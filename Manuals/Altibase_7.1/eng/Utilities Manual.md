@@ -2701,11 +2701,11 @@ $ altimon.sh stop
 
 altiMon uses PICL library written in C language in order to collect information on operating system. The PICL library is available on the operation systems describe in the chart below. 
 
-| OS    | CPU          | Version                           | PICL Library                |
-| ----- | ------------ | --------------------------------- | --------------------------- |
-| AIX   | ppc64        | OS Version 5.3, 6.1, 7.1          | aix-ppc64-5.so              |
-| HP-UX | ia64         | IA64                              | hpux-ia64-11.sl             |
-| LINUX | X86_64 ppc64 | OS Version 2.6 glibc 2.5 or later | linux-x64.so linux-ppc64.so |
+| OS    | CPU                   | Version                           | PICL Library                     |
+| ----- | --------------------- | --------------------------------- | -------------------------------- |
+| AIX   | ppc64                 | OS Version 5.3, 6.1, 7.1          | aix-ppc64-5.so                   |
+| HP-UX | ia64                  | IA64                              | hpux-ia64-11.sl                  |
+| LINUX | X86_64</br> ppc64(le) | OS Version 2.6</br> glibc 2.5 or later | linux-x64.so </br>linux-ppc64.so |
 
 it can also be used after checking whether the PICL for the lower version works on the OS version that is not supported.
 
@@ -4167,7 +4167,7 @@ dumptrc outputs a trace log file recorded in $ALTIBASE_HOME/trc directory by con
 
 ```
 dumptrc [-h |[-p file_path][-c [-s]]
-[-a|-i file_name [-i file_name]..|-e file_name [-e file_name]..] [-n file_count] |-f |-v]
+[-a|-i file_name [-i file_name]..|-e file_name [-e file_name]..] [-n file_count] [x] |-f |-v]
 ```
 
 
@@ -4233,7 +4233,7 @@ If experiencing abnormal termination of Altibase server, converts the process ca
 
 #### Precaution
 
-The version of Altibase executable file and that of the dumptrc should be identical to confirm the call stack information in order to normally operate the dumptrc.
+The exact call stack information can be checked only when the version of the Altibase executable file and the version of dumptrc are the same. If the version is incorrect, an incorrect value may be displayed, so a warning message is displayed by default and the call stack is not displayed. If the version is incorrect, the -x option can be used to forcefully display the call stack.
 
 #### Examples
 

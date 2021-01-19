@@ -125,7 +125,7 @@ When you need immediate assistance regarding technical issues, please contact Al
 
 Thank you. We appreciate your feedback and suggestions.
 
-1. About the Altibase Package Installer
+## 1. About the Altibase Package Installer
 ------------------------
 
 This Altibase Package Installer is a Java-based installer that lets you easily install Altibase products such as the database server, client components, tools, and so forth.
@@ -254,7 +254,7 @@ uninstall-base
 -   rollback-p0_0_0_10: the directory that contains backups of the files patched with 7.1.0.0.10.
 -   uninstall-p0_0_0_10: the executable file needed to delete the patch 7.1.0.0.10 and rollback to the previous version. These files are stored in the rollback-p0_0_0_10 directory.
 
-2. Installing Products with the Altibase Package Installer
+## 2. Installing Products with the Altibase Package Installer
 ----------------------------------
 
 This chapter consists of the following sections:
@@ -290,6 +290,59 @@ You should have at least 12GB of free disk space to smoothly run the database.
 #### Network
 
 It is recommended to use a dedicated line when using the replication feature.
+
+### Supported Platforms
+
+Altibase supports both server/client for the following platforms. However, for Windows, only the client is supported.
+
+#### AIX
+
+AIX 6.1TL3 and later (64-bit)
+
+AIX 7.1 , AIX 7.2(64-bit)
+
+>For altimon, altimon for AIX 7.x is supported starting from 7.1.0.1.9 and later.
+
+#### HP-UX
+
+HP-UX.IA64 11.31 and later(64-bit)
+
+#### Linux(x86)
+
+GNU glibc 2.12 and later
+
+Redhat 6.0 and later(64-bit)
+
+Redhat 7.0 and later(64-bit)
+
+#### Power Linux
+
+GNU glibc 2.12 and later
+
+Power7 Redhat 6.5 and later(64-bit)
+
+Power7 Redhat 7.0 and later(64-bit)
+
+Power8 Redhat 6.5 and later(64-bit)
+
+Power8 Redhat 7.0 and later(64-bit)
+
+#### Power Linux Little Endian(LE)
+
+GNU glibc 2.17 and later
+
+Power8(LE) Redhat 7.2 and later(64-bit)
+
+> For altimon, altimon for Power Linux(LE) is supported starting from 7.1.0.3.6 and later.
+>
+> For jdbcAdapter, jdbcAdapter for Power Linux(LE) is supported starting from 7.1.0.3.6 and later.
+
+#### Windows
+
+Starting from Altibase version 7.1.0.4.5, Altibase client for windows is supported.
+
+Windows Server 2008-x64 (64bit)
+
 
 ### Altibase Package Installer
 
@@ -1019,7 +1072,7 @@ export CLASSPATH=${ALTIBASE_HOME}/lib/Altibase.jar:${CLASSPATH}
 
 If you have not applied new environment variables to your shell during the above procedure, do it now. For more detailed information, please refer to [*Installing the Altibase Client Product*](#installing-the-altibase-client-product).
 
-3. Uninstalling Altibase and Meta Downgrade
+## 3. Uninstalling Altibase and Meta Downgrade
 ----------------------------------
 
 This chapter explains how to uninstall an installed or meta downgrade the installed product.
@@ -1148,7 +1201,7 @@ Run the Patch Uninstaller to remove the patch
 >
 > After performing a server downgrade, the user must delete the patch. If the server is run without deleting the patch, the meta upgrade will occur because the meta version has been modified to the previous version. 
 
-4. Patching Products With the Altibase Package Installer
+## 4. Patching Products With the Altibase Package Installer
 ----------------------------------
 
 This chapter consists of the following sections:

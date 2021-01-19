@@ -60,7 +60,7 @@ Customer Service Portal: [http://support.altibase.com/en/]
 
 Homepage: [[http://www.altibase.com](http://www.altibase.com/)]
 
-1. Preface
+## 1. Preface
 ----
 
 ### About This Manual
@@ -1256,7 +1256,7 @@ ALTER TABLE table_name ALTER COLUMN column_name DROP DEFAULT;
 
 ALTER TABLE table_name ALTER TABLESPACE;
 
-ALTER TABLE table_name TRUNCATE PARTITION TRUNCATE TABLE table_name;
+ALTER TABLE table_name TRUNCATE PARTITION partition_name;
 
 ALTER TABLE table_name SPLIT PARTITION partition_name(condition) INTO
 ( PARTITION partition_name
@@ -1316,7 +1316,7 @@ Altibase supports the execution of DDL statements on replication target tables. 
   
 -   The target table should be locked by the LOCK TABLE...UNTIL NEXT DDL statement in order to execute SPLIT PARTITION, MERGE PARTITION, and DROP PARTITION on a replication target table. Moreover, the data should be checked to identify since there would be a replication gap between the local and remote server.
 
-If the SPLIT, MERGE, or DROP is executed on a replication target partition, the identical replication partition is automatically removed or added to the local or remote server.
+If the SPLIT, MERGE, or DROP is executed on a replication target partition, a partition with the same name must be created or deleted on the remote server and a newly created or deleted partition is automatically added or removed as a replication target partition.
 
 #### Restrictions
 
@@ -1526,7 +1526,7 @@ Altibase provides the following extra replication features:
 
 -   Recovery Option
 
--   Offline Option)
+-   Offline Option
 
 -   Replication Gapless Option
 
@@ -1609,7 +1609,7 @@ The below figure is an example of the offline option in use.
 ##### Offline Option Restrictions
 
 -   This option can only be used when executing replication in LAZY mode.
--   Offline replication is not supported for replication objects which designate compressed tables as replication targets
+-   Offline replication is not supported for replication objects which designate compressed tables as replication targets.
 -   The offline option cannot be used at the same time as the recovery option.
 -   At the moment that offline replication starts, any replication Receiver thread having the same replication_name must be in a stopped state. If such a thread is still running, offline replication will terminate.
 -   If the log file directory on the Active Server cannot be accessed due to a disk error, offline replication will fail.
@@ -1714,7 +1714,7 @@ The buffer_size property specifies the initial size of the queue. Values range f
 
 If the unit (K, M, G) is not input, it is recognized in units of Megabytes.
 
-For more detailed information about properties, please refer to the *General Reference**.* 
+For more detailed information about properties, please refer to the *General Reference*.
 
 ##### Example
 

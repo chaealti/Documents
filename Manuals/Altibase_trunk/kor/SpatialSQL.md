@@ -1,6 +1,7 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [Spatial SQL Reference](#spatial-sql-reference)
     - [서문](#%EC%84%9C%EB%AC%B8)
     - [이 매뉴얼에 대하여](#%EC%9D%B4-%EB%A7%A4%EB%89%B4%EC%96%BC%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC)
@@ -27,6 +28,9 @@
     - [객체 생성 함수](#%EA%B0%9D%EC%B2%B4-%EC%83%9D%EC%84%B1-%ED%95%A8%EC%88%98)
     - [객체 검색 함수](#%EA%B0%9D%EC%B2%B4-%EA%B2%80%EC%83%89-%ED%95%A8%EC%88%98)
     - [Endian 함수](#endian-%ED%95%A8%EC%88%98)
+  - [4. 데이터 마이그레이션](#4-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98)
+    - [Altibase 공간 데이터 마이그레이션](#altibase-%EA%B3%B5%EA%B0%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98)
+    - [이기종 데이터베이스 공간 데이터 마이그레이션](#%EC%9D%B4%EA%B8%B0%EC%A2%85-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B3%B5%EA%B0%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98)
   - [A.부록: Spatial 칼럼의 제약사항](#a%EB%B6%80%EB%A1%9D-spatial-%EC%B9%BC%EB%9F%BC%EC%9D%98-%EC%A0%9C%EC%95%BD%EC%82%AC%ED%95%AD)
     - [GEOMETRY 칼럼에 대한 제약 사항](#geometry-%EC%B9%BC%EB%9F%BC%EC%97%90-%EB%8C%80%ED%95%9C-%EC%A0%9C%EC%95%BD-%EC%82%AC%ED%95%AD)
   - [B.부록: 스키마](#b%EB%B6%80%EB%A1%9D-%EC%8A%A4%ED%82%A4%EB%A7%88)
@@ -113,6 +117,12 @@ homepage: [http://www.altibase.com](http://www.altibase.com/)
 -   제 3장 응용 프로그램 개발  
     이 장에서는 응용 프로그램 개발자가 공간 데이터에 접근하는 것을 지원하기 위한
     API들을 설명한다.
+
+- 제 4장 데이터 마이그레이션
+
+  이 장에서는 Altibase 제품간 또는 이기종 데이터베이스 제품과 공간 데이터 마이그레이션 방법을
+
+  설명한다.
 
 -   A. 부록: Spatial 칼럼의 제약사항  
     이 부록은 Altibase에 공간 (Spatial) 기능을 확장함에 따라 기존 기능 중
@@ -2365,6 +2375,48 @@ F1          ISRING(F2)
 1 row selected.
 ```
 
+#### ST_ISCOLLECTION
+
+##### 구문
+
+```
+ST_ISCOLLECTION( GEOMETRY )
+```
+
+##### 설명
+
+인자로 받은 공간 객체가 Multi\*이거나 GeometryCollection이면 1을 반환하고, 
+그렇지 않으면 0을 반환한다. 
+
+
+##### 반환 타입
+
+```
+INTEGER
+```
+
+##### 예제
+
+```
+iSQL> SELECT ST_ISCOLLECTION(GEOMETRY'POINT(1 1)'); 
+ST_ISCOLLECTION(GEOMETRY'POINT(1 1)') 
+----------------------------------------
+0           
+1 row selected.
+
+iSQL> SELECT ST_ISCOLLECTION(GEOMETRY'MULTIPOINT(1 1)');
+ST_ISCOLLECTION(GEOMETRY'MULTIPOINT(1 1)') 
+---------------------------------------------
+1           
+1 row selected.
+
+iSQL> SELECT ST_ISCOLLECTION(GEOMETRY'GEOMETRYCOLLECTION(POINT(1 1), LINESTRING(2 2, 3 3))');  
+ST_ISCOLLECTION(GEOMETRY'GEOMETRYCOLLECTIO 
+---------------------------------------------
+1           
+1 row selected.
+```
+
 #### NUMPOINTS
 
 ##### 구문
@@ -3324,18 +3376,18 @@ iSQL> INSERT INTO TB3 VALUES (104, LINEFROMTEXT('MULTIPOLYGON(((10 10, 10 20, 20
 ##### 구문
 
 ```
-POLYFROMTEXT( WKT )
+POLYFROMTEXT( WKT[, srid] )
 ```
 
 ##### 설명
 
-WKT(Well-Known Text) 형태로 공간 객체를 입력 받아 폴리곤 객체를 생성한다.
+WKT(Well-Known Text) 형태로 공간 객체와 SRID를 입력 받아 폴리곤 객체를 생성한다.
 
 폴리곤이 아닌 공간 객체를 표현한 WKT이거나 문법이 잘못된 경우 에러를 출력한다.
 
-WKT의 값이 NULL인 경우에는 NULL을 반환한다.
+WKT의 값이 NULL이거나 SRID의 값이 NULL인 경우에는 NULL을 반환한다.
 
-생성된 객체의 SRID는 0이다.
+SRID를 입력하지 않으면 생성된 객체의 SRID는 0이다.
 
 ##### 반환 타입
 
@@ -3359,6 +3411,64 @@ POLYGON((10 10, 10 20, 20 20, 20 15, 10 10))
 
 iSQL> INSERT INTO TB3 VALUES (105, POLYFROMTEXT('MULTILINESTRING((10 10, 20 20), (15 15, 30 15))'));
 [ERR-A1019 : Not applicable object type]
+
+iSQL> INSERT INTO TB3 VALUES (120, POLYFROMTEXT('POLYGON((10 10, 10 20, 20 20, 20 15, 10 10))', 100));
+1 row inserted.
+
+iSQL> SELECT ID, ASEWKT(OBJ) FROM TB3;
+ID          ASEWKT(OBJ)
+---------------------------------------------------------------------------------------------------------------------
+104         SRID=0;POLYGON((10 10, 10 20, 20 20, 20 15, 10 10))
+120         SRID=100;POLYGON((10 10, 10 20, 20 20, 20 15, 10 10))
+2 rows selected.
+```
+
+#### ST_POLYGONFROMTEXT
+
+##### 구문
+
+```
+ST_POLYGONFROMTEXT( TEXT[, srid] )
+```
+
+##### 설명
+
+WKT(Well-Known Text) 형태 또는 EWKT(Extended Well-Known Text) 형태의 공간 객체와 SRID를 입력 받아 폴리곤 객체를 생성한다.
+
+WKT의 값이 NULL이거나 SRID의 값이 NULL인 경우에는 NULL을 반환한다.
+
+POLYFROMTEXT와 달리 폴리곤이 아닌 공간 객체를 표현한 WKT또는 EWKT인 경우에는 NULL을 반환한다.
+
+WKT 형태 또는 EWKT 형태가 문법이 잘못된 경우 에러를 출력한다.
+
+SRID를 입력하지 않으면 생성된 객체의 SRID는 0이다.
+
+##### 반환 타입
+
+```
+GEOMETRY
+```
+
+##### 예제
+
+```
+iSQL> INSERT INTO TB3 VALUES (121, ST_POLYGONFROMTEXT('POLYGON((10 10, 10 20, 20 20, 20 15, 10 10))'));
+1 row inserted.
+iSQL> INSERT INTO TB3 VALUES (122, ST_POLYGONFROMTEXT('POLYGON((10 10, 10 20, 20 20, 20 15, 10 10))', 100));
+1 row inserted.
+iSQL> INSERT INTO TB3 VALUES (123, ST_POLYGONFROMTEXT('MULTILINESTRING((10 10, 20 20), (15 15, 30 15))'));
+1 row inserted.
+iSQL> INSERT INTO TB3 VALUES (124, ST_POLYGONFROMTEXT('SRID=100;POLYGON((10 10, 10 20, 20 20, 20 15, 10 10))'));
+1 row inserted.
+
+iSQL> SELECT ID, ASEWKT(OBJ) FROM TB3;
+ID          ASEWKT(OBJ)
+---------------------------------------------------------------------------------------------------------------------
+121         SRID=0;POLYGON((10 10, 10 20, 20 20, 20 15, 10 10))
+122         SRID=100;POLYGON((10 10, 10 20, 20 20, 20 15, 10 10))
+123
+124         SRID=100;POLYGON((10 10, 10 20, 20 20, 20 15, 10 10))
+4 rows selected.
 ```
 
 #### MPOINTFROMTEXT
@@ -3583,6 +3693,32 @@ WKB(Well-Known Binary) 형태로 공간 객체를 입력 받아 라인스트링 
 
 라인스트링이 아닌 공간 객체를 표현한 WKB이거나 문법이 잘못된 경우 에러를
 출력한다.
+
+##### 반환 타입
+
+```
+GEOMETRY
+```
+
+#### ST_LINESTRINGFROMWKB
+
+##### 구문
+
+```
+ST_LINESTRINGFROMWKB( WKB[, SRID] )
+```
+
+##### 설명
+
+WKB(Well-Known Binary) 형태 또는 EWKT(Extended Well-Known Text) 형태의 공간 객체와 SRID를 입력 받아 폴리곤 객체를 생성한다.
+
+WKB의 값이 NULL이거나 SRID의 값이 NULL인 경우에는 NULL을 반환한다.
+
+LINEFROMWKB와 달리 라인스트링이 아닌 공간 객체를 표현한 WKT또는 EWKT인 경우에는 NULL을 반환한다.
+
+WKT 형태 또는 EWKT 형태가 문법이 잘못된 경우 에러를 출력한다.
+
+SRID를 입력하지 않으면 생성된 객체의 SRID는 0이다.
 
 ##### 반환 타입
 
@@ -3842,6 +3978,7 @@ EWKB(Extended Well-Known Binary) 형태로 공간 객체를 입력 받아 GEOMET
 ```
 GEOMETRY
 ```
+
 #### ST_MAKEPOINT
 
 ##### 구문
@@ -3906,13 +4043,12 @@ POINT(1 1)
 ##### 구문
 
 ```
-ST_MAKELINE( GEOMETRY1, GEOMETRY2, ... )
+ST_MAKELINE( GEOMETRY1, GEOMETRY2 )
 ```
 
 ##### 설명
 
-Point, MultiPoint, LineString 객체를 인자로 받아 LineString 객체를 생성한다.
-여러 개의 Geometry 객체를 가변적으로 입력 받을 수 있다.   
+Point, MultiPoint, LineString 객체를 입력 받아 LineString 객체를 생성한다. 
 
 ##### 반환 타입
 
@@ -3929,13 +4065,214 @@ GEOM
 LINESTRING(1 1, 2 2)                                
 1 row selected.
  
-iSQL> SELECT ASTEXT( ST_MAKELINE( GEOMETRY'POINT(1 1)', 
-    2                             GEOMETRY'LINESTRING(2 2, 3 3)', 
-    3                             GEOMETRY'MULTIPOINT(4 4, 5 5)' ) ) AS GEOM
-    4 FROM DUAL;
-GEOM                                                
+iSQL> SELECT ASTEXT( ST_MAKELINE( GEOMETRY'LINESTRING(1 1, 2 2)', 
+    2 GEOMETRY'LINESTRING(3 3, 4 4)' ) ) AS GEOM
+    3 FROM DUAL;
+GEOM                                                                                                                                                                                                                                                              
 ------------------------------------------------------
-LINESTRING(1 1, 2 2, 3 3, 4 4, 5 5)                 
+LINESTRING(1 1, 2 2, 3 3, 4 4)                                                                                                                                                                                                                                    
+1 row selected.
+```
+
+#### ST_MAKEPOLYGON
+
+##### 구문
+
+```
+ST_MAKEPOLYGON( GEOMETRY )
+```
+
+##### 설명
+
+LineString 객체를 입력 받아 Polygon 객체를 생성한다. 이 때 LineString은 반드시 Ring 형태여야 한다. 
+
+##### 반환 타입
+
+```
+GEOMETRY
+```
+
+##### 예제
+
+```
+iSQL> SELECT ASTEXT( ST_MAKEPOLYGON( GEOMETRY'LINESTRING( 0 0, 1 1, 1 0, 0 0 ) ' ) ) AS GEOM FROM DUAL; 
+GEOM                                                                                                                                                                                                                                                              
+------------------------------------------------------
+POLYGON((0 0, 1 1, 1 0, 0 0))                                                                                                                                                                                                                                     
+1 row selected.
+```
+
+#### ST_POLYGON
+
+##### 구문
+
+```
+ST_POLYGON( GEOMETRY, SRID )
+```
+
+##### 설명
+
+ST_MAKEPOLYGON과 유사하다. LineString과 SRID를 입력 받아 SRID를 갖는 Polygon 객체를 생성한다.  
+
+##### 반환 타입
+
+```
+GEOMETRY
+```
+
+##### 예제
+
+```
+iSQL> SELECT ST_ASEWKT( ST_POLYGON( GEOMETRY'LINESTRING( 2 2, 3 2, 3 3, 2 3, 2 2 ) ', 4326 ) ) AS GEOM FROM DUAL;
+GEOM                                                                                                                                                                                                                                                              
+------------------------------------------------------
+SRID=4326;POLYGON((2 2, 3 2, 3 3, 2 3, 2 2))                                                                                                                                                                                                                      
+1 row selected.
+```
+
+#### ST_COLLECT
+
+##### 구문
+
+```
+ST_COLLECT( GEOMETRY1, GEOMETRY2 );
+```
+
+##### 설명
+
+Geometry 객체들을 입력 받아 GeometryCollection 객체를 생성한다. 이 때 input type이 동일하면 결과값은 Multi\*가 되고, 동일하지 않으면 GeometryCollection이 된다.
+
+##### 반환 타입
+
+```
+GEOMETRY
+```
+
+##### 예제
+
+```
+iSQL> SELECT ASTEXT( ST_COLLECT( GEOMETRY'POINT( 1 1 )', GEOMETRY'POINT( 2 2 )' ) ) AS GEOM FROM DUAL;
+GEOM                                                                              
+------------------------------------------------------------------------------------
+MULTIPOINT(1 1, 2 2)                                                              
+1 row selected.
+ 
+iSQL> SELECT ASTEXT( ST_COLLECT( GEOMETRY'LINESTRING( 1 1, 2 2 )', GEOMETRY'LINESTRING( 3 3, 4 4 )' ) ) AS GEOM FROM DUAL;
+GEOM                                                                              
+------------------------------------------------------------------------------------
+MULTILINESTRING((1 1, 2 2), (3 3, 4 4))                                           
+1 row selected.
+ 
+iSQL> SELECT ASTEXT( ST_COLLECT( GEOMETRY'POLYGON( ( 0 0, 1 1, 1 0, 0 0 ) )', GEOMETRY'POLYGON( ( 10 10, 2 2, 2 0, 10 10 ) )' ) ) AS GEOM FROM DUAL;
+GEOM                                                                              
+------------------------------------------------------------------------------------
+MULTIPOLYGON(((0 0, 1 1, 1 0, 0 0)), ((10 10, 2 2, 2 0, 10 10)))                  
+1 row selected.
+ 
+iSQL> SELECT ASTEXT( ST_COLLECT( GEOMETRY'POINT( 1 1 )', GEOMETRY'LINESTRING( 1 1, 2 2 )' ) ) AS GEOM FROM DUAL;
+GEOM                                                                              
+------------------------------------------------------------------------------------
+GEOMETRYCOLLECTION( POINT(1 1) , LINESTRING(1 1, 2 2) )                           
+1 row selected.
+```
+
+#### ST_MAKEENVELOPE
+
+##### 구문
+
+```
+ST_MAKEENVELOPE( X1, Y1, X2, Y2[, SRID=0] )
+```
+
+##### 설명
+
+입력한 Double 형 변수 4개에 해당하는 LINESTRING( X1 Y1, X2 Y2 )를 ENVELOPE 수행한 결과인 POLYGON( X1 Y1, X2 Y1, X2 Y2, X1 Y2, X1 Y1 )로 반환한다.
+SRID를 입력한 경우 생성된 공간 객체의 SRID로 설정된다. 만약 SRID를 입력하지 않은 경우 생성된 공간객체의 SRID는 0이다.
+
+##### 반환 타입
+
+```
+GEOMETRY
+```
+
+##### 예제
+
+```
+iSQL> SELECT ASEWKT( ST_MAKEENVELOPE( 10.9351, 49.3866, 11.201, 49.5138 ) ) AS POL FROM DUAL;
+POL
+----------------------------------------------------------------------------------------------------------------------------
+SRID=0;POLYGON((10.9351 49.3866, 11.201 49.3866, 11.201 49.5138, 10.9351 49.5138, 10.9351 49.3866))
+1 row selected.
+
+iSQL> SELECT ASEWKT( ST_MAKEENVELOPE( 10.9351, 49.3866, 11.201, 49.5138, 104 ) ) AS POL FROM DUAL;
+POL
+----------------------------------------------------------------------------------------------------------------------------
+SRID=104;POLYGON((10.9351 49.3866, 11.201 49.3866, 11.201 49.5138, 10.9351 49.5138, 10.9351 49.3866))
+1 row selected.
+```
+
+#### ST_TRANSFORM
+
+##### 구문
+
+```
+GEOMETRY ST_Transform( GEOMETRY, INTEGER to_srid );
+GEOMETRY ST_Transform( GEOMETRY, VARCHAR to_proj4text );
+GEOMETRY ST_Transform( GEOMETRY, VARCHAR from_proj4text, VARCHAR to_proj4text );
+GEOMETRY ST_Transform( GEOMETRY, VARCHAR from_proj4text, INTEGER to_srid );
+```
+
+##### 설명
+
+GEOMETRY 객체가 입력된 좌표계로 변환되어 새롭게 생성된다.
+입출력 좌표계는 SRID 또는 PROJ4TEXT 문자열로 입력될 수 있다.
+
+##### 반환 타입
+
+```
+GEOMETRY
+```
+
+##### 제약 조건
+
+이 함수는 Intel 환경의 Linux 운영체제에서만 사용할 수 있다.
+
+입력된 인자가 하나라도 NULL인 경우, NULL을 반환한다.
+
+입력된 GEOMETRY 객체가 EMPTY인 경우, EMPTY GEOMETRY 객체를 반환한다.
+
+입출력 SRID가 동일한 경우, 반환된 GEOMETRY 객체는 입력된 GEOMETRY 객체와 동일하다.
+
+입출력 좌표계로 SRID가 입력된 경우, SPATIAL_REF_SYS 테이블에 해당하는 SRID의 Spatial Reference System 메타 데이터가 존재해야 한다.
+
+PROJ4TEXT 문법은 PROJ 라이브러리 버전 4 형식만 지원한다.
+
+출력 좌표계가 PROJ4TEXT인 경우, 반환된 GEOMETRY 객체의 SRID는 0으로 설정된다.
+
+입력 좌표계가  PROJ4TEXT이며 입력된 GEOMETRY 객체의 SRID가 0인 경우, 반환된 GEOMETRY 객체의 SRID는 0으로 설정된다.
+
+##### 예제
+
+```
+iSQL> select st_asewkt(st_transform(st_pointfromtext('POINT(958003.59712966 1948254.75875841)', 5178), 4326 )) as geometry;
+GEOMETRY                                                                                                                                                                                                                                                          
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SRID=4326;POINT(127.0246 37.5326)                                                                                                                                                                                                                                 
+1 row selected.
+iSQL> select st_asewkt(st_transform(st_pointfromtext('POINT(958003.59712966 1948254.75875841)', 5178), '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs' )) as geometry;
+GEOMETRY                                                                                                                                                                                                                                                          
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SRID=0;POINT(127.0246 37.5326)                                                                                                                                                                                                                                    
+1 row selected.
+iSQL> select st_asewkt(st_transform(st_pointfromtext('POINT(958003.59712966 1948254.75875841)'), '+proj=tmerc +lat_0=38 +lon_0=127.5 +k=0.9996 +x_0=1000000 +y_0=2000000 +ellps=bessel +units=m +no_defs', '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs' )) as geometry;
+GEOMETRY                                                                                                                                                                                                                                                          
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SRID=0;POINT(127.0246 37.5326)                                                                                                                                                                                                                                    
+1 row selected.
+iSQL> select st_asewkt(st_transform(st_pointfromtext('POINT(958003.59712966 1948254.75875841)'), '+proj=tmerc +lat_0=38 +lon_0=127.5 +k=0.9996 +x_0=1000000 +y_0=2000000 +ellps=bessel +units=m +no_defs', 4326 )) as geometry;
+GEOMETRY                                                                                                                                                                                                                                                          
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SRID=0;POINT(127.0246 37.5326)                                                                                                                                                                                                                                    
 1 row selected.
 ```
 
@@ -6480,6 +6817,27 @@ else
 }
 
 ```
+## 4. 공간 데이터 마이그레이션
+
+본 장에서는 Altibase 또는 타 벤더  데이터베이스 제품과 공간 데이터 마이그레이션 하는 방법을 설명한다.
+
+### Altibase 제품간 공간 데이터 마이그레이션
+
+Altibase 제품간 공간 데이터 마이그레이션을 위해 iLoader와 aexport를 사용가능하다. 데이터 이관을 위한 iLoader와 마이그레이션을 위한 aexport는 공간 데이터를 지원하기에 다른 데이터 타입과 동일한 방식으로 마이그레이션이 가능하다.  
+
+한가지 주의할 점은 Altibase가 공간 데이터를 저장하는 포맷이다. SYSTEM\_.SYS\_DATABASE\_ 테이블 기준 메타 버젼 8.8.1 미만 버젼은 WKB 포맷을, 8.8.1이상 버젼은 EWKB 포맷을 지원한다. 마이그레이션 수행 시 추출되는 공간 데이터의 포맷은 공간 데이터가 저장된 Altibase가 지원하는 포맷에 따른다. 따라서, 8.8.1 미만 버젼은 WKB 포맷 공간 데이터 파일이 생성되고, 8.8.1이상 버젼은 EWKB 포맷 데이터 파일을 생성한다.
+
+WKB 포맷의 공간 데이터는 EWKB 지원 Altibase가 읽고 자동으로 변환한다. 반면, EWKB 포맷 공간 데이터는 WKB 지원 Altibase가 인식하지 못한다. 따라서, EWKB 포맷 데이터를  WKB 지원 Altibase로 데이터 이관 할때 원본 데이터를 WKB 포맷으로 추출하는 옵션을 사용해야 한다. 마이그레이션 작업할 때는 aexport의 aexport.properties 파일에 'ILOADER_GEOM = WKB' 옵션을, 하나의 테이블만 작업할 때는 iLoader에서 '-geom WKB' 옵션을 사용한다. 상세 내용은 iLoader와 aexport 매뉴얼을 참조한다.
+
+앞서 설명한 것과 별도로 altiShapeLoader를 이용하여 shapefile 포맷으로 공간 데이터를 import/export 하는 방법도 제공한다. 
+
+### 이기종 데이터베이스과 공간 데이터 마이그레이션
+
+데이터베이스 제품마다 공간 데이터를 표현하거나 저장하는 방법이 대부분 다르다. 서로 다른 형식의 공간 데이터를 교환하기 위해, 대부분의 데이터베이스 벤더들은 사실상 산업 표준인 shapefile 포맷으로 공간 데이터를  import/export 하는 유틸리티를 제공한다.
+
+Altibase는 altiShapeLoader라는 shapefile 유틸리티를 제공한다. 이를 이용하여 타 DBMS에서 만들어진 shapefile을 Altibase로 import하거나 Altibase의 공간 데이터를 shapefile로 export 할 수 있다. 상세 사용법은 altiShapeLoader 매뉴얼을 참조한다.
+
+Migration Center는 공간 데이터 타입을 지원하지 않는다. 마이그레이션 수행시 공간 데이터 테이블은 제외하고 마이그레이션이 수행된다.
 
 ## A.부록: Spatial 칼럼의 제약사항
 
