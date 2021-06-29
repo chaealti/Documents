@@ -1,22 +1,20 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [General Reference](#general-reference)
-  - [2. Altibase Properties](#2altibase-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0)
-    - [Session Properties](#%EC%84%B8%EC%85%98-%EA%B4%80%EB%A0%A8-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0)
-    - [Time-out Properties](#%ED%83%80%EC%9E%84%EC%95%84%EC%9B%83-%EA%B4%80%EB%A0%A8-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0)
-    - [Transaction Properties](#%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EA%B4%80%EB%A0%A8-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0)
-    - [Backup and Recovery Properties](#%EB%B0%B1%EC%97%85-%EB%B0%8F-%EB%B3%B5%EA%B5%AC-%EA%B4%80%EB%A0%A8-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0)
-    - [Replication Properties](#%EC%9D%B4%EC%A4%91%ED%99%94-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0)
-    - [Network and Security Properties](#%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EA%B4%80%EB%A0%A8-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0)
-    - [Message Logging Properties](#%EB%A9%94%EC%8B%9C%EC%A7%80-%EB%A1%9C%EA%B7%B8-%EA%B4%80%EB%A0%A8-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0)
-    - [Database Link Properties](#%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EB%A7%81%ED%81%AC-%EA%B4%80%EB%A0%A8-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0)
-    - [Auditing Properties](#%EA%B0%90%EC%82%AC-%EA%B4%80%EB%A0%A8-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0)
-    - [C/C++ External Procedure Agent Properties](#%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8-%EA%B4%80%EB%A0%A8-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0)
-    - [Account Security Properties](#%EC%82%AC%EC%9A%A9%EC%9E%90-%EA%B3%84%EC%A0%95-%EB%B3%B4%EC%95%88-%EA%B4%80%EB%A0%A8-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0)
-    - [Altibase Sharding Properties](#altibase-sharding-%EA%B4%80%EB%A0%A8-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0)
-    - [Other Properties](#%EA%B8%B0%ED%83%80-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0)
+  - [2. Altibase Properties](#2-altibase-properties)
+    - [Session Properties](#session-properties)
+    - [Time-out Properties](#time-out-properties)
+    - [Tranaction Properties](#tranaction-properties)
+    - [Backup and Recovery Properties](#backup-and-recovery-properties)
+    - [Replication Properties](#replication-properties)
+    - [Network and Security Properties](#network-and-security-properties)
+    - [Message Logging Properties](#message-logging-properties)
+    - [Database Link Properties](#database-link-properties)
+    - [Auditing Properties](#auditing-properties)
+    - [C/C++ External Procedure Agent Properties](#cc-external-procedure-agent-properties)
+    - [Account Security Properties](#account-security-properties)
+    - [Other Properties](#other-properties)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -30,7 +28,7 @@ Altibase Administration General Reference
 
 Release 7.1
 
-Copyright ⓒ 2001\~2020 Altibase Corp. All Rights Reserved.
+Copyright ⓒ 2001\~2021 Altibase Corp. All Rights Reserved.
 
 This manual contains proprietary information of Altibase Corporation; it is provided under a license agreement containing restrictions on use and disclosure and is also protected by copyright patent and other intellectual property law. Reverse engineering of the software is prohibited. All trademarks, registered or otherwise, are the property of their respective owners.
 
@@ -70,7 +68,7 @@ Read-Only, Single Value
 
 Altibase server provides a session management thread for checking whether the connection between a client and a server has been interrupted. This property specifies the interval, in seconds, at which the session management thread operates. 
 
-Usually, when a client process is abnormally terminated, the server to which the client is connected can immediately detect this
+Usually, when a client process is abnormally terminated, the server to which the client is connected can immediately detect this.
 
 However, when a session has an unfinished task, and furthermore if the task is an internal Altibase server operation that is not directly related to the client session, and it is taking a long time, the server cannot check whether the client has terminated abnormally. That is to say, because the server cannot check whether the connection with the client has ended abnormally, such abnormal termination would be disregarded and Altibase would continue to process the task.
 
@@ -122,7 +120,7 @@ Read-Only, Single Value
 
 ##### Description
 
-CONCURRENT_EXEC_DEGREE_MAX specifies the maximum number of procedures in the DBMS_CONCURRENT_EXEC package that are allowed to execute in parallel
+CONCURRENT_EXEC_DEGREE_MAX specifies the maximum number of procedures in the DBMS_CONCURRENT_EXEC package that are allowed to execute in parallel.
 
 If this value is set to 0, the DBMS_CONCURRENT_EXEC package cannot be executed.
 
@@ -595,7 +593,7 @@ Unsigned Integer
 
 ##### Description
 
-This property specifies the port number for communication between the client and the server via TCP/IP. The user can set this port number to any number not being used by another application within the range of port numbers (up to number 65535) excluding the so-called “well-known TCP port numbers” (from 1 to 1023). Application programs of Altibase can connect to the server via this port number
+This property specifies the port number for communication between the client and the server via TCP/IP. The user can set this port number to any number not being used by another application within the range of port numbers (up to number 65535) excluding the so-called “well-known TCP port numbers” (from 1 to 1023). Application programs of Altibase can connect to the server via this port number.
 
 #### PSM_CURSOR_OPEN_LIMIT
 
@@ -913,7 +911,7 @@ If the execution time of a DDL statement exceeds the number of seconds specified
 
 This property can be changed using the ALTER SYSTEM or ALTER SESSION statement while Altibase is running.
 
-> Note: In Altibase versions up to 5.5.1, the execution time of DDL statements was governed by the UTRANS_TIMEOUT and QUERY_TIMEOUT properties, which still govern the execution time of DML and DCL statements
+> Note: In Altibase versions up to 5.5.1, the execution time of DDL statements was governed by the UTRANS_TIMEOUT and QUERY_TIMEOUT properties, which still govern the execution time of DML and DCL statements.
 
 #### FETCH_TIMEOUT (Unit: second)
 
@@ -1185,28 +1183,6 @@ The number of transactions which can be simultaneously created during the Altiba
 
 This property should increase or decrease the value by 2n and the database must be created again when decreasing the value.
 
-#### SHARED_TRANS_HASH_BUCKET_COUNT(단위 : 해시 저장소 개수)
-
-##### Data Type
-
-Unsigned Integer
-
-##### Default value
-
-1024
-
-##### Attributes
-
-Read-Only, Single value
-
-##### Range
-
-[16,16384]
-
-##### Description
-
-Sets the hash storage size of the data structure for managing shared transactions created during the Altibase sharding.
-
 ### Backup and Recovery Properties
 
 These properties are related to the management of change logs, which are maintained in response to database changes.
@@ -1259,7 +1235,7 @@ Read-Only, Single Value
 
 This property controls the action of the archivelog thread, which conducts archive log backup, when there is not enough disk space in the archive log destination (specified using ARCHIVE_DIR).
 
-If this parameter is set to 0, the archivelog thread will output an error message and stop the archive log file backup. Even if enough disk space can subsequently be secured, archive log backup will not resume until the user explicitly issues a command to do so. If checkpointing takes place in such cases, unnecessary log files will be deleted, even if no archive log file backup has been conducted. Therefore care must be taken when using this mode
+If this parameter is set to 0, the archivelog thread will output an error message and stop the archive log file backup. Even if enough disk space can subsequently be secured, archive log backup will not resume until the user explicitly issues a command to do so. If checkpointing takes place in such cases, unnecessary log files will be deleted, even if no archive log file backup has been conducted. Therefore care must be taken when using this mode.
 
 If this parameter is set to 1, the archivelog thread waits until enough disk space can be secured to perform the archive log file backup. Because the archive log files have not been backed up, care must be taken to prevent the log files from being deleted if checkpointing takes place during this waiting period.
 
@@ -1519,7 +1495,7 @@ Read-Only, Single Value
 
 This property determines the log buffer type. If it is set to 0, the OS kernel log buffer is used. If it is set to 1, the process memory log buffer is used.
 
-This property cannot be changed while the system is running
+This property cannot be changed while the system is running.
 
 #### LOG_MULTIPLEX_COUNT
 
@@ -1569,7 +1545,7 @@ None
 
 ##### Description
 
-This property specifies the path for copies of the log file. The number of values specified in the LOG_MULTIPLEX_DIR properties must be equal to the value of the LOG_MULTIPLEX_COUNT property. It is recommended to set each path to a separate disk
+This property specifies the path for copies of the log file. The number of values specified in the LOG_MULTIPLEX_DIR properties must be equal to the value of the LOG_MULTIPLEX_COUNT property. It is recommended to set each path to a separate disk.
 
 #### PREPARE_LOG_FILE_COUNT
 
@@ -1693,7 +1669,7 @@ Read-Write, Single Value
 
 ##### Description
 
-This property specifies whether or not to allow replication objects to set duplicate values for the IP address and port number of the remote server
+This property specifies whether or not to allow replication objects to set duplicate values for the IP address and port number of the remote server.
 
 0: Disallowed
 
@@ -2212,7 +2188,7 @@ Read-Write, Single Value
 
 ##### Description
 
-This property specifies the interval, in seconds, at which to check the HeartBeat thread<sup>12</sup>. The HeartBeat thread checks the host for a fault every 6 seconds (the default value). This property can be changed using the ALTER SYSTEM statement while Altibase is running
+This property specifies the interval, in seconds, at which to check the HeartBeat thread<sup>12</sup>. The HeartBeat thread checks the host for a fault every 6 seconds (the default value). This property can be changed using the ALTER SYSTEM statement while Altibase is running.
 
 [<sup>12</sup>] HeartBeat thread
 
@@ -2524,7 +2500,7 @@ Read-Write, Single Value
 
 ##### Description
 
-This property specifies the number of prefetch log files, that is, the number of log files in each log file group that are read in advance. Pre-reading and caching log files allows the Sender thread to read logs from log files more quickly
+This property specifies the number of prefetch log files, that is, the number of log files in each log file group that are read in advance. Pre-reading and caching log files allows the Sender thread to read logs from log files more quickly.
 
 #### REPLICATION_RECEIVE_TIMEOUT (Unit: second)
 
@@ -2891,15 +2867,15 @@ This property configures how to synchronize inconsistent data between the local 
 - 1: If replication is performed under the following conditions, XLog is converted into a SQL statement and reflected in the replicated table.
 
 - Column information  
-  If the data types are different  
-  If sizes, precisions, and scales are different
+  If the data types are different.
+  If sizes, precisions, and scales are different.
   
 - Constraints  
-  If the check constraints are different
+  If the check constraints are different.
   
-  If Not Null constraints are different
+  If Not Null constraints are different.
   
-  If any of the other meta information contains a LOB column
+  If any of the other meta information contains a LOB column.
   
 - Indexes  
   If a unique index or function-based index consists of columns to be replicated and not to be replicated  
@@ -2955,7 +2931,7 @@ Read-Write, Single Value
 
 ##### Description
 
-When replication synchronization is performed, the Replication Sender Thread determines the current position in the log at which replication will start after synchronization. In order to prevent another transaction from changing the data in the table on which synchronization is to be performed right at the time of this determination, the Replication Sender Thread obtains an S Lock on the table on which synchronization is to be performed for a short time before synchronization. This property specifies the amount of time, in seconds, to wait to establish a lock when a table to be synchronized has been locked by another transaction. If a lock is requested but cannot be obtained immediately, the replication process will wait for the amount of time specified here. If a lock cannot be obtained within the amount of time specified here, the synchronization attempt will be handled as an error. If this value is specified as 0, a lock is not established on the replication target table; however, data conflict can occur
+When replication synchronization is performed, the Replication Sender Thread determines the current position in the log at which replication will start after synchronization. In order to prevent another transaction from changing the data in the table on which synchronization is to be performed right at the time of this determination, the Replication Sender Thread obtains an S Lock on the table on which synchronization is to be performed for a short time before synchronization. This property specifies the amount of time, in seconds, to wait to establish a lock when a table to be synchronized has been locked by another transaction. If a lock is requested but cannot be obtained immediately, the replication process will wait for the amount of time specified here. If a lock cannot be obtained within the amount of time specified here, the synchronization attempt will be handled as an error. If this value is specified as 0, a lock is not established on the replication target table; however, data conflict can occur.
 
 This property can be changed using the ALTER SYSTEM statement while Altibase is running.
 
@@ -3137,9 +3113,9 @@ Read Only, Single Value
 
 This property is an option to use InfiniBand in Altibase. This feature is only available on Linux.
 
-0 : IB is not used (default value)
+0 : IB is not used (default value).
 
-1: IB is used
+1: IB is used.
 
 #### IB_LATENCY 
 
@@ -3913,7 +3889,7 @@ Read-Only, Single Value
 
 ##### Description
 
-This property specifies the name of the message file to which debugging information for server errors is written
+This property specifies the name of the message file to which debugging information for server errors is written.
 
 #### DUMP_MSGLOG_RESERVE_SIZE (Unit : byte)
 
@@ -4809,7 +4785,7 @@ Unsigned Integer
 
 ##### Attributes
 
-읽기 전용, 단일 값
+Read-Only, Single Value
 
 ##### Range
 
@@ -5565,7 +5541,7 @@ None
 
 ##### Description
 
-This is a socket file's path created for Altibase server to connect with the external procedure agent. If the external procedure uses, the session creates a socket file with socket_sessionID when creating an external procedure agent. The socket file is automatically deleted when the session is colsed normally. And, be careful not to delete this file
+This is a socket file's path created for Altibase server to connect with the external procedure agent. If the external procedure uses, the session creates a socket file with socket_sessionID when creating an external procedure agent. The socket file is automatically deleted when the session is colsed normally. And, be careful not to delete this file.
 
 ### Account Security Properties
 
@@ -5750,36 +5726,6 @@ Maximum length : 40 bytes
 
 This specifies a user-defined CALLBACK function for verifying passwords.
 
-### Altibase Sharding Properties
-
-#### SHARD_META_ENABLE 
-
-##### Data Type
-
-Unsigned Integer
-
-##### Default Value
-
-0
-
-##### Attributes
-
-Read-Only, Single Value
-
-##### Range
-
-[0, 1]
-
-##### Description
-
-Set to shard node of Altibase sharding:
-
-0: Disabled
-
-1: Enabled
-
-For other sharding properties, please refer to the *Sharding Manual*.
-
 ### Other Properties
 
 #### ACCESS_LIST
@@ -5930,7 +5876,7 @@ This property sets the Altibase server to arithmetic operation mode.
 
 0: The server runs in arithmetic operation mode with precision as its priority. The server mainly uses FLOAT or NUMERIC data types to reduce errors from arithmetic operations. The processing speed can be slower than arithmetic operation mode with performance as its priority. 
 
-1: The server runs in arithmetic operation mode with performance as its priority. The server mainly uses DOUBLE data types for arithmetic operations to enhance performance; the occurrence of errors is relatively higher
+1: The server runs in arithmetic operation mode with performance as its priority. The server mainly uses DOUBLE data types for arithmetic operations to enhance performance; the occurrence of errors is relatively higher.
 
 #### CHECK_MUTEX_DURATION_TIME_ENABLE
 
@@ -5944,7 +5890,7 @@ Unsigned Integer
 
 ##### Attributes
 
-변경 가능, 단일 값
+Read-Write, Single Value
 
 ##### Range
 
@@ -6041,7 +5987,7 @@ Generally, after a database is initially created, DML statements are executed mu
 
 The administrator can thus use this property to prevent the execution of DDL statements. When this property is set to 1, DDL statements cannot be executed while Altibase is running, whereas if it is set to 0, DDL statements can be executed. 
 
-This property can be changed using the ALTER SYSTEM statement while Altibase is running
+This property can be changed using the ALTER SYSTEM statement while Altibase is running.
 
 #### GROUP_CONCAT_PRECISION
 
@@ -6089,9 +6035,9 @@ Read-Write, Single Value
 
 This controls the operation of the job scheduler. The job scheduler does not operate if the value of the JOB_THREAD_COUNT property is set to 0, even if the value of this property is set to 1.
 
-0: The job scheduler terminates the job
+0: The job scheduler terminates the job.
 
-1: The job scheduler starts the job the run
+1: The job scheduler starts the job the run.
 
 The value of this property can be changed using the ALTER SYSTEM statement while Altibase is running.
 
@@ -6433,9 +6379,9 @@ Read-Write, Single Value
 
 This property specifies whether the SYS user can access the database with SYSDBA privileges from a remote location. Its value can be changed using the ALTER SYSTEM statement.
 
-0: Deny remote database access with SYSDBA privileges
+0: Deny remote database access with SYSDBA privileges.
 
-1: Allow remote database access with SYSDBA privileges (default)
+1: Allow remote database access with SYSDBA privileges (default).
 
 #### SELECT_HEADER_DISPLAY
 

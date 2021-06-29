@@ -42,7 +42,7 @@ Altibase New Features Guide
 
 Release 7.1
 
-Copyright ⓒ 2001\~2020 Altibase Corp. All Rights Reserved.
+Copyright ⓒ 2001\~2021 Altibase Corp. All Rights Reserved.
 
 This manual contains proprietary information of Altibase Corporation; it is provided under a license agreement containing restrictions on use and disclosure and is also protected by copyright patent and other intellectual property law. Reverse engineering of the software is prohibited. All trademarks, registered or otherwise, are the property of their respective owners.
 
@@ -321,18 +321,6 @@ This chapter consists of the following sections:
 -   Others
 
 ### Improved Features
-
-#### Altibase Sharding 
-
-Altibase Sharding introduces Sharding technology in Altibase to improve the storage capacity and throughput per hour to distribute large volumes of database.
-
-Altibase Sharding supports "server side sharding" and "client side sharding" simultaneously. The user can choose client-side sharding as needed to improve the performance of application, or the user can choose server-side sharding to improve compatibility.
-
-In particular, the client side sharding of Altibase Sharding can be applied by simply replacing the shard-only library without modifying existing application source code or existing SQL statements.
-
-Please refer to the manual below for more information.
-
--   Altibase Sharding Guide
 
 #### SQL Extension
 
@@ -658,14 +646,6 @@ In order to use altiMon, config.xml, Metrics.xml, and GroupMetrics.xml files loc
 Please refer to the manual below for more information.
 
 -   *Utilities Manual\> Chapter 4. Other Utilities \> altimon.sh*
-
-##### Shard Manager
-
-Shard Manager is a tool to help organize and manage Altibase Sharding data nodes and shard objects. Because Altibase Sharding consists of multiple databases, managing each database and object can be expensive. In this environment, users can use Shard Manager to improve work efficiency. 
-
-Please refer to the manual below for more information.
-
--   *Altibase Sharding Guide\>  Chapter 6. Altibase Sharding Utilities \> Shard Manager*
 
 ##### Host Variable 
 
@@ -1203,7 +1183,7 @@ Altibase does not support the DataPort function and utility (convdp) that can tr
 
 ##### Shared Memory Function Not Supported
 
-Shared memory mode is not supported since 7.1.
+Shared memory mode is not supported starting from version 7.1.
 
 Delete the management tool 'shmutil' that supports shared memory and the following properties.
 

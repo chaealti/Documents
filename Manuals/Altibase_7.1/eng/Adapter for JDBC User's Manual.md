@@ -35,7 +35,7 @@ Altibase Tool & Utilities Adapter for Oracle User’s Manual
 
 Release 7.1
 
-Copyright ⓒ 2001\~2020 Altibase Corp. All Rights Reserved.
+Copyright ⓒ 2001\~2021 Altibase Corp. All Rights Reserved.
 
 This manual contains proprietary information of Altibase Corporation; it is provided under a license agreement containing restrictions on use and disclosure and is also protected by copyright patent and other intellectual property law. Reverse engineering of the software is prohibited. All trademarks, registered or otherwise, are the property of their respective owners.
 
@@ -172,7 +172,7 @@ Altibase's Adapter for JDBC(jdbcAdapter) is an utility which applies modified da
 
 In order to replicate modified data in Altibase to other databse, Altibase, jdbcAdapter, and other database, which supports JDBC, should be installed in the first place shown in Figure1-1.
 
-jjdbcAdapter has been implimented with integration of Altibase Log Analysis API(ALA) and Java data base connectivity (JDBC). The ALA utility receives data that has been modified in Altibase whereas JDBC is used to send the data to other database. Refer to the L*og Analyzer User's Manual* for detailed information on ALA.
+jdbcAdapter has been implimented with integration of Altibase Log Analysis API(ALA) and Java data base connectivity (JDBC). The ALA utility receives data that has been modified in Altibase whereas JDBC is used to send the data to other database. Refer to the *Log Analyzer User's Manual* for detailed information on ALA.
 
 The following figure demonstrates how jdbcAdapter replicates from Altibase to other database.
 
@@ -219,7 +219,7 @@ This chapter describes how to install and configure the Adapter for JDBC.
 
 The following system requirements should be satisfied in order to install and run jdbcAdapter. Also, there are some required configuration for jdbcAdapter to propery performs. 
 
-For detailed information about system requirements, please contact Altibase's Customer Support site (http://support.altibase.com/en/).
+For more detailed information about system requirements, please contact Altibase's Customer Support site (http://support.altibase.com/en/).
 
 #### OS
 
@@ -229,9 +229,9 @@ jdbcAdapter is currenly only supported in the following OS:
 
 #### Datbase Versions
 
--   Altibase : Version 6.3.1 or above
+-   Altibase : Version 6.3.1 or later
 
--   OTHER DB : JDBC 4.1 or lower version of other database
+-   OTHER DB : JDBC 4.1 or earlier version of other database
 
 #### Database Character Set
 
@@ -247,9 +247,9 @@ In order to use jdbcAdapter, JDBC driver should be installed on a machine in whi
 
 #### Installation JRE
 
-jdbcAdapter is an application program running in JRE 7 or above versions; thus, JRE 7 or higher version should be installed in which jdbcAdapter will be performed. 
+jdbcAdapter is an application program running in JRE version 7 or later; thus, JRE 7 or later version should be installed in which jdbcAdapter will be performed. 
 
-If the JDBC driver for the remote database to which jdbcAdapter will connect is running on  JRE version 7 or above, a version of the JRE compatible to the JDBC driver should be installed. 
+If the JDBC driver for the remote database to which jdbcAdapter will connect is running on  JRE version 7 or later, a version of the JRE compatible to the JDBC driver should be installed. 
 
 After installing JRE, environment variables, such as JAVA_HOME and CLASSPATH should be installed. The following is an example of specifying environment variables for JRE in UNIX operation system.
 
@@ -326,10 +326,10 @@ It is recommended to install jdbcAdapter on other user's account rather than Alt
 
 After installing jdbcAdapter, it is required to configure environment variables, add a library path, and set the database and national character sets. 
 
-Refer to the "Configuration" section described later in this chapter for more detailed information on configuring the environment variables. .
+Refer to the "Configuration" section described later in this chapter for more detailed information on configuring the environment variables.
 
 -   JDBC_ADAPTER_HOME  
-    This environment variable is automatically set when installing jdbcAdapter
+    This environment variable is automatically set when installing jdbcAdapter.
 
 -   ALTIBASE_NLS_USE  
     The character set used in Altibase is specified in this environment variable. Refer to the Getting Started Guide for more detailed information on the character set.
@@ -387,8 +387,7 @@ This is a property specifying the IP address of Xlog sender. This property enabl
 
 ##### ALA_RECEIVER_PORT
 
-XLog 콜렉터가 XLog를 수신하기 위해 사용하는 포트 번호를 지정하는 프로퍼티이다.
-jdbcAdpater가 대기하고 있는 포트 번호를 지정하도록 한다.
+This is a property specifying the port number used by the XLog collecter to receive Xlog. This property specifies the port number on which jdbcAdapter is waiting.
 
 -   Range: 1024 – 65535
 
@@ -551,7 +550,7 @@ Multiple transactions can be processed at once. Even if commit execution is perf
 
 ##### OTHER_DATABASE_ERROR_RETRY_COUNT (Unit: count)
 
-This indicates the number of retry attempts if an error occurs when applying to records. 
+This property indicates the number of retry attempts if an error occurs when applying to records. 
 
 -   Default Value: 0
 
@@ -561,7 +560,7 @@ This indicates the number of retry attempts if an error occurs when applying to 
 
 ##### OTHER_DATABASE_ERROR_RETRY_INTERVAL (Unit: second)
 
-This indicates retry invervals between error accurances when applying records.
+This property indicates retry invervals between error accurances when applying records.
 
 -   Default Value: 0
 
@@ -593,7 +592,7 @@ This property determines whether the INSERT statement performed in Altibase is a
 
 ##### OTHER_DATABASE_SKIP_UPDATE
 
-This is a property determines whether the UPDATE statement executed in Altibase is also execued in other DB to which data is sent. If this property is set to 1, the UPDATE statement executed in Altibase is not executed in other DB.
+This property determines whether the UPDATE statement executed in Altibase is also execued in other DB to which data is sent. If this property is set to 1, the UPDATE statement executed in Altibase is not executed in other DB.
 
 -   Default Value: 0
 
@@ -681,7 +680,7 @@ This section describes how to start and stop jdbcAdapter.
 
 #### Startup
 
-This section explains how to run jdbcAdapter step by step.
+This section explains how to start jdbcAdapter step by step.
 
 To use jdbcAdapter, Altibase and Other DB to which data is to be sent must be running first. Also, Adapter for JDBC properties and environment variables jdbcAdapter must be properly configured as an environment that can be executed.
 
@@ -792,7 +791,7 @@ oaUtility { check [ alive ] }
 
 This option is used to continuously check whether jdbcAdapter operates or not, and restarts if oaUtility is terminated(regardless of normal shutdown or forcible shutdown). 
 
-If the alive option is specified, only one check is made to see if jdbcAdapter is running, and then oaUtility is terminated
+If the alive option is specified, only one check is made to see if jdbcAdapter is running, and then oaUtility is terminated.
 
 ### Command-Line Option
 
@@ -820,7 +819,7 @@ Adapter for JDBC version 7.1.0.0.2
 
 #### What do I have to do after modifying environment variables or properties?
 
-If environment variables or properties are modified after jdbcAdapter has been run, jdbcAdapter should be retstarted in order to apply the modifications.
+If environment variables or properties are modified after jdbcAdapter has been started, jdbcAdapter should be restarted in order to apply the modifications.
 
 #### What happens if data is not propery applied to Altibase DB?
 

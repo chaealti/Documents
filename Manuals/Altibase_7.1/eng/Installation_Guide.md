@@ -3,28 +3,30 @@
 
 
 - [Installation Guide](#installation-guide)
-    - [Preface](#%EC%84%9C%EB%AC%B8)
-    - [About This Manual](#%EC%9D%B4-%EB%A7%A4%EB%89%B4%EC%96%BC%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC)
-  - [1. Altibase Package Installer](#1altibase-%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%9D%B8%EC%8A%A4%ED%86%A8%EB%9F%AC)
-    - [Altibase Home](#altibase-%ED%99%88)
-    - [APatch Directory](#apatch-%EB%94%94%EB%A0%89%ED%84%B0%EB%A6%AC)
-  - [2. Installing Products with the Altibase Package Installer](#2%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%9D%B8%EC%8A%A4%ED%86%A8%EB%9F%AC%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%A0%9C%ED%92%88-%EC%84%A4%EC%B9%98)
-    - [System Requirements](#%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD)
-    - [Altibase Package Installer](#altibase-%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%9D%B8%EC%8A%A4%ED%86%A8%EB%9F%AC)
-    - [Altibase Products Installation](#altibase-%EC%A0%9C%ED%92%88-%EC%84%A4%EC%B9%98)
-    - [Altibase Client Products Installation](#altibase-%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8-%EC%A0%9C%ED%92%88-%EC%84%A4%EC%B9%98)
-  - [3. Altibase Uninstallation and Meta Downgrade](#3altibase-%EC%A0%9C%EA%B1%B0-%EB%B0%8F-%EB%A9%94%ED%83%80-%EB%8B%A4%EC%9A%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EB%93%9C)
-    - [Altibase Uninstallation](#altibase-%EC%A0%9C%ED%92%88-%EC%82%AD%EC%A0%9C)
-    - [Meta Downgrade](#%EB%A9%94%ED%83%80-%EB%8B%A4%EC%9A%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EB%93%9Cmeta-downgrade)
-  - [4. Patching Products with the Altibase Package Installer](#4%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%9D%B8%EC%8A%A4%ED%86%A8%EB%9F%AC%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%A0%9C%ED%92%88-%ED%8C%A8%EC%B9%98)
-    - [About Patches](#%ED%8C%A8%EC%B9%98%EB%9E%80)
-    - [Patching Altibase Server Products](#altibase-%EC%84%9C%EB%B2%84-%EC%A0%9C%ED%92%88-%ED%8C%A8%EC%B9%98)
-    - [Patching Altibase Client Products](#altibase-%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8-%EC%A0%9C%ED%92%88-%ED%8C%A8%EC%B9%98)
-  - [Appendix A. Installation Prerequisites](#a%EB%B6%80%EB%A1%9D-%EC%84%A4%EC%B9%98-%EC%A0%84-%ED%99%95%EC%9D%B8-%EC%82%AC%ED%95%AD)
-    - [Setting User Resource Limit Values](#%EC%82%AC%EC%9A%A9%EC%9E%90-%EA%B3%84%EC%A0%95%EC%9D%98-%EB%A6%AC%EC%86%8C%EC%8A%A4-%ED%95%9C%EA%B3%84-%EA%B0%92-%ED%99%95%EC%9D%B8)
-    - [Setting Kernel Parameters for Different Operating Systems](#os%EB%B3%84-%EC%BB%A4%EB%84%90-%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0-%EC%84%A4%EC%A0%95)
-    - [Configuration of THP and Verifying Disk Configuration](#thp-%EC%84%A4%EC%A0%95-%ED%99%95%EC%9D%B8-%EB%B0%8F-%EB%B9%84%ED%99%9C%EC%84%B1%ED%99%94-%EB%B0%A9%EB%B2%95)
-    - [Checking DISK Configuration](#%EB%94%94%EC%8A%A4%ED%81%AC-%EA%B5%AC%EC%84%B1-%EC%83%81%ED%83%9C-%ED%99%95%EC%9D%B8)
+    - [Preface](#preface)
+    - [About This Manual](#about-this-manual)
+  - [1. About the Altibase Package Installer](#1-about-the-altibase-package-installer)
+    - [Altibase Home](#altibase-home)
+    - [APatch Directory](#apatch-directory)
+  - [2. Installing Products with the Altibase Package Installer](#2-installing-products-with-the-altibase-package-installer)
+    - [System Requirements](#system-requirements)
+    - [Supported Platforms](#supported-platforms)
+    - [Altibase Package Installer](#altibase-package-installer)
+    - [Installing Altibase Products](#installing-altibase-products)
+    - [Installing Altibase Client Products](#installing-altibase-client-products)
+  - [3. Uninstalling Altibase and Meta Downgrade](#3-uninstalling-altibase-and-meta-downgrade)
+    - [Uninstalling Altibase Products](#uninstalling-altibase-products)
+    - [Meta Downgrade](#meta-downgrade)
+  - [4. Patching Products With the Altibase Package Installer](#4-patching-products-with-the-altibase-package-installer)
+    - [About Patches](#about-patches)
+    - [Patching Altibase Ser Products](#patching-altibase-ser-products)
+    - [Patching Altibase Client Products](#patching-altibase-client-products)
+  - [Appendix A. Installation Prerequisites](#appendix-a-installation-prerequisites)
+    - [Setting User Resource Limit Values](#setting-user-resource-limit-values)
+    - [Setting Kernel Parameters for Different Operating Systems (OS)](#setting-kernel-parameters-for-different-operating-systems-os)
+    - [Configuration of THP (Transparent Huge Pages)](#configuration-of-thp-transparent-huge-pages)
+    - [<a name="footnote-rhel8-sharedlibrary">Red Hat Enterprise Linux 8  </a>](#a-namefootnote-rhel8-sharedlibraryred-hat-enterprise-linux-8%C2%A0%C2%A0a)
+    - [Checking Disk Configuration](#checking-disk-configuration)
     - [OS Patch](#os-patch)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -40,7 +42,7 @@ Altibase Administration Installation Guide
 
 Release 7.1
 
-Copyright ⓒ 2001\~2019 Altibase Corp. All Rights Reserved.
+Copyright ⓒ 2001\~2021 Altibase Corp. All Rights Reserved.
 
 This manual contains proprietary information of Altibase Corporation; it is provided under a license agreement containing restrictions on use and disclosure and is also protected by copyright patent and other intellectual property law. Reverse engineering of the software is prohibited.
 
@@ -128,17 +130,17 @@ Thank you. We appreciate your feedback and suggestions.
 ## 1. About the Altibase Package Installer
 ------------------------
 
-This Altibase Package Installer is a Java-based installer that lets you easily install Altibase products such as the database server, client components, tools, and so forth.
+This Altibase Package Installer is a Java-based installer that lets users easily install Altibase products such as the database server, client components, tools, and so forth.
 
 ### Altibase Home
 
-When you install Altibase with the Altibase Package Installer, a home directory and APatch directory are generated.
+When installing Altibase with the Altibase Package Installer, a home directory and APatch directory are generated.
 
 The Altibase home directory is the default directory wherein Altibase software is installed.
 
 #### Altibase Home Directory
 
-When you install Altibase with the Altibase Package Installer, a home directory (wherein Altibase products are installed) is generated. The Altibase home directory takes the following values by default
+When installing Altibase with the Altibase Package Installer, a home directory (wherein Altibase products are installed) is generated. The Altibase home directory takes the following values by default
 
 -   When installing Altibase Server Products:
 
@@ -285,7 +287,7 @@ The requirements and recommendations listed in this chapter assume that your dat
 
 Altibase requires a disk with sufficient storage space to hold tablespaces (to store data), transaction logs, and Altibase software. Altibase software and transaction logs require at least 1GB of space, respectively.
 
-You should have at least 12GB of free disk space to smoothly run the database.
+There must be at least 12GB of free disk space to smoothly run the database.
 
 #### Network
 
@@ -293,55 +295,33 @@ It is recommended to use a dedicated line when using the replication feature.
 
 ### Supported Platforms
 
-Altibase supports both server/client for the following platforms. However, for Windows, only the client is supported.
-
-#### AIX
-
-AIX 6.1TL3 and later (64-bit)
-
-AIX 7.1 , AIX 7.2(64-bit)
-
->For altimon, altimon for AIX 7.x is supported starting from 7.1.0.1.9 and later.
-
-#### HP-UX
-
-HP-UX.IA64 11.31 and later(64-bit)
-
-#### Linux(x86)
-
-GNU glibc 2.12 and later
-
-Redhat 6.0 and later(64-bit)
-
-Redhat 7.0 and later(64-bit)
-
-#### Power Linux
-
-GNU glibc 2.12 and later
-
-Power7 Redhat 6.5 and later(64-bit)
-
-Power7 Redhat 7.0 and later(64-bit)
-
-Power8 Redhat 6.5 and later(64-bit)
-
-Power8 Redhat 7.0 and later(64-bit)
-
-#### Power Linux Little Endian(LE)
-
-GNU glibc 2.17 and later
-
-Power8(LE) Redhat 7.2 and later(64-bit)
-
-> For altimon, altimon for Power Linux(LE) is supported starting from 7.1.0.3.6 and later.
+>  *Altibase server/client only support 64-bit.*
 >
-> For jdbcAdapter, jdbcAdapter for Power Linux(LE) is supported starting from 7.1.0.3.6 and later.
+> *Microsoft Windows only supports Altibase client.*
 
-#### Windows
 
-Starting from Altibase version 7.1.0.4.5, Altibase client for windows is supported.
+|                                                              | Altibase server <br /> | Altibase client <br /> | Software requirements                  |
+| ------------------------------------------------------------ | :-----------------: | :-----------------------: | :------------------------------------- |
+| **AIX on IBM Power Systems**                                 |                     |                           |                                        |
+| AIX 6.1 TL3 <br />AIX 6.1 TL9<br />                          |          ●          |             ●             |                                        |
+| AIX 7.1<br />AIX 7.2                                         |          ●          |             ●             |                                        |
+| **HP-UX Itanium (IA-64)**                                    |                     |                           |                                        |
+| HP-UX 11.31                                                  |          ●          |             ●             |                                        |
+| **Linux x86-64**                                             |                     |                           |                                        |
+| Red Hat Enterprise Linux 6<br/>Red Hat Enterprise Linux 7<br/> |          ●          |             ●             | *- GNU glibc 2.12 or later*                |
+| Red Hat Enterprise Linux 8 [Note before installation](#footnote-rhel8)    |                     |                           | *- GNU glibc 2.12 or later*  <br />        |
+| **Linux on Power**                                           |                     |                           |                                        |
+| POWER7 Red Hat Enterprise Linux 6<br/>POWER7 Red Hat Enterprise Linux 7<br />POWER8 Red Hat Enterprise Linux 6<br/>POWER8 Red Hat Enterprise Linux 7 |          ●          |             ●             | *- GNU glibc 2.12 or later*                |
+| **Linux on Power** **(Little Endian)**                       |                     |                           |                                        |
+| POWER8(LE) Red Hat Enterprise Linux 7                        |          ●          |             ●             | *- GNU glibc 2.17 or later*<br />          |
+| **Microsoft Windows (x64)**                                  |                     |                           |                                        |
+| Microsoft Windows 2008                                       |        **X**        |             ●             | *- Altibase client 7.1.0.4.5 or later* |
 
-Windows Server 2008-x64 (64bit)
+> **<a name="footnote-rhel8">Red Hat Enterprise Linux 8  </a>**
+>
+> For RHEL 8, libncurses.so.5 and libtinfo.so.5 links must be created in order to execute iSQL and iLoader. For more detailed information, refer to [Appendix A. Installation Prerequisites - Red Hat Enterprise Linux 8](#red-hat-enterprise-linux-8)
+
+
 
 
 ### Altibase Package Installer
@@ -374,7 +354,7 @@ To install Altibase products, follow the steps below. More detailed description 
 
 #### Download the Altibase Package Installer
 
-You can download the appropriate Package Installer for your operating system from Altibase's Customer Support site (support.altibase.com/en/)
+The appropriate Package Installer can be downloaded for the operating system from Altibase's Customer Support site (support.altibase.com/en/)
 
 Altibase Package Installer names follow the rule below:
 
@@ -396,11 +376,11 @@ Linux rhel6-x64 2.6.32-71.el6.x86_64 #1 SMP Wed Sep 1 01:33:01 EDT 2010 x86_64 x
 
 | OS    | CPU                          | Version         | Bit (Server) | Bit (Client) |
 |-------|------------------------------|-----------------|--------------|--------------|
-| AIX   | PowerPC                      | 6.1 tl03 이상   | 64-bit       | 64-bit,      |
-| HP-UX | IA64                         | 11.31 이상      | 64-bit       | 64-bit,      |
-| LINUX | x86-64 (GNU glibc 2.12 이상) | redhat 6.0 이상 | 64-bit       | 64-bit,      |
+| AIX   | PowerPC                      | 6.1 tl03 or later   | 64-bit       | 64-bit,      |
+| HP-UX | IA64                         | 11.31 or later      | 64-bit       | 64-bit,      |
+| LINUX | x86-64 (GNU glibc 2.12 or later) | redhat 6.0 or later | 64-bit       | 64-bit,      |
 
-Altibase 7.1 is compatible with JDK 1.5 or higher.
+Altibase 7.1 is compatible with JDK 1.5 or later.
 
 #### Installation Mode
 
@@ -960,14 +940,14 @@ After successful installation, a user needs to:
   
 ```
   $ server create utf8 utf8
-  ```
-  
+```
+
 - If properties for using PSM were not set during the installation, execute the catproc.sql script.
   
 ```
   $ isql -s 127.0.0.1 -u sys -p manager -silent -f
   ${ALTIBASE_HOME}/packages/catproc.sql
-  ```
+```
 
 ### Installing Altibase Client Products
 
@@ -1146,7 +1126,7 @@ For meta downgrade-able version, perform the meta downgrade with the following s
 $ server downgrade
 ```
 
-> \* Note: User must shut down the server (server stop) before performing the meta downgrade. If the user does perform this without shutting down the server, then the following error with occur: 
+> \* Note: The user must shut down the server (server stop) before performing the meta downgrade. If the user does perform this without shutting down the server, then the following error with occur: 
 
 ```
 $ server downgrade
@@ -1520,7 +1500,7 @@ System kernel parameters can be classified into the following:
 
 #### AIX
 
-##### 설정 방법
+##### How to set
 
 Kernel parameters can be set with the /usr/bin/smit utility
 
@@ -1532,7 +1512,7 @@ The same values for shared memory and semaphore on HP-UX are also recommended fo
 
 Depending on the file caching policy for AIX, the file system can swap-out memory from the application program heap, although the system has free memory, and use it as file-cache (this is called stealing).
 
-For AIX 5.2 or higher, kernel parameters can be set as below to prevent the system from stealing: 
+For AIX 5.2 or later, kernel parameters can be set as below to prevent the system from stealing: 
 
 ```
 minperm =  5%
@@ -1540,7 +1520,7 @@ lru_file_repage = 0 (AIX 5.2 ML4 or higher)
 strict_maxclient = 0
 ```
 
-###### Posix AIO의 설정
+###### Configuration of Posix AIO
 
 AIX provides the Posix A/O interfaces for improved disk I/O improvement which must be manually activated. However, from AIX 6.1 and higher, the interfaces are activated by default.
 
@@ -1562,7 +1542,7 @@ Kernel parameters can be set in the sem,shmmax, shmmni, swapiness files at the /
 
 The same values for shared memory and semaphore on HP-UX are also recommended for Linux
 
-However, sessions using the IPC connection can be abruptly cut off, if the Linux kernel version is lower than 2.5. 
+However, sessions using the IPC connection can be abruptly cut off, if the Linux kernel version is earlier than 2.5. 
 
 To set kernel parameters automatically when the server boots, add the following to the /etc/rc.d/rc/local file. 
 
@@ -1628,11 +1608,60 @@ It is advised to set the HTP option to never in order to run the Altibase operat
    .....
    kernel /vmlinuz-2.6.32-220.el6.x86_64 ro root=UUID=067b9803-90ca-4875-a018-ff043adde1ed rd_NO_LUKS LANG=ko_KR.UTF-8 rd_NO_MD quiet rhgb crashkernel=128M  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_LVM rd_NO_DM transparent_hugepage=never
    ......
-   ```
-   
-2. Reboot the system.
+```
 
+2. Reboot the system.
 3. Confirm whether the THP option is never or not. 
+
+### <a name="footnote-rhel8-sharedlibrary">Red Hat Enterprise Linux 8  </a>
+
+For RHEL 8, libncurses.so.5 and libtinfo.so.5 must be created in order to execute iSQL and iLoader. In order to do this, the user needs root privileges.
+
+1. Check the ncurses and tinfo library files.
+
+   ```bash
+   % ls -l /usr/lib64/| grep -e libncurses.so -e libtinfo.so
+   -rw-r--r--   1 root root       31 Jan 16  2019 libncurses.so
+   lrwxrwxrwx.  1 root root       17 Jan 16  2019 libncurses.so.6 -> libncurses.so.6.1*
+   -rwxr-xr-x.  1 root root   216912 Jan 16  2019 libncurses.so.6.1*                 # ncurses library file
+   lrwxrwxrwx   1 root root       13 Jan 16  2019 libtinfo.so -> libtinfo.so.6*
+   lrwxrwxrwx.  1 root root       15 Jan 16  2019 libtinfo.so.6 -> libtinfo.so.6.1*
+   -rwxr-xr-x.  1 root root   208616 Jan 16  2019 libtinfo.so.6.1*                   # tinfo library file
+   ```
+
+2. If libncurses.so.5 and libtinfo.so.5 files do not exist, create symbolic links.
+
+   ```bash
+   % ln -s /usr/lib64/libncurses.so.6.1 /usr/lib64/libncurses.so.5
+   % ln -s /usr/lib64/libtinfo.so.6.1 /usr/lib64/libtinfo.so.5
+   ```
+
+3. Check the created symbolic links.
+
+   ```bash
+   % ls -l /usr/lib64/ | grep -e libncurses.so.5 -e libtinfo.so.5
+   lrwxrwxrwx   1 root root       17 May  7 16:44 libncurses.so.5 -> libncurses.so.6.1*
+   lrwxrwxrwx   1 root root       15 May  7 16:51 libtinfo.so.5 -> libtinfo.so.6.1*
+   ```
+
+
+
+- If libncurses.so.5 file does not exist, the following error occurs when iSQL is executed.
+
+  ```bash
+  % isql
+  isql: error while loading shared libraries: libtinfo.so.5: cannot open shared object file: No such file or directory
+  ```
+
+  ```bash
+  % server create utf8 utf8
+  /home/dev02/altibase_home/bin/isql: error while loading shared libraries: libncurses.so.5: cannot open shared object file: No such file or directory
+  ```
+
+- In RHEL 8, the ncurses (including tinfo) library version has been changed to 6.1. Altibase requires ncurses 5 version files. 
+  The ncurses library guarantees both source-level compatibility (API) and binary compatibility (ABI) from ncurses 5 to ncurses 6.2. 
+
+  Reference : [Announcing ncurses 6.2 (invisible-island.net)](https://invisible-island.net/ncurses/announce.html#h2-release-notes)
 
 ### Checking Disk Configuration
 

@@ -1,6 +1,4 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
+**Table of Contents**  
 
 - [Installation Guide](#installation-guide)
     - [서문](#%EC%84%9C%EB%AC%B8)
@@ -25,10 +23,11 @@
     - [사용자 계정의 리소스 한계 값 확인](#%EC%82%AC%EC%9A%A9%EC%9E%90-%EA%B3%84%EC%A0%95%EC%9D%98-%EB%A6%AC%EC%86%8C%EC%8A%A4-%ED%95%9C%EA%B3%84-%EA%B0%92-%ED%99%95%EC%9D%B8)
     - [OS별 커널 파라미터 설정](#os%EB%B3%84-%EC%BB%A4%EB%84%90-%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0-%EC%84%A4%EC%A0%95)
     - [THP 설정 확인 및 비활성화 방법](#thp-%EC%84%A4%EC%A0%95-%ED%99%95%EC%9D%B8-%EB%B0%8F-%EB%B9%84%ED%99%9C%EC%84%B1%ED%99%94-%EB%B0%A9%EB%B2%95)
+    - [Red Hat Enterprise Linux 8](#red-hat-enterprise-linux-8)
     - [디스크 구성 상태 확인](#%EB%94%94%EC%8A%A4%ED%81%AC-%EA%B5%AC%EC%84%B1-%EC%83%81%ED%83%9C-%ED%99%95%EC%9D%B8)
     - [OS Patch](#os-patch)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 Altibase® Administration
 
@@ -337,57 +336,32 @@ Altibase가 사용하는 디스크에는 데이터를 저장하는 테이블스�
 
 ### 지원 플랫폼
 
-Altibase 는 아래 플랫폼에 대해서 서버/클라이언트 모두 지원합니다. 단, Windows의 경우는 클라이언트만 지원합니다.
+>  *Altibase 서버/클라이언트 모두 64-bit 만 지원한다.*
+>*Microsoft Windows 는 Altibase 클라이언트만 지원한다.*
 
-#### AIX
 
-AIX 6.1TL3 이상(64-bit)
+|                                                              | Altibase 서버<br /> | Altibase 클라이언트<br /> | 소프트웨어 요구사항                    |
+| ------------------------------------------------------------ | :-----------------: | :-----------------------: | :------------------------------------- |
+| **AIX on IBM Power Systems**                                 |                     |                           |                                        |
+| AIX 6.1 TL3 <br />AIX 6.1 TL9<br />                          |          ●          |             ●             |                                        |
+| AIX 7.1<br />AIX 7.2                                         |          ●          |             ●             |                                        |
+| **HP-UX Itanium (IA-64)**                                    |                     |                           |                                        |
+| HP-UX 11.31                                                  |          ●          |             ●             |                                        |
+| **Linux x86-64**                                             |                     |                           |                                        |
+| Red Hat Enterprise Linux 6<br/>Red Hat Enterprise Linux 7<br/> |          ●          |             ●             | *- GNU glibc 2.12 이상*                |
+| Red Hat Enterprise Linux 8[설치 전 참고](#footnote-rhel8)    |                     |                           | *- GNU glibc 2.12 이상*  <br />        |
+| **Linux on Power**                                           |                     |                           |                                        |
+| POWER7 Red Hat Enterprise Linux 6<br/>POWER7 Red Hat Enterprise Linux 7<br />POWER8 Red Hat Enterprise Linux 6<br/>POWER8 Red Hat Enterprise Linux 7 |          ●          |             ●             | *- GNU glibc 2.12 이상*                |
+| **Linux on Power** **(Little Endian)**                       |                     |                           |                                        |
+| POWER8(LE) Red Hat Enterprise Linux 7                        |          ●          |             ●             | *- GNU glibc 2.17 이상*<br />          |
+| **Microsoft Windows (x64)**                                  |                     |                           |                                        |
+| Microsoft Windows 2008                                       |        **X**        |             ●             | *- Altibase 클라이언트 7.1.0.4.5 이상* |
 
-AIX 7.1 , AIX 7.2(64-bit)
-
-> altimon의 경우, 7.1.0.1.9 이상부터 AIX 7.x 용 altimon이 지원됩니다.
-
-#### HP-UX
-
-HP-UX.IA64 11.31 이상(64-bit)
-
-#### Linux(x86)
-
-GNU glibc 2.12 and higher
-
-Redhat 6.0 이상(64-bit)
-
-Redhat 7.0 이상(64-bit)
-
-#### Power Linux
-
-GNU glibc 2.12 and higher
-
-Power7 Redhat 6.5 이상(64-bit)
-
-Power7 Redhat 7.0 이상(64-bit)
-
-Power8 Redhat 6.5 이상(64-bit)
-
-Power8 Redhat 7.0 이상(64-bit)
-
-#### Power Linux Little Endian(LE)
-
-Altibase 7.1.0.0.8 부터 지원합니다.
-
-GNU glibc 2.17 and higher
-
-Power8(LE) Redhat 7.2 이상(64-bit)
-
-> altimon의 경우 7.1.0.3.6 이상부터 Power Linux(LE)용 altimon이 지원됩니다.
+> **<a name="footnote-rhel8">Red Hat Enterprise Linux 8  </a>**
 >
-> jdbcAdapter의 경우  7.1.0.3.6 이상부터 Power Linux(LE)용 jdbcAdapter가 지원됩니다.
+> RHEL 8 의 경우 iSQL 및 iLoader 실행을 위해 libncurses.so.5, libtinfo.so.5 심볼릭 링크를 생성해야 한다. 자세한 설명은 [A.부록: 설치 전 확인 사항 - Red Hat Enterprise Linux 8](#Red-Hat-Enterprise-Linux-8) 을 확인한다.
 
-#### Windows
 
-Altibase 7.1.0.4.5 부터 windows 용 Altibase 클라이언트를 지원합니다.
-
-Windows Server 2008-x64 (64bit)
 
 ### Altibase 패키지 인스톨러
 
@@ -508,7 +482,7 @@ Altibase 패키지 인스톨러는 제품을 설치하기 전에 설치할 장�
 
 Altibase 패키지 인스톨러가 확인한 정보와 일치하지 않으면, 에러 메시지를 반환하고
 설치는 중단된다. 앞선 단계에서의 시스템 구성의 문제를 발견하는 것이 설치 중에
-문제에 부딪힐 가능성을 줄여주기 때문이다.
+문제에 부딪힐 가능성을 줄여주기 때문이다.	
 
 #### 패키지 인스톨러 다운로드 
 
@@ -1842,6 +1816,58 @@ Altibase의 운영을 위해서 THP 옵션을 never로 설정할 것을 권고�
 2. 시스템을 재시작한다.
 
 3. THP 옵션이 never 인지 확인한다.
+
+### Red Hat Enterprise Linux 8
+
+RHEL 8 의 경우 iSQL 및 iLoader 실행을 위해 libncurses.so.5, libtinfo.so.5 심볼릭 링크를 생성해야 한다. 이 작업 root 권한이 필요하다.
+
+1. ncurses와 tinfo 라이브러리 파일을 확인한다.
+
+   ```bash
+   % ls -l /usr/lib64/| grep -e libncurses.so -e libtinfo.so
+   -rw-r--r--   1 root root       31 Jan 16  2019 libncurses.so
+   lrwxrwxrwx.  1 root root       17 Jan 16  2019 libncurses.so.6 -> libncurses.so.6.1*
+   -rwxr-xr-x.  1 root root   216912 Jan 16  2019 libncurses.so.6.1*                 # ncurses 라이브러리 파일
+   lrwxrwxrwx   1 root root       13 Jan 16  2019 libtinfo.so -> libtinfo.so.6*
+   lrwxrwxrwx.  1 root root       15 Jan 16  2019 libtinfo.so.6 -> libtinfo.so.6.1*
+   -rwxr-xr-x.  1 root root   208616 Jan 16  2019 libtinfo.so.6.1*                   # tinfo 라이브러리 파일
+   ```
+
+2. libncurses.so.5, libtinfo.so.5 파일이 없는 경우 심볼릭 링크를 생성한다.
+
+   ```bash
+   % ln -s /usr/lib64/libncurses.so.6.1 /usr/lib64/libncurses.so.5
+   % ln -s /usr/lib64/libtinfo.so.6.1 /usr/lib64/libtinfo.so.5
+   ```
+
+3. 생성한 심볼릭 링크를 확인한다.
+
+   ```bash
+   % ls -l /usr/lib64/ | grep -e libncurses.so.5 -e libtinfo.so.5
+   lrwxrwxrwx   1 root root       17 May  7 16:44 libncurses.so.5 -> libncurses.so.6.1*
+   lrwxrwxrwx   1 root root       15 May  7 16:51 libtinfo.so.5 -> libtinfo.so.6.1*
+   ```
+
+
+
+- libncurses.so.5 파일이 없는 경우 iSQL 수행 시 아래와 같은 에러가 발생한다.
+
+  ```bash
+  % isql
+  isql: error while loading shared libraries: libtinfo.so.5: cannot open shared object file: No such file or directory
+  ```
+
+  ```bash
+  % server create utf8 utf8
+  /home/dev02/altibase_home/bin/isql: error while loading shared libraries: libncurses.so.5: cannot open shared object file: No such file or directory
+  ```
+
+- RHEL 8 에서 ncurses (tinfo 포함) 라이브러리 버전이 6.1 로 변경되었다. Altibase 는 ncurses 5 버전 파일을 필요로 한다. 
+  ncurses 라이브러리는  ncurses 5 ~ ncurses 6.2 까지 소스 레벨의 호환성(API)와 바이너리 호환성 (ABI)를 동시에 보장한다. 
+
+  참고 : [Announcing ncurses 6.2 (invisible-island.net)](https://invisible-island.net/ncurses/announce.html#h2-release-notes)
+
+​	
 
 ### 디스크 구성 상태 확인
 

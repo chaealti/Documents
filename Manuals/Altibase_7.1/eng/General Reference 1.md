@@ -31,7 +31,7 @@ Altibase Administration General Reference
 
 Release 7.1
 
-Copyright ⓒ 2001\~2020 Altibase Corp. All Rights Reserved.
+Copyright ⓒ 2001\~2021 Altibase Corp. All Rights Reserved.
 
 This manual contains proprietary information of Altibase Corporation; it is provided under a license agreement containing restrictions on use and disclosure and is also protected by copyright patent and other intellectual property law. Reverse engineering of the software is prohibited. All trademarks, registered or otherwise, are the property of their respective owners.
 
@@ -2512,8 +2512,6 @@ The property file for configuring the Altibase server is called "altibase.proper
 - C/C++ external procedure agent properties
 - User account security properties
 - Other properties
-
-For more detailed information on Altibase Sharding properties, please refer to the properties chapter of "Altibase Sharding Guide" manual.
 
 The following table lists all Altibase properties. For reference, each group in the table has the following meaning:
 

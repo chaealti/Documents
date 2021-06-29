@@ -60,7 +60,7 @@ Altibase Application Development Altibase CLI User's Manaul
 
 Release 7.1
 
-Copyright ⓒ 2001\~2020 Altibase Corp. All Rights Reserved.
+Copyright ⓒ 2001\~2021 Altibase Corp. All Rights Reserved.
 
 This manual contains proprietary information of Altibase Corporation; it is provided under a license agreement containing restrictions on use and disclosure and is also protected by copyright patent and other intellectual property law. Reverse engineering of the software is prohibited. All trademarks, registered or otherwise, are the property of their respective owners.
 
@@ -1868,7 +1868,7 @@ SQL_ERROR
 
 #### Description
 
-This closes cursor and discars the suspended results. 
+This closes cursor and discards the suspended results. 
 
 This option has same functionality as using SQL_CLOSE option in SQLFreeStmt(). However, 240000 errors occur if cursor is not open in SQLCloseCorsor().
 
@@ -3018,7 +3018,7 @@ When the result set is created, the cursor is positioned before the start of the
 
 | Current row set | Returned code | New row set                                     | Number of the fetched rows |
 | --------------- | ------------- | ----------------------------------------------- | -------------------------- |
-| 시작 전         | SQL_SUCCESS   | 1 to 5                                          | 5                          |
+| Before start        | SQL_SUCCESS   | 1 to 5                                          | 5                          |
 | 1 to 5          | SQL_SUCCESS   | 6 to 10                                         | 5                          |
 | 52 to 56        | SQL_SUCCESS   | 57 to 61                                        | 5                          |
 | 91 to 95        | SQL_SUCCESS   | 96 to 100                                       | 5                          |
@@ -3522,7 +3522,7 @@ SQL_CLOSE: Closes the cursor related to *stmt*, and discards all pending results
 
 SQL_DROP: The resources related to the input statement handle will be released, and the handle will be freed. In case there is an open cursor, the cursor will be closed and all pending results will be deleted.
 
-SQL_UNBIND: Releases all column buffers bound by SQLBindCol for the given StatementHandle
+SQL_UNBIND: Releases all column buffers bound by SQLBindCol for the given StatementHandle.
 
 SQL_RESET_PARAMS: Releases all parameter buffers set by SQLBindParameter (). The relation between an application variable or file reference and a SQL statement parameter marker of the statement handle will be released.
 
@@ -3687,7 +3687,7 @@ This function returns only the data of unbound columnsWhen SQLGetData () is call
 
 ##### Retrieving Data with SQLGetData ()
 
-To return the data to a specified column, SQLGetData () must execute the following series of procedures
+To return the data to a specified column, SQLGetData () must execute the following series of procedures.
 
 1.  Returns SQL_NO_DATA if it has already returned all of the data for the column. 
 2.  If the data is NULL, SQL_NULL_DATA will be set in *pcbValue. If the data for the corresponding column is not NULL, SQLGetData () will proceed to the next phase. 
@@ -4007,9 +4007,9 @@ This retrieves attribute value of environment handle.
 | -------- | --------------------------- | ------------------------------------------------------------ |
 | HY000    | General error               | No error occurs explicitly                                   |
 | HY001    | Memory allocation error     | This denotes to fial to allocate memory for handle.          |
-| HY092    | Invalid attribute or option | The value specified in attribute is not valid one supported by this driver. |
-| 01004    | Data is cut off             | The size of value buffer is lesser than the size of returned data. |
-| HYC00    | Unsupported Attribute Use   | The value specified in attribute is unsupported in driver.   |
+| HY092    | Invalid attribute or option | Value specified in attribute is not valid one supported by this driver. |
+| 01004    | Data is cut off             | Size of value buffer is lesser than the size of returned data. |
+| HYC00    | Unsupported Attribute Use   | Value specified in attribute is unsupported in driver.   |
 
 #### Related Function
 
@@ -4019,7 +4019,7 @@ SQLSetEnvAttr
 
 ### SQLGetFunctions
 
-This retrieves function list supported by Altibase CLI driver.
+This retrieves function list supported by the Altibase CLI driver.
 
 #### Syntax
 

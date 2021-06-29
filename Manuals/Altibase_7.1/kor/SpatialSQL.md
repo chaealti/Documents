@@ -19,7 +19,6 @@
     - [공간 객체 생성 함수](#%EA%B3%B5%EA%B0%84-%EA%B0%9D%EC%B2%B4-%EC%83%9D%EC%84%B1-%ED%95%A8%EC%88%98)
     - [Dimensionally Extended Nine Intersection Model(DE－9IM)](#dimensionally-extended-nine-intersection-modelde9im)
     - [Altibase 공간 관계 연산자](#altibase-%EA%B3%B5%EA%B0%84-%EA%B4%80%EA%B3%84-%EC%97%B0%EC%82%B0%EC%9E%90)
-    - [예약어](#%EC%98%88%EC%95%BD%EC%96%B4)
   - [3.응용 프로그램 개발](#3%EC%9D%91%EC%9A%A9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8-%EA%B0%9C%EB%B0%9C)
     - [API 사용 방법](#api-%EC%82%AC%EC%9A%A9-%EB%B0%A9%EB%B2%95)
     - [응용 프로그램 작성 예](#%EC%9D%91%EC%9A%A9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8-%EC%9E%91%EC%84%B1-%EC%98%88)
@@ -28,9 +27,8 @@
     - [객체 생성 함수](#%EA%B0%9D%EC%B2%B4-%EC%83%9D%EC%84%B1-%ED%95%A8%EC%88%98)
     - [객체 검색 함수](#%EA%B0%9D%EC%B2%B4-%EA%B2%80%EC%83%89-%ED%95%A8%EC%88%98)
     - [Endian 함수](#endian-%ED%95%A8%EC%88%98)
-  - [4. 데이터 마이그레이션](#4-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98)
-    - [Altibase 공간 데이터 마이그레이션](#altibase-%EA%B3%B5%EA%B0%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98)
-    - [이기종 데이터베이스 공간 데이터 마이그레이션](#%EC%9D%B4%EA%B8%B0%EC%A2%85-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B3%B5%EA%B0%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98)
+  - [4. 공간 데이터 마이그레이션](#4-%EA%B3%B5%EA%B0%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98)
+    - [Altibase 제품간 공간 데이터 마이그레이션](#altibase-%EC%A0%9C%ED%92%88%EA%B0%84-%EA%B3%B5%EA%B0%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98)
   - [A.부록: Spatial 칼럼의 제약사항](#a%EB%B6%80%EB%A1%9D-spatial-%EC%B9%BC%EB%9F%BC%EC%9D%98-%EC%A0%9C%EC%95%BD%EC%82%AC%ED%95%AD)
     - [GEOMETRY 칼럼에 대한 제약 사항](#geometry-%EC%B9%BC%EB%9F%BC%EC%97%90-%EB%8C%80%ED%95%9C-%EC%A0%9C%EC%95%BD-%EC%82%AC%ED%95%AD)
   - [B.부록: 스키마](#b%EB%B6%80%EB%A1%9D-%EC%8A%A4%ED%82%A4%EB%A7%88)
@@ -3229,7 +3227,7 @@ F1          SRID(F2)    
 ##### 구문
 
 ```
-GEOMFROMTEXT( WKT)
+GEOMFROMTEXT( WKT[, srid] )
 ```
 
 ##### 설명
@@ -3242,7 +3240,7 @@ WKT로 표현 가능한 공간 객체는 모두 입력이 허용된다.
 
 WKT의 문법이 잘못되었을 경우 에러를 출력한다.
 
-생성된 객체의 SRID는 0이다.
+생성된 객체의 SRID를 명시할 수 있으며, 명시하지 않은 경우 객체의 SRID는  0 이다.
 
 ##### 반환 타입
 
@@ -3267,6 +3265,13 @@ GEOMETRYCOLLECTION( POINT(10 10) , POINT(30 30) , LINESTRING(15 15, 20 20) )
 
 iSQL> INSERT INTO TB3 VALUES (102, GEOMFROMTEXT('POLYGON((10 10, 10 20, 20 20, 20 15, 10))'));
 [ERR-A101A : Parsing error of well-known-text]
+
+
+iSQL> SELECT ASEWKT(GEOMFROMTEXT('POINT(1 1)', 100)) AS OBJ FROM DUAL;
+OBJ
+-------------------------------------
+SRID=100;POINT(1 1)
+1 row selected.
 ```
 
 #### POINTFROMTEXT
@@ -3274,7 +3279,7 @@ iSQL> INSERT INTO TB3 VALUES (102, GEOMFROMTEXT('POLYGON((10 10, 10 20, 20 20, 2
 ##### 구문
 
 ```
-POINTFROMTEXT( WKT )
+POINTFROMTEXT( WKT[, srid] )
 ```
 
 ##### 설명
@@ -3284,7 +3289,7 @@ WKT(Well-Known Text) 형태로 공간 객체를 입력 받아 포인트 객체�
 
 WKT의 값이 NULL인 경우에는 NULL을 반환한다.
 
-생성된 객체의 SRID는 0이다.
+생성된 객체의 SRID를 명시할 수 있으며, 명시하지 않은 경우 객체의 SRID는  0 이다.
 
 ##### 반환 타입
 
@@ -3308,6 +3313,12 @@ POINT(10 10)
 
 iSQL> INSERT INTO TB3 VALUES (103, POINTFROMTEXT('GEOMETRYCOLLECTION( POINT(10 10), POINT(30 30), LINESTRING(15 15, 20 20))'));
 [ERR-A1019 : Not applicable object type]
+
+iSQL> SELECT ASEWKT(POINTFROMTEXT('POINT(1 1)', 100)) AS OBJ FROM DUAL;
+OBJ
+-------------------------------------
+SRID=100;POINT(1 1)
+1 row selected.
 ```
 
 #### LINEFROMTEXT 
@@ -3315,7 +3326,7 @@ iSQL> INSERT INTO TB3 VALUES (103, POINTFROMTEXT('GEOMETRYCOLLECTION( POINT(10 1
 ##### 구문
 
 ```
-LINEFROMTEXT( WKT )
+LINEFROMTEXT( WKT[, srid] )
 ```
 
 ##### 설명
@@ -3327,7 +3338,7 @@ WKT(Well-Known Text) 형태로 공간 객체를 입력받아 라인스트링 객
 
 WKT의 값이 NULL인 경우에는 NULL을 반환한다.
 
-생성된 객체의 SRID는 0이다.
+생성된 객체의 SRID를 명시할 수 있으며, 명시하지 않은 경우 객체의 SRID는 0 이다.
 
 ##### 반환 타입
 
@@ -3351,6 +3362,12 @@ LINESTRING(10 10, 20 20, 30 40)
 
 iSQL> INSERT INTO TB3 VALUES (104, LINEFROMTEXT('MULTIPOLYGON(((10 10, 10 20, 20 20, 20 15, 10 10)), ((60 60, 70 70, 80 60, 60 60)))'));
 [ERR-A1019 : Not applicable object type]
+
+iSQL> SELECT ASEWKT(LINEFROMTEXT('LINESTRING(10 10, 20 20, 30 40)', 100) ) FROM DUAL;
+OBJ
+-------------------------------------
+SRID=100;LINESTRING(10 10, 20 20, 30 40)
+1 row selected.
 ```
 
 #### POLYFROMTEXT
@@ -3369,7 +3386,7 @@ WKT(Well-Known Text) 형태로 공간 객체와 SRID를 입력 받아 폴리곤 
 
 WKT의 값이 NULL이거나 SRID의 값이 NULL인 경우에는 NULL을 반환한다.
 
-SRID를 입력하지 않으면 생성된 객체의 SRID는 0이다.
+생성된 객체의 SRID를 명시할 수 있으며, 명시하지 않은 경우 객체의 SRID는 0 이다.
 
 ##### 반환 타입
 
@@ -3403,6 +3420,12 @@ ID          ASEWKT(OBJ)
 104         SRID=0;POLYGON((10 10, 10 20, 20 20, 20 15, 10 10))
 120         SRID=100;POLYGON((10 10, 10 20, 20 20, 20 15, 10 10))
 2 rows selected.
+
+iSQL> SELECT ASEWKT(POLYFROMTEXT('POLYGON((10 10, 10 20, 20 20, 20 15, 10 10))', 100)) AS OBJ FROM DUAL;
+OBJ
+-------------------------------------
+SRID=100;POLYGON((10 10, 10 20, 20 20, 20 15, 10 10))
+1 row selected.
 ```
 
 #### ST_POLYGONFROMTEXT
@@ -3423,7 +3446,8 @@ POLYFROMTEXT와 달리 폴리곤이 아닌 공간 객체를 표현한 WKT또는 
 
 WKT 형태 또는 EWKT 형태가 문법이 잘못된 경우 에러를 출력한다.
 
-SRID를 입력하지 않으면 생성된 객체의 SRID는 0이다.
+생성된 객체의 SRID를 명시할 수 있다. 
+명시하지 않은 경우 WKT 형태인 경우 객체의 SRID는 0, EWKT 형태인 경우 EWKT의 SRID로 생성한다.
 
 ##### 반환 타입
 
@@ -3458,7 +3482,7 @@ ID          ASEWKT(OBJ)
 ##### 구문
 
 ```
-MPOINTFROMTEXT( WKT )
+MPOINTFROMTEXT( WKT[, srid] )
 ```
 
 ##### 설명
@@ -3470,7 +3494,7 @@ WKT(Well-Known Text) 형태로 공간 객체를 입력 받아 멀티포인트 �
 
 WKT의 값이 NULL인 경우에는 NULL을 반환한다.
 
-생성된 객체의 SRID는 0이다.
+생성된 객체의 SRID를 명시할 수 있으며, 명시하지 않은 경우 객체의 SRID는 0 이다.
 
 ##### 반환 타입
 
@@ -3494,6 +3518,12 @@ MULTIPOINT(10 10, 20 20)
 
 iSQL> INSERT INTO TB3 VALUES (106, MPOINTFROMTEXT('LINESTRING(10 10, 20 20, 30 40)'));
 [ERR-A1019 : Not applicable object type]
+
+iSQL> SELECT ASEWKT( MPOINTFROMTEXT('MULTIPOINT(10 10, 20 20)', 100) ) AS OBJ FROM DUAL;
+OBJ
+-------------------------------------
+SRID=100;MULTIPOINT(10 10, 20 20)
+1 row selected.
 ```
 
 #### MLINEFROMTEXT
@@ -3501,7 +3531,7 @@ iSQL> INSERT INTO TB3 VALUES (106, MPOINTFROMTEXT('LINESTRING(10 10, 20 20, 30 4
 ##### 구문
 
 ```
-MLINEFROMTEXT( WKT )
+MLINEFROMTEXT( WKT[, srid] )
 ```
 
 ##### 설명
@@ -3512,6 +3542,8 @@ WKT(Well-Known Text) 형태로 공간 객체를 입력받아 멀티라인스트�
 출력한다.
 
 WKT의 값이 NULL인 경우에는 NULL을 반환한다.
+
+생성된 객체의 SRID를 명시할 수 있으며, 명시하지 않은 경우 객체의 SRID는 0 이다.
 
 ##### 반환 타입
 
@@ -3534,6 +3566,12 @@ MULTILINESTRING((10 10, 20 20), (15 15, 30 15))
 1 row selected.
 iSQL> INSERT INTO TB3 VALUES (107, MLINEFROMTEXT('POINT(10 10)'));
 [ERR-A1019 : Not applicable object type]
+
+iSQL> SELECT ASEWKT(MLINEFROMTEXT('MULTILINESTRING((10 10, 20 20), (15 15, 30 15))', 100))AS OBJ FROM DUAL;
+OBJ
+-------------------------------------
+SRID=100;MULTILINESTRING((10 10, 20 20), (15 15, 30 15))
+1 row selected.
 ```
 
 #### MPOLYFROMTEXT
@@ -3541,7 +3579,7 @@ iSQL> INSERT INTO TB3 VALUES (107, MLINEFROMTEXT('POINT(10 10)'));
 ##### 구문
 
 ```
-MPOLYFROMTEXT( WKT )
+MPOLYFROMTEXT( WKT[, srid] )
 ```
 
 ##### 설명
@@ -3552,6 +3590,8 @@ WKT(Well-Known Text) 형태로 공간 객체를 입력 받아 멀티폴리곤 �
 출력한다.
 
 WKT의 값이 NULL인 경우에는 NULL을 반환한다.
+
+생성된 객체의 SRID를 명시할 수 있으며, 명시하지 않은 경우 객체의 SRID는 0 이다.
 
 ##### 반환 타입
 
@@ -3575,6 +3615,12 @@ MULTIPOLYGON(((10 10, 10 20, 20 20, 20 15, 10 10)), ((60 60, 70 70, 80 60, 60 60
 
 iSQL> INSERT INTO TB3 VALUES (108, MPOLYFROMTEXT('MULTIPOINT(10 10, 20 20)'));
 [ERR-A1019 : Not applicable object type]
+
+iSQL> SELECT ASEWKT(MPOLYFROMTEXT('MULTIPOLYGON(((10 10, 10 20, 20 20, 20 15, 10 10)), ((60 60, 70 70, 80 60, 60 60)))',100)) AS OBJ FROM DUAL;
+OBJ
+-------------------------------------
+SRID=100;MULTIPOLYGON(((10 10, 10 20, 20 20, 20 15, 10 10)), ((60 60, 70 70, 80 60, 60 60)))
+1 row selected.
 ```
 
 #### GEOMCOLLFROMTEXT
@@ -3582,7 +3628,7 @@ iSQL> INSERT INTO TB3 VALUES (108, MPOLYFROMTEXT('MULTIPOINT(10 10, 20 20)'));
 ##### 구문
 
 ```
-GEOMCOLLFROMTEXT( WKT )
+GEOMCOLLFROMTEXT( WKT[, srid] )
 ```
 
 ##### 설명
@@ -3594,6 +3640,8 @@ WKT(Well-Known Text) 형태로 공간 객체를 입력 받아 공간 객체 콜�
 출력한다.
 
 WKT의 값이 NULL인 경우에는 NULL을 반환한다.
+
+생성된 객체의 SRID를 명시할 수 있으며, 명시하지 않은 경우 객체의 SRID는 0 이다.
 
 ##### 반환 타입
 
@@ -3619,6 +3667,12 @@ GEOMETRYCOLLECTION( POINT(10 10) , POINT(30 30) , LINESTRING(15 15, 20 20) )
 
 iSQL> INSERT INTO TB3 VALUES (109, GEOMCOLLFROMTEXT('POLYGON((10 10, 10 20, 20 20, 20 15, 10 10))'));
 [ERR-A1019 : Not applicable object type]
+
+iSQL> SELECT ASEWKT(GEOMCOLLFROMTEXT('GEOMETRYCOLLECTION(POINT(10 10), POINT(30 30), LINESTRING(15 15, 20 20))',100)) AS OBJ FROM DUAL;
+OBJ
+---------------------------------------------
+SRID=100;GEOMETRYCOLLECTION( POINT(10 10) , POINT(30 30) , LINESTRING(15 15, 20 20) )
+1 row selected.
 ```
 
 #### GEOMFROMWKB
@@ -4925,51 +4979,7 @@ F1          F1
 2 rows selected.
 ```
 
-### 예약어
 
-다음 단어들은 Spatial SQL에서 정의된 예약어로 테이블, 칼럼, 사용자 같은
-데이터베이스 객체 이름으로 사용할 수 없다.
-
-```
-AREA	                                         ASBINARY
-ASTEXT	                                         BOUNDARY
-BUFFER	                                         CENTROID
-CONTAINS	                                     CONVEXHULL
-COORDX	                                         COORDY
-CROSSES	                                         DIFFERENCE
-DIMENSION	                                     DISJOINTS
-DISTANCE	                                     ENDPOINT
-ENVELOPE	                                     EQUALS
-EXTERIORRING	                                 GEOMCOLLFROMTEXT
-GEOMCOLLFROMWKB	                                 GEOMETRY
-GEOMETRYCOLLECTION	                             GEOMETRYLENGTH
-GEOMETRYN	                                     GEOMETRYTYPE
-GEOMFROMTEXT	                                 GEOMFROMWKB
-INTERIORRINGN	                                 INTERSECTION
-INTERSECTS	                                     ISCLOSED
-ISEMPTY	                                         ISRING
-ISSIMPLE	                                     LINEFROMTEXT 
-LINEFROMWKB	                                     LINESTRING
-MLINEFROMTEXT	                                 MLINEFROMWKB
-MPOINTFROMTEXT	                                 MPOINTFROMWKB
-MPOLYFROMTEXT	                                 MPOLYFROMWKB
-MULTILINESTRING	                                 MULTIPOINT
-MULTIPOLYGON	                                 NUMGEOMETRIES
-NUMINTERIORRING	                                 NUMPOINTS
-OVERLAPS	                                     POINT
-POINTFROMTEXT	                                 POINTFROMWKB
-POINTN	                                         POINTONSURFACE
-POLYFROMTEXT	                                 POLYFROMWKB
-POLYGON	                                         RELATE
-RECTFROMTEXT	                                 RECTFROMWKB
-ST_GEOMETRY	                                     STARTPOINT
-SYMDIFFERENCE	                                 TOUCHES
-UNION 	                                         WITHIN
-X		                                         Y
-MINX	                                         MINY
-MAXX	                                         MAXY
-ISVALID
-```
 
 3.응용 프로그램 개발
 ------------------
@@ -6806,16 +6816,6 @@ Altibase 제품간 공간 데이터 마이그레이션을 위해 iLoader와 aexp
 
 WKB 포맷의 공간 데이터는 EWKB 지원 Altibase가 읽고 자동으로 변환한다. 반면, EWKB 포맷 공간 데이터는 WKB 지원 Altibase가 인식하지 못한다. 따라서, EWKB 포맷 데이터를  WKB 지원 Altibase로 데이터 이관 할때 원본 데이터를 WKB 포맷으로 추출하는 옵션을 사용해야 한다. 마이그레이션 작업할 때는 aexport의 aexport.properties 파일에 'ILOADER_GEOM = WKB' 옵션을, 하나의 테이블만 작업할 때는 iLoader에서 '-geom WKB' 옵션을 사용한다. 상세 내용은 iLoader와 aexport 매뉴얼을 참조한다.
 
-앞서 설명한 것과 별도로 altiShapeLoader를 이용하여 shapefile 포맷으로 공간 데이터를 import/export 하는 방법도 제공한다. 
-
-### 이기종 데이터베이스과 공간 데이터 마이그레이션
-
-데이터베이스 제품마다 공간 데이터를 표현하거나 저장하는 방법이 대부분 다르다. 서로 다른 형식의 공간 데이터를 교환하기 위해, 대부분의 데이터베이스 벤더들은 사실상 산업 표준인 shapefile 포맷으로 공간 데이터를  import/export 하는 유틸리티를 제공한다.
-
-Altibase는 altiShapeLoader라는 shapefile 유틸리티를 제공한다. 이를 이용하여 타 DBMS에서 만들어진 shapefile을 Altibase로 import하거나 Altibase의 공간 데이터를 shapefile로 export 할 수 있다. 상세 사용법은 altiShapeLoader 매뉴얼을 참조한다.
-
-Migration Center는 공간 데이터 타입을 지원하지 않는다. 마이그레이션 수행시 공간 데이터 테이블은 제외하고 마이그레이션이 수행된다.
-
 ## A.부록: Spatial 칼럼의 제약사항
 
 이 부록은 Altibase에 Spatial 기능을 확장함에 따라 기존의 DBMS 기능 중 GEOEMTRY
@@ -7050,7 +7050,7 @@ GEOMETRY 칼럼에 공간 참조 식별자(SRID, Spatial Reference ID)를 지정
 | F_TABLE_NAME      | VARCHAR(128) | 테이블 이름          |
 | F_GEOMETRY_COLUMN | VARCHAR(128) | COLUMN의 이름        |
 | COORD_DIMENSION | INTERGER     | GEOMETRY 객체의 차원 |
-| SRID            | INTERGER     | 공간 참조 식별자     |
+| SRID            | INTERGER     | 데이터베이스 내에서의 공간 참조 식별자 |
 
 #### SPATIAL_REF_SYS
 
@@ -7062,7 +7062,7 @@ SPATIAL_REF_SYS 테이블에 Spatial Reference System 메타 데이터를 등독
 
 | Column name | Type           | Description                                          |
 |-------------|----------------|------------------------------------------------------|
-| SRID        | INTEGER        | 내부적으로 사용되는 공간 참조자                      |
+| SRID        | INTEGER        | 데이터베이스 내에서의 공간 참조 식별자 |
 | AUTH_NAME   | VARCHAR(256)    | 표준 이름                                            |
 | AUTH_SRID   | INTERGER       | 표준 식별자                                          |
 | SRTEXT      | VARCHAR (2048) | OGC-WKT형태로 표현 되는 공간 참조 시스템에 대한 설명 |
@@ -7084,7 +7084,9 @@ SYS_SPATIAL.ADD_SPATIAL_REF_SYS( SRID in integer,
 
 ##### 설명
 
-SPATIAL_REF_SYS_BASE 테이블에 Spatial Reference System 메타데이터를 등록하는 프러시저이다.
+SPATIAL_REF_SYS_ 테이블에 Spatial Reference System 메타데이터를 등록하는 프로시저이다.
+
+SRID와 AUTH_SRID는 동일한 값을 사용하는 것을 권장한다.
 
 ##### 파라미터
 
@@ -7116,7 +7118,7 @@ SYS_SPATIAL.DELETE_SPATIAL_REF_SYS( SRID in integer,
 
 ##### 설명
 
-GEOMETRY_COLUMNS_BASE 테이블에 등록한 Geometry Column의 메타데이터를 삭제하는 프러시저이다.
+GEOMETRY_COLUMNS_BASE 테이블에 등록한 Geometry Column의 메타데이터를 삭제하는 프로시저이다.
 
 ##### 파라미터
 

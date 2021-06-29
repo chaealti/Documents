@@ -79,7 +79,7 @@ Altibase Application Development Log Analyzer User’s Manual
 
 Release 7.1
 
-Copyright ⓒ 2001\~2020 Altibase Corp. All Rights Reserved.
+Copyright ⓒ 2001\~2021 Altibase Corp. All Rights Reserved.
 
 This manual contains proprietary information of Altibase Corporation; it is provided under a license agreement containing restrictions on use and disclosure and is also protected by copyright patent and other intellectual property law. Reverse engineering of the software is prohibited. All trademarks, registered or otherwise, are the property of their respective owners.
 
@@ -1719,7 +1719,7 @@ The mPKColumnArray element of the ALA_Table structure is an array of ALA_Column 
 
 This section describes the format in which the data are stored internally for each data type of Altibase.
 
- Information about columns, which is stored in the ALA_Column structure, can be accessed by calling ALA_GetColumnInfo(), whereas actual column values, which are stored in the ALA_Value structure, can be accessed using the XLog Log Analysis API. 
+Information about columns, which is stored in the ALA_Column structure, can be accessed by calling ALA_GetColumnInfo(), whereas actual column values, which are stored in the ALA_Value structure, can be accessed using the XLog Log Analysis API. 
 
 The actual column value is stored in the value element of the ALA_Value structure, whereas the length of the column value is stored in the length element of the ALA_Value structure. 
 
@@ -2753,7 +2753,7 @@ ALA_RC ALA_SetXLogPoolSize (
 | Argument      | Description                                         |
 | ------------- | --------------------------------------------------- |
 | aHandle       | This is the handle of the XLog Collector            |
-| aXLogPoolSize | XLog Pool의 크기 This is the size of the XLog Pool. |
+| aXLogPoolSize | This is the size of the XLog Pool. |
 | aOutErrorMgr  | This is an Error Manager structure.                 |
 
 #### Return Values
@@ -3600,7 +3600,7 @@ ALA_GetXLogSavepoint
 
 #### Example
 
- Refer to ALA_GetXLogHeader.
+Refer to ALA_GetXLogHeader.
 
 ### ALA_GetProtocolVersion
 
@@ -3976,7 +3976,7 @@ ALA_GetIndexInfo
 
 #### Example
 
- Refer to ALA_GetReplicationInfo.
+Refer to ALA_GetReplicationInfo.
 
 ### ALA_GetIndexInfo
 

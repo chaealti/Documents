@@ -46,7 +46,7 @@ Altibase Application Development Application Program Interface User’s Manual
 
 Release 7.1
 
-Copyright ⓒ 2001\~2020 Altibase Corp. All Rights Reserved.
+Copyright ⓒ 2001\~2021 Altibase Corp. All Rights Reserved.
 
 This manual contains proprietary information of Altibase Corporation; it is provided under a license agreement containing restrictions on use and disclosure and is also protected by copyright patent and other intellectual property law. Reverse engineering of the software is prohibited. All trademarks, registered or otherwise, are the property of their respective owners.
 
@@ -97,10 +97,10 @@ This manual is organized as follows:
 -   Chapter 3: XA Interface  
     This chapter introduces the data structures and functions that are needed to use the XA functions supported by Altibase and provides basic procedures for using ODBC, APRE and JDBC in an XA environment.
     
--   Chapter 4: The iLoader API  
+-   Chapter 4: iLoader API  
     This chapter introduces the Altibase iLoader API, which is an application programming interface that lets you create applications that use function calls to download data from, or upload data to, an Altibase database server.
     
--   Chapter 5: The CheckServer API  
+-   Chapter 5: CheckServer API  
     This chapter introduces the Altibase CheckServer API, which is an application programming interface for creating applications that use function calls to monitor whether the Altibase server has terminated abnormally.
 
 #### Documentation Conventions
@@ -200,7 +200,7 @@ This chapter explains how to integrate PHP pages with Altibase using PHP's ODBC 
 
 ### Installing the ODBC Manager for Integration with PHP
 
-In order to integrate Altibase with a PHP interface, the ODBC Manager must be installed. This section describes how to install the ODBC Manager in Unix, or Linux environments.
+In order to integrate Altibase with the PHP interface, the ODBC Manager must be installed. This section describes how to install the ODBC Manager in Unix, or Linux environments.
 
 #### The ODBC Manager in Unix and Linux
 
@@ -326,7 +326,7 @@ To use pdo_altibase, you have to use pecl environment. Download the pecl package
 Software requirements
 ```
 
--   Altibase : Altibase 6.5.1.5.1 or above
+-   Altibase : Altibase 6.5.1.5.1 or later
 
 -   OS : Linux (Refer the Altibase Release Notes for a detailed version.)
 
@@ -454,7 +454,7 @@ foreach ($db->query("SELECT * FROM dual") as $row) {
 
 #### DATE Format Setup 
 
-You can set which string format to use as the default for DATE.
+The user can set which string format to use as the default for DATE.
 
 ```
 $db->setAttribute(PDO::ALTIBASE_DATE_FORMAT, "YYYY-MM-DD");
@@ -587,10 +587,10 @@ XA is a useful construct for applications that process transactions in one or mo
     In some situations, when an RM does not receive an expected command pertaining to an in-doubt transaction, such as a COMMIT command or the like, the RM proceeds to commit or roll back the transaction of its own accord. Completion of transactions in this way is referred to as “Heuristic Commit” or “Heuristic Rollback”, or collectively as “Heuristic Completion”. Typical causes are network failure and transaction timeouts.
     
 -   In-doubt Transaction  
-    An “in-doubt transaction” is a transaction branch that has been prepared on an RM (i.e. DBMS) and for which a commit or rollback message has not yet been received. It is also known as a “pending transaction”.
+    An “in-doubt transaction” is a transaction branch that has been prepared on a RM (i.e. DBMS) and for which a commit or rollback message has not yet been received. It is also known as a “pending transaction”.
     
 -   Resource Manager (RM)  
-    A Resource Manager (RM) controls a resource that is accessed by an XA transaction. It must be possible to restore the resource to its original state in the event of a failure. An RM can be, for example, a relational database, a transactional queue, or a file system.
+    A Resource Manager (RM) controls a resource that is accessed by a XA transaction. It must be possible to restore the resource to its original state in the event of a failure. A RM can be, for example, a relational database, a transactional queue, or a file system.
     
 -   Transaction Branch  
     A transaction branch is essentially a sub-transaction that is part of the global transaction. It is executed on one of the Resource Managers (see above) participating in the global transaction. There is a one-to-one relationship between a transaction branch and a so-called “XID” (i.e. a Transaction ID in XA parlance).
@@ -873,7 +873,7 @@ When operating in asynchronous mode, this is used to determine whether to keep w
 
 This section describes the basic procedures for using ODBC, APRE and JDBC in an XA environment.
 
-#### ODBC/XA 수행 순서
+#### ODBC/XA execution order
 
 1.  xa_open  
     Connect to the specified server.
@@ -925,7 +925,7 @@ SQLINTEGER sLen);
 
 ##### How to Author an Application depending on the Setting of XA_NAME in xa_open
 
-n XA applications, a cursor is valid only for a single transaction. This means that a cursor must be opened after the start of execution of a transaction, and must be closed before the transaction is completed (i.e. committed or rolled back).
+In XA applications, a cursor is valid only for a single transaction. This means that a cursor must be opened after the start of execution of a transaction, and must be closed before the transaction is completed (i.e. committed or rolled back).
 
 ###### How to Author an Application when Using the Default Connection
 
@@ -2092,7 +2092,7 @@ int altibase_iloader_datain (
 
 ##### Arguments
 
-| Argumetn    | In/Output | Description                                                  |
+| Argument    | In/Output | Description                                                  |
 | ----------- | --------- | ------------------------------------------------------------ |
 | handle      | Input     | This is the pointer to the iLoader handle.                   |
 | version     | Input     | This is the version of the iLoader API.                      |

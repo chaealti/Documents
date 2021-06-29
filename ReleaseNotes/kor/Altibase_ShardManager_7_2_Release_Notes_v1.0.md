@@ -24,8 +24,6 @@
 Altibase Shard Manager Release Notes
 ===============================
 
-**(Jan. 10, 2020)**
-
 ## 1. Abstract
 
 ### 1.1 System Requirements
@@ -50,45 +48,6 @@ Altibase Shard Manager Release Notes
 
 Shard Manager is a graphical tool which enables users to manage multiple databases and shard objects for Altibase Sharding. Typically, the task of manually administrating them are complicated, time-consuming, and prone to human error. In order to relieve such burden, Shard Manager can be utilized providing qualified help for users to efficiently perform their work with only a few mouse clicks while visualizing all of them on the same screen.
 
-#### 	2.1.1 New Features
-
-- Supports shard table resharding
-- Provides report file: shard node configuration, shard object schema and shard table record count
-- Provides Command Line Interface (CLI) including Graphical User Interface (GUI)
-
-#### 2.1.2  Bug-Fixes
-
-|    PK     | SYNOPSIS                                                     |
-| :-------: | :----------------------------------------------------------- |
-| BUG-47116 | In order to enhance count query performance, need to use shard view |
-| BUG-47114 | Need to check that the same DB is not already registered when registering a new node |
-| BUG-47138 | Need to provide a way to input replication address separately from DB address |
-| BUG-47146 | Add new node continues to fail due to previous add node fail |
-| BUG-47153 | Need to provide a way to set the Sync parallel option to enhance resharding performance |
-| BUG-47147 | Resharding must be parallel                                  |
-| BUG-47156 | "Test" button is not be activated even if the input values are filled in the specific order on the Add Node screen |
-| BUG-47179 | RpIp is applied incorrectly when configuring Shard Manager by reading ShardDatabase.xml |
-| BUG-47181 | Need to remove alternate DB from node when alternate DB shutdown unexpectedly |
-| BUG-47189 | Clone table resharding should be managed by Shard Manager instead of shard procedure |
-| BUG-47191 | NEXT button may not be activated after shard database creation |
-| BUG-47184 | Shard manager needs logic to avoid distributed deadlock      |
-| BUG-47185 | Need to make sure database has the properties for sharding when connecting to it |
-| BUG-47103 | Incorrect local_meta_info_ is allocated when adding a new node. |
-| BUG-47304 | To improve usability, need to remove the dependency on external procedures such as utl_shard_online_rebuild.sql |
-| BUG-47317 | Need to provide wizard for "Create Hash Table"               |
-| BUG-47417 | When adding a new node or Alternate DB, need to copy shard object schema from old node |
-| BUG-47418 | Need to check the shard database has the dbms_meta package when connecting to it |
-| BUG-47353 | Need to provide a report on the shard object and its configuration |
-| BUG-47157 | Need to test alternate DB connection if required             |
-| BUG-47440 | Need to unset multiple shard objects at once                 |
-| BUG-47444 | [CLI] When resharding, need to enter partition name only instead of partition name and partition max |
-| BUG-47462 | [CLI] Requires resharding functionality for Clone, Solo table |
-| BUG-47463 | [CLI] Requires provide Add/remove node functionality         |
-| BUG-47464 | [CLI] Requires Set / unset shard object functionality        |
-| BUG-47465 | [CLI] Requires shard report functionality                    |
-| BUG-47467 | [CLI] Requires Create/Load/Remove ShardDb functionality      |
-| BUG-47610 | When removing a shard database, need to drop the DB object registered as a shard object |
-
 ### 2.2 Changes
 
 Listed below are added/updated/deleted functions and their explanations for Shard Manager.
@@ -99,15 +58,13 @@ Shard Manager Version
 
 | Altibase Shard Manager Version |
 | :----------------------------: |
-|              2.0               |
-
-
+|              7.2               |
 
 #### 2.2.2 Database Compatibility
 
 ##### Altibase Compatibility
 
-- Altibase database: Altibase 7.1.0.2.3 (Altibase Sharding 2.2.1)
+- Altibase database: Altibase 7.2.0.0.0
 
 #### 2.2.3 Properties
 
@@ -152,11 +109,14 @@ Shard Manager is based on the following Open Source Libraries and Royalty-Free I
 
 #### 2.5.1 Packages
 
-<http://support.altibase.com/en/product>
+<http://support.altibase.com/kr/product>
 
 #### 2.5.2 Manual
 
-https://altibase.com/resources/manuals/ > *Altibase Sharding Guide*
+https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.2/kor/ShardManager.md
+
+[comment]: <> "현재는 trunk에만 shard manager manual 이 있지만, 7.2 릴리즈를 하면, 어차피 위의 위치에 매뉴얼이 생길것입니다. 혹시 실수라고 생각하시는 분이 있을것 같아서 코멘트 남깁니다."
+
 
 #### 2.5.3 Installation
 

@@ -35,7 +35,7 @@ Altibase Tool & Utilities Adapter for Oracle User’s Manual
 
 Release 7.1
 
-Copyright ⓒ 2001\~2020 Altibase Corp. All Rights Reserved.
+Copyright ⓒ 2001\~2021 Altibase Corp. All Rights Reserved.
 
 This manual contains proprietary information of Altibase Corporation; it is provided under a license agreement containing restrictions on use and disclosure and is also protected by copyright patent and other intellectual property law. Reverse engineering of the software is prohibited. All trademarks, registered or otherwise, are the property of their respective owners.
 
@@ -229,9 +229,9 @@ jdbcAdapter is currenly only supported in the following OS:
 
 #### Datbase Versions
 
--   Altibase : Version 6.3.1 or above
+-   Altibase : Version 6.3.1 or later
 
--   OTHER DB : JDBC 4.1 or lower version of other database
+-   OTHER DB : JDBC 4.1 or earlier version of other database
 
 #### Database Character Set
 
@@ -387,8 +387,8 @@ This is a property specifying the IP address of Xlog sender. This property enabl
 
 ##### ALA_RECEIVER_PORT
 
-XLog 콜렉터가 XLog를 수신하기 위해 사용하는 포트 번호를 지정하는 프로퍼티이다.
-jdbcAdpater가 대기하고 있는 포트 번호를 지정하도록 한다.
+This property specifies the port number used by the XLog collector to receive XLogs.
+This property specifies the port number on which jdbcAdpater is listening.
 
 -   Range: 1024 – 65535
 
