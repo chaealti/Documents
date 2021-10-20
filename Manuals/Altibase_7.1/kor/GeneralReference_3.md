@@ -49,6 +49,7 @@
     - [SYS_REPL_OLD_INDEX_COLUMNS\_](#sys_repl_old_index_columns_)
     - [SYS_REPL_OLD_INDICES\_](#sys_repl_old_indices_)
     - [SYS_REPL_OLD_ITEMS\_](#sys_repl_old_items_)
+    - [SYS_REPL_TABLE_OID_IN_USE\_](#sys_repl_table_oid_in_use_)
     - [SYS_REPL_RECOVERY_INFOS\_](#sys_repl_recovery_infos_)
     - [SYS_SECURITY\_](#sys_security_)
     - [SYS_SYNONYMS\_](#sys_synonyms_)
@@ -2628,13 +2629,14 @@ SESSION SET REPLICATION 구문에 관한 내용은 *SQL Reference*을 참조한�
 옵션을 설정시 이진수로 제어되며, 십진수로 변환되어 표시된다. 두 개 이상의 옵션을
 사용할 경우 각각의 옵션에 해당하는 이진수 합이 십진수로 반환된다.
 
-- 0(000000): 이중화 옵션을 사용하지 않음
-- 1(000001): 복구 옵션 사용
-- 2(000010): 오프라인 옵션 사용
-- 4(000100): 이중화 갭 해소 옵션 사용
-- 8(001000): 병렬 적용자 옵션 사용
-- 16(010000):이중화 트랜잭션 그룹 옵션 사용
-- 32(100000):로컬 이중화 옵션 사용
+- 0(00000000): 이중화 옵션을 사용하지 않음
+- 1(00000001): 복구 옵션 사용
+- 2(00000010): 오프라인 옵션 사용
+- 4(00000100): 이중화 갭 해소 옵션 사용
+- 8(00001000): 병렬 적용자 옵션 사용
+- 16(00010000):이중화 트랜잭션 그룹 옵션 사용
+- 32(00100000):로컬 이중화 옵션 사용
+- 64(01000000):메타 로깅 옵션 사용
 
 ##### INVALID_RECOVERY
 
@@ -3197,6 +3199,31 @@ SYS_REPL_OLD_COLUMNS_
 SYS_REPL_OLD_INDICES_
 SYS_REPL_OLD_INDEX_COLUMNS_
 ```
+
+### SYS_REPL_TABLE_OID_IN_USE\_
+
+이중화가 아직 처리하지 않은 DDL 로그에 포함된 테이블의 테이블 객체 식별자(TABLE OID) 정보를 관리하는 메타 테이블이다.
+
+| Column name      | Type         | Description                    |
+| ---------------- | ------------ | ------------------------------ |
+| REPLICATION_NAME | VARCHAR(40)  | 이중화 이름                    |
+| OLD_TABLE_OID    | BIGINTBIGINT | DDL 수행 전 테이블 객체 식별자 |
+| TABLE_OID        | BIGINTBIGINT | 현재 테이블 객체 식별자        |
+
+#### 칼럼 정보
+
+##### REPLICATION_NAME
+
+사용자가 명시한 이중화 이름으로, SYS_REPLICATIONS\_ 메타 테이블의 한
+REPLICATION_NAME 값과 동일하다.
+
+##### OLD_TABLE_OID
+
+이중화가 아직 처리하지 않은 DDL 로그에 포함된 테이블의 이전 테이블 객체 식별자이다.
+
+##### TABLE_OID
+
+이중화가 아직 처리하지 않은 DDL 로그에 포함된 테이블의 현재 테이블 객체 식별자이다. 이 값은 SYS_REPL_ITEMS_ 메타 테이블의 한 TABLE_OID 값과 동일하다.
 
 ### SYS_REPL_RECOVERY_INFOS\_
 
@@ -4367,6 +4394,8 @@ Altibase에 접근하는 특정 IP 패킷의 접근 허용 및 제한 정보를 
 | ADDRESS     | VARCHAR(40) | IP 주소                                         |
 | OPERATION   | VARCHAR(6)  | IP 주소 접근 허용 및 제한 여부                  |
 | MASK        | VARCHAR(16) | 서브넷 마스크(IPv4) 또는 prefix 비트 길이(IPv6) |
+| LIMIT       | INTEGER     | 세션 최대 허용 개수                             |
+| CONNECTED   | INTEGER     | 현재 세션 접속 개수                             |
 
 #### **칼럼 정보**
 
@@ -4389,6 +4418,16 @@ IP 패킷 주소의 접근 허용 및 제한 여부를 보여준다.
 
 IPv4 주소일 경우 서브넷 마스크를 기술하고, IPv6 주소인 경우에는 prefix 비트의
 길이를 기술한다. 자세한 내용은 ACCESS_LIST 프로퍼티의 설명을 참조한다
+
+**LIMIT**
+
+ACCESS_LIST에 명시된 접속 가능한 IP 주소 영역에서 허용되는 최대 접속 세션 개수.
+
+운영 중 RELOAD ACCESS LIST로 ACCESS_LIST를 추가하면, 기존에 연결된 세션은 영향을 받지 않으며, 변경 이후 새로운 연결 요청에 대해서만 ACCESS_LIST 조건이 적용된다. 예를 들어 ACCESS_LIST에 limit값을 설정 후 RELOAD ACCESS LIST 수행하면, 적용 이후 새로운 연결에 대해서만 limit 값이 적용된다. 이런 경우, V$ACCESS_LIST 조회시 Limit 값보다 CONNECTED 값이 더 클 수도 있다.
+
+**CONNECTED**
+
+ACCESS_LIST에 해당하는 현재 접속된 세션 개수
 
 ### V\$ALLCOLUMN
 
