@@ -1,6 +1,4 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  
+
 
 - [JDBC User’s Manual](#jdbc-users-manual)
   - [Preface](#preface)
@@ -13,7 +11,7 @@
     - [JDBC Connection Failover](#jdbc-connection-failover)
   - [2. Basic Functions](#2-basic-functions)
     - [IPv6 Connectivity](#ipv6-connectivity)
-    - [Statement, PreparedStatement 및 CallableStatement](#statement-preparedstatement-%EB%B0%8F-callablestatement)
+    - [Statement, PreparedStatement and CallableStatement](#statement-preparedstatement-and-callablestatement)
     - [Using the National Character Set](#using-the-national-character-set)
   - [3. Advanced Functions](#3-advanced-functions)
     - [Auto-generated Keys](#auto-generated-keys)
@@ -23,7 +21,7 @@
     - [Multiple ResultSet](#multiple-resultset)
     - [JDBC and Failover](#jdbc-and-failover)
     - [JDBC Escapes](#jdbc-escapes)
-    - [RHow to Use ResultSet](#rhow-to-use-resultset)
+    - [How to Use ResultSet](#how-to-use-resultset)
     - [Atomic Batch](#atomic-batch)
     - [Date, Time, Timestamp](#date-time-timestamp)
     - [GEOMETRY](#geometry)
@@ -35,13 +33,31 @@
     - [SQL Plan](#sql-plan)
   - [4. Tips & Recommendation](#4-tips--recommendation)
     - [Tips for Better Performance](#tips-for-better-performance)
+  - [5. Error Messages](#5-error-messages)
     - [SQL States](#sql-states)
+  - [6. JDBC 4.2 API References](#6-jdbc-4.2-api-references)
+    - [java.sql.Connection](#javasqlconnection)
+    - [java.sql.Wrapper](#javasqlwrapper)
+    - [java.sql.Driver](#javasqldriver)
+    - [java.sql.Statement](#javasqlstatement)
+    - [java.sql.PreparedStatement](#javasqlpreparedstatement)
+    - [java.sql.CallableStatement](#javasqlcallablestatement)
+    - [java.sql.PooledConnection](#javasqlpooledconnection)
+    - [java.sql.ResultSet](#javasqlresultset)
+    - [java.sql.CommonDataSource](#javasqlcommondatasource)
+    - [java.sql.DatabaseMetaData](#javasqldatabasemetadata)
+    - [java.sql.Blob](#javasqlblob)
+    - [java.sql.Clob](#javasqlclob)
+    - [java.sql.Types](#javasqltypes)
+    - [java.sql.DriverAction](#javasqldriveraction)
+    - [java.sql.SQLTypes](#javasqlsqltypes)
+    - [Java 8 Time API](#java-8-time-api)
   - [Appendix A. Data Type Mapping](#appendix-a-data-type-mapping)
     - [Data Type Mapping](#data-type-mapping)
     - [Converting Java Data Types to Database Data Types](#converting-java-data-types-to-database-data-types)
     - [Converting Database Data Types to Java Data Types](#converting-database-data-types-to-java-data-types)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 Altibase® Application Development
 
@@ -67,10 +83,6 @@ This manual contains proprietary information of Altibase Corporation; it is prov
 Customer Service Portal: http://support.altibase.com/en/
 
 Homepage: [[http://www.altibase.com](http://www.altibase.com/)]
-
-
-
-
 
 Preface
 ----
@@ -154,12 +166,12 @@ The following table describes the printing conventions used in the code examples
 
 | Rules            | Meaning                                                      | Example                                                      |
 | ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [ ]              | Indicates an optional item                                   | VARCHAR [(*size*)][[FIXED \|] VARIABLE]                      |
+| [ ]              | Indicates an optional item                                   | VARCHAR [(*size*)] [[FIXED \|] VARIABLE]                     |
 | { }              | Indicates a mandatory field for which one or more items must be selected. | { ENABLE \| DISABLE \| COMPILE }                             |
 | \|               | A delimiter between optional or mandatory arguments.         | { ENABLE \| DISABLE \| COMPILE } [ ENABLE \| DISABLE \| COMPILE ] |
-| . . .            | Indicates that the previous argument is repeated, or that sample code has been omitted. | SQL> SELECT ename FROM employee; ENAME ----------------------- SWNO HJNO HSCHOI . . . 20 rows selected. |
-| Other Symbols    | Symbols other than those shown above are part of the actual code.Other Symbols | EXEC :p1 := 1; acc NUMBER(11,2);Symbols other than those shown above are part of the actual code. |
-| Italics          | Statement elements in italics indicate variables and special values specified by the user. | SELECT * FROM *table_name*; CONNECT *userID*/*password*;     |
+| . . .            | Indicates that the previous argument is repeated, or that sample code has been omitted. | SQL\> SELECT ename FROM employee;<br/> ENAME<br/>  -----------------------<br/> SWNO<br/>  HJNO<br/>  HSCHOI<br/>  .<br/> .<br/> .<br/> 20 rows selected. |
+| Other Symbols    | Symbols other than those shown above are part of the actual code. | EXEC :p1 := 1; acc NUMBER(11,2)                              |
+| Italics          | Statement elements in italics indicate variables and special values specified by the user. | SELECT \* FROM *table_name*; <br/>CONNECT *userID*/*password*; |
 | Lower case words | Indicate program elements set by the user, such as table names, column names, file names, etc. | SELECT ename FROM employee;                                  |
 | Upper case words | Keywords and all elements provided by the system appear in upper case. | DESC SYSTEM_.SYS_INDICES_;                                   |
 
@@ -183,7 +195,7 @@ Include the following information:
 - Any comments about the manual
 - Your name, address, and phone number
 
-If you need immediate assistance regarding any errors, omissions, and other technical issues, please contact Altibase's Support Portal (http://altibase.com/support-center/en/).
+If you need immediate assistance regarding any errors, omissions, and other technical issues, please contact [Altibase's Support Portal](http://support.altibase.com/en/).
 
 Thank you. We always welcome your feedbacks and suggestions.
 
@@ -764,6 +776,15 @@ Chapter 3.</p>
 | Setting Range | The session                                                  |
 | Description   | Sets the maximum waiting time for a response. <br/>For more detailed information, please refer to “Timeout” in Chapter 3. |
 
+##### reuse_resultset
+
+| Defualt Value | false                                                        |
+| ------------- | :----------------------------------------------------------- |
+| Range         | [true \| false]                                              |
+| Mandatory     | No                                                           |
+| Setting Range | The session                                                  |
+| Description   | Specifies whether to reuse the ResultSet object when multiple ResultSet objects were created by executeQuery() method on the same PreparedStatement object. When it is set to true, it reuses the ResultSet object. When close() method is used on the first newly created ResultSet object, the resourse is released and an error occurs when another ResultSet object is used.  To prevent this, the next ResultSet object has to be created after the resource of the first ResultSet object is released. When it is set to false, ResultSet object will not be reused. |
+
 ##### sessionfailover
 
 | Default Value | off                                                          |
@@ -862,6 +883,33 @@ Chapter 3.</p>
 | Mandatory     | No                                                           |
 | Setting Range | N/A                                                          |
 | Description   | Specifies whether or not to authenticate the server's CA certificate. <br />If this value is false, the client application will not authenticate the server's CA certificate. |
+
+##### getprocedures_return_functions
+
+| Default Value | true                                                         |
+| ------------- | :----------------------------------------------------------- |
+| Range         | [true \| false ]                                             |
+| Mandatory     | No                                                           |
+| Setting Range | N/A                                                          |
+| Description   | Specifies whether to include stored procedures in the result DatabaseMetaData.getProcedures() and DatabaseMetaData.getProcedureColumns() methods return. When this value is set to true, it includes stored procedures. When this value is set to false, stored procedures are not included. Hence, DatabaseMetaData.getFunctions() and DatabaseMetaData.getFunctionColumns() have to be used separately to retrieve the stored procedures information.<br />This property is only effective for Altibase42.jar that supports JDBC 4.2. |
+
+##### getcolumns_return_jdbctype
+
+| Default Value | false                                                        |
+| ------------- | :----------------------------------------------------------- |
+| Range         | [true \| false ]                                             |
+| Mandatory     | No                                                           |
+| Setting Range | N/A                                                          |
+| Description   | Specifies the value of DATA_TYPE among the result of DatabaseMetaData.getColumns method. When the value is set to true, it is returned in SQL data type of java.sql.Type specified in JDBC API. When it is set to false, it is returned in data type that is specified in V$DATATYPE. |
+
+##### batch_setbytes_use_lob
+
+| Default Value | true                                                         |
+| ------------- | :----------------------------------------------------------- |
+| Range         | [true \| false ]                                             |
+| Mandatory     | No                                                           |
+| Setting Range | N/A                                                          |
+| Description   | Specifies whether to process in binary type or BLOB type when PreparedStatement.setBytes() is executed by executeBatch() for the BLOB type columns. If the value is set to true, it is processed in BLOB type. In case BLOB data exceed 65,534 bytes which is the maximum size binary data can process, this value has to be set to true because unless java.lang.ClassCastException error occurs. When it is set to false, it is processed in binary type. |
 
 ### Using Statement and ResultSet
 
@@ -969,8 +1017,6 @@ sRs.close();
 sStmt.close();
 ```
 
-
-
 ### JDBC Connection Failover
 
 Due to the termination of one server in an environment where multiple Altibase servers are running, network failure or etc., the service of an application implemented with the Altibase JDBC driver can be compromised. In the event of such a failure, the client which connected to the server on which the failure occurred detects the situation and automatically connects to another server and processes the statements that were being executed; this process is called a Fail-Over. For instructions on how to use the Fail-Over feature in JDBC applications, please refer to the Chapter 4  of *Replication Manual.*
@@ -1047,9 +1093,7 @@ String sURL = “jdbc:Altibase://localhost:20300/mydb";
 Connection sCon = DriverManager.getConnection( sURL, sProps );
 ```
 
-
-
-### Statement, PreparedStatement 및 CallableStatement
+### Statement, PreparedStatement and CallableStatement
 
 Depending on whether or not an in/out parameter is used in a SQL statement or whether or not a SQL statement is directly executed, different Statement objects are available for use in JDBC. The following table shows whether or not the PREPARE function and in/output parameters are available for use for each Statement.
 
@@ -1058,8 +1102,6 @@ Depending on whether or not an in/out parameter is used in a SQL statement or wh
 | Statement         | X       | X            | X             |
 | PreparedStatement | O       | O            | X             |
 | CallableStatement | O       | O            | O             |
-
-
 
 #### Statement
 
@@ -1085,8 +1127,6 @@ sPrepStmt.execute();
 sPrepStmt.close();
 ```
 
-
-
 #### CallableStatement
 
 CallableStatement can be used with an input or output parameter. CallableStatement is mainly used for calling a stored procedure or a stored function.
@@ -1106,8 +1146,6 @@ String sOutVal = sCallStmt.getString(2);
  
 sCallStmt.close();
 ```
-
-
 
 ### Using the National Character Set 
 
@@ -1236,7 +1274,7 @@ A login timeout occurs when a connect method of a Connection object is called an
 The following are code examples which show two ways to set the login_timeout property.
 
 1. Create a Connection object with the Properties object to which the timeout property has been added.
-  
+
 ```
    Properties sProps = new Properties();
    ...
@@ -1264,7 +1302,7 @@ This value is applied to all methods which communicate with the server.
 The following are code examples which show different ways to set the response_timeout property
 
 1. Create a Connection object with a Properties object to which the timeout property has been added.
-  
+
 ```
    Properties sProps = new Properties();
    ...
@@ -1884,7 +1922,7 @@ Altibase</p>
 </table>
 
 
-### RHow to Use ResultSet
+### How to Use ResultSet
 
 This section describes the types of ResultSets supported by the Altibase JDBC driver and how to use them.
 
@@ -1948,7 +1986,7 @@ This option determines whether or not to retain the ResultSet object after the t
 ##### Notes
 
 -   Since the JDBC driver caches as many number of rows as the value set for FetchSize for the ResultSet object on the client, data left in the cache can be retrieved by the application, even if the cursor is closed. If you want the application to immediately detect that the cursor has been closed, set FetchSize to 1.
-  
+
 
 * The default value of Holdability for the Altibase JDBC driver is CLOSE_CURSORS_AT_COMMIT, and is different from the default value for the JDBC specification, HOLD_CURSORS_OVER_COMMIT.  
 
@@ -2245,7 +2283,7 @@ This sections offers instructions on how to use LOB type data provided by Altiba
 #### Prerequisites
 
 -   Altibase supports the LOB data types, BLOB and CLOB, and each can have the maximum size of 4GB-1byte. 
-In JDK 1.5, if sPstmt is cast to AltibasePreparedStatement object, setBinaryStream() method defined as long type length variable can be called.
+    In JDK 1.5, if sPstmt is cast to AltibasePreparedStatement object, setBinaryStream() method defined as long type length variable can be called.
     
 ```
 import Altibase.jdbc.driver.AltibasePreparedStatement;
@@ -3392,6 +3430,265 @@ The following table lists the types of SQLSTATE which can occur in the Altibase 
 |                                       |       | XA open failed                                                                                           | F01      |
 |                                       |       | XA close failed                                                                                          | F02      |
 |                                       |       | XA recover failed                                                                                        | F03      |
+
+## 6. JDBC 4.2 API References
+
+---
+
+### java.sql.Connection
+
+| Interface name                                          | Specification Version | **Supported** | Details                                                      | Exceptions                                                   |
+| :------------------------------------------------------ | --------------------- | ------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| createBlob()                                            | 4.0                   | X             | Does not support creating LOB object in Connection phase     | SQLFeatureNotSupported error occurred                        |
+| createClob()                                            | 4.0                   | X             | Does not support creating LOB object in Connection phase     | SQLFeatureNotSupported error occurred                        |
+| createNClob()                                           | 4.0                   | X             | Does not support multinational language for CLOB object      | SQLFeatureNotSupported error occurred                        |
+| createSQLXML()                                          | 4.0                   | X             | Does not support SQLXML type                                 | SQLFeatureNotSupported error occurred                        |
+| isValid(int  timeout)                                   | 4.0                   | O             |                                                              |                                                              |
+| setClientInfo(String  name, String value)               | 4.0                   | O             | Altibase JDBC supports ApplicationName only among client attributes |                                                              |
+| setClientInfo(Properties  properties)                   | 4.0                   | O             | Supports ApplicationName only                                |                                                              |
+| getClientInfo(String  name)                             | 4.0                   | O             | Supports ApplicationName only                                |                                                              |
+| getClientInfo()                                         | 4.0                   | O             | Supports ApplicationName only                                |                                                              |
+| createArrayOf(String  typeName, Object[] elements)      | 4.0                   | X             | Does not support Array type                                  | SQLFeatureNotSupported error occurred                        |
+| createStruct(String  typeName, Object[] attributes)     | 4.0                   | X             | Does not support Struct type                                 | SQLFeatureNotSupported error occurred                        |
+| setSchema(String  schema)                               | 4.1                   | X             | Does not support schema                                      | Can be just ignored without occurring an error according to specification |
+| getSchema()                                             | 4.1                   | X             | Does not support schema                                      | Returns null instead of occurring an error                   |
+| abort(Executor  executor)                               | 4.1                   | O             |                                                              |                                                              |
+| setNetworkTimeout(Executor  executor, int milliseconds) | 4.1                   | O             | Executor can return NULL since SO_TIMEOUT socket option of TCP/IP connection is used internally |                                                              |
+| getNetworkTimeout()                                     | 4.1                   | O             | Synchronised with response_timeout property of JDBC and returns the property value of it |                                                              |
+
+### java.sql.Wrapper
+
+| Interface name                | Specification Version | Supported | Details | Exceptions |
+| ----------------------------- | --------------------- | --------- | ------- | ---------- |
+| unwrap(Class iface)           | 4.0                   | O         |         |            |
+| isWrapperFor(Class<?>  iface) | 4.0                   | O         |         |            |
+
+ List of classes implementing java.sql.Wrapper interface in Altibase JDBC driver
+
+- Altibase42Connection
+- AltibaseStatement
+- AltibaseResultSet
+- AltibaseResultSetMetaData
+- AltibaseDataSource
+- AltibaseParameterMetaData
+- Altibase42DatabaseMetaData
+
+### java.sql.Driver
+
+| Interface name    | Specification Version | Supported | Details | Exceptions |
+| ----------------- | --------------------- | --------- | ------- | ---------- |
+| getParentLogger() | 4.1                   | O         |         |            |
+
+### java.sql.Statement
+
+| Interface name                  | Specification Version | Supported | Details                                                      | Exceptions |
+| ------------------------------- | --------------------- | --------- | ------------------------------------------------------------ | ---------- |
+| setPoolable(boolean  poolable)  | 4.0                   | O         | Altibase JDBC does not support Statement Pool but flag setting is  available |            |
+| isPoolable()                    | 4.0                   | O         |                                                              |            |
+| closeOnCompletion()             | 4.1                   | O         |                                                              |            |
+| isCloseOnCompletion()           | 4.1                   | O         |                                                              |            |
+| executeLargeBatch()             | 4.2                   | O         |                                                              |            |
+| executeLargeUpdate(String  sql) | 4.2                   | O         |                                                              |            |
+| getLargeMaxRows(long  max)      | 4.2                   | O         |                                                              |            |
+| setLargeMaxRows()               | 4.2                   | O         |                                                              |            |
+| getLargeUpdateCount()           | 4.2                   | O         |                                                              |            |
+
+### java.sql.PreparedStatement
+
+| Interface name                                               | Specification Version | Supported | Details                     | Exceptions                             |
+| ------------------------------------------------------------ | --------------------- | --------- | --------------------------- | -------------------------------------- |
+| setRowId(int  parameterIndex, RowId x)                       | 4.0                   | X         | Does not support RowId      | SQLFeatureNotSupported  error occurred |
+| setNString(int  parameterIndex, String value)                | 4.0                   | O         |                             |                                        |
+| setNClob(int  parameterIndex, NClob value)                   | 4.0                   | X         | Does not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| setNClob(int  parameterIndex, Reader reader)                 | 4.0                   | X         | Does not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| setNClob(int  parameterIndex, Reader reader, long length)    | 4.0                   | X         | Does not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| setClob(int  parameterIndex, Reader reader)                  | 4.0                   | O         |                             |                                        |
+| setClob(int  parameterIndex, Reader reader, long length)     | 4.0                   | O         |                             |                                        |
+| setBlob(int  parameterIndex, InputStream inputStream)        | 4.0                   | O         |                             |                                        |
+| setBlob(int  parameterIndex, InputStream inputStream, long length) | 4.0                   | O         |                             |                                        |
+| setSQLXML(int  parameterIndex, SQLXML xmlObject)             | 4.0                   | X         | Does not support XML type   | SQLFeatureNotSupported  error occurred |
+| setNCharacterStream(int  parameterIndex, Reader value)       | 4.0                   | X         | Does not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| setNCharacterStream(int  parameterIndex, Reader value, long length) | 4.0                   | X         | Does not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| setAsciiStream(int  parameterIndex, InputStream x)           | 4.0                   | O         |                             |                                        |
+| setAsciiStream(int  parameterIndex, InputStream x, long length) | 4.0                   | O         |                             |                                        |
+| executeLargeUpdate()                                         | 4.2                   | O         |                             |                                        |
+| setObject(int  parameterIndex, Object x, SQLType targetSqlType) | 4.2                   | O         |                             |                                        |
+| setObject(int  parameterIndex, Object x, SQLType targetSqlType, int scaleOrLength) | 4.2                   | O         |                             |                                        |
+
+### java.sql.CallableStatement
+
+| Interface name                                               | Specification Version | Supported | Details                     | Exceptions                             |
+| ------------------------------------------------------------ | --------------------- | --------- | --------------------------- | -------------------------------------- |
+| getRowId(int  parameterIndex)                                | 4.0                   | X         | Does not support RowId      | SQLFeatureNotSupported  error occurred |
+| getRowId(String  parameterName)                              | 4.0                   | X         | Does not support RowId      | SQLFeatureNotSupported  error occurred |
+| setRowId(String  parameterName, RowId x)                     | 4.0                   | X         | Does not support RowId      | SQLFeatureNotSupported  error occurred |
+| getNClob(int  parameterIndex)                                | 4.0                   | X         | Does not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| getNClob(String  parameterName)                              | 4.0                   | X         | Does not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| setNClob(String  parameterName, NClob value)                 | 4.0                   | X         | Does not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| setNClob(String  parameterName, Reader reader)               | 4.0                   | X         | Does not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| setNClob(String  parameterName, Reader reader, long length)  | 4.0                   | X         | Does not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| setClob(String  parameterName, Clob x)                       | 4.0                   | O         |                             |                                        |
+| setClob(String  parameterName, Reader reader)                | 4.0                   | O         |                             |                                        |
+| setClob(String  parameterName, Reader reader, long length)   | 4.0                   | O         |                             |                                        |
+| setBlob(String  parameterName, Blob x)                       | 4.0                   | O         |                             |                                        |
+| setBlob(String  parameterName, InputStream inputStream)      | 4.0                   | O         |                             |                                        |
+| setBlob(String  parameterName, InputStream inputStream, long, length) | 4.0                   | O         |                             |                                        |
+| setSQLXML(String  parameterName, SQLXML xmlObject)           | 4.0                   | X         | Does not support XML        | SQLFeatureNotSupported  error occurred |
+| getSQLXML(int  parameterIndex)                               | 4.0                   | X         | Does not support XML        | SQLFeatureNotSupported  error occurred |
+| getSQLXML(String  parameterName)                             | 4.0                   | X         | Does not support XML        | SQLFeatureNotSupported  error occurred |
+| getNString(int  parameterIndex)                              | 4.0                   | O         |                             |                                        |
+| getNString(String  parameterName)                            | 4.0                   | O         |                             |                                        |
+| setNString(String  parameterName, String value)              | 4.0                   | O         |                             |                                        |
+| getNCharacterStream(int  parameterIndex)                     | 4.0                   | X         | Does not support NClob type | SQLFeatureNotSupported  error occurred |
+| getNCharacterStream(String  parameterName)                   | 4.0                   | X         | Does not support NClob type | SQLFeatureNotSupported  error occurred |
+| setNCharacterStream(String  parameterName, Reader reader)    | 4.0                   | X         | Does not support NClob type | SQLFeatureNotSupported  error occurred |
+| setNCharacterStream(String  parameterName, Reader value, long length | 4.0                   | X         | Does not support NClob type | SQLFeatureNotSupported  error occurred |
+| getCharacterStream(int  parameterIndex)                      | 4.0                   | O         |                             |                                        |
+| getCharacterStream(String  parameterName)                    | 4.0                   | O         |                             |                                        |
+| setAsciiStream(String  parameterName, InputStream x)         | 4.0                   | O         |                             |                                        |
+| setAsciiStream(String  parameterName, InputStream x, long length) | 4.0                   | O         |                             |                                        |
+| setBinaryStream(String  parameterName, InputStream x)        | 4.0                   | O         |                             |                                        |
+| setBinaryStream(String  parameterName, InputStream x, long length) | 4.0                   | O         |                             |                                        |
+| setCharacterStream(String  parameterName, Reader reader)     | 4.0                   | O         |                             |                                        |
+| setCharacterStream(String  parameterName, Reader reader, long length) | 4.0                   | O         |                             |                                        |
+| getObject(int  parameterIndex, Class<T> type                 | 4.1                   | O         |                             |                                        |
+| getObject(String  parameterName, Class<T> type               | 4.1                   | O         |                             |                                        |
+| setObject(String  parameterName, Object x, SQLType targetSqlType, int scaleOrLength) | 4.2                   | O         |                             |                                        |
+| setObject(String  parameterName, Object x, SQLType targetSqlType) | 4.2                   | O         |                             |                                        |
+| registerOutParameter(int  parameterIndex, SQLType sqlType)   | 4.2                   | O         |                             |                                        |
+| registerOutParameter(int  parameterIndex, SQLType sqlType, int scale) | 4.2                   | O         |                             |                                        |
+| registerOutParameter(int  parameterIndex, SQLType sqlType, String typeName) | 4.2                   | O         |                             |                                        |
+| registerOutParameter(String  parametername, SQLType sqlType  | 4.2                   | O         |                             |                                        |
+| registerOutParameter(String  parametername, SQLType sqlType, int scale) | 4.2                   | O         |                             |                                        |
+| registerOutParameter(String  parametername, SQLType sqlType, String typeName) | 4.2                   | O         |                             |                                        |
+
+### java.sql.PooledConnection
+
+| Interface name                                               | Specification Version | Supported | Details                                              | Exceptions |
+| ------------------------------------------------------------ | --------------------- | --------- | ---------------------------------------------------- | ---------- |
+| addStatementEventListener(StatementEventListener  listener)  | 4.0                   | X         | Gets ignored because Statement Pool is not supported |            |
+| removeStatementEventListener(StatementEventListener  listener) | 4.0                   | X         | Gets ignored because Statement Pool is not supported |            |
+
+### java.sql.ResultSet
+
+| Interface name                                               | Specification Version | Supported | Details                      | Exception                              |
+| ------------------------------------------------------------ | --------------------- | --------- | ---------------------------- | -------------------------------------- |
+| getRowId(int  columnIndex)                                   | 4.0                   | X         | Does  not support RowId      | SQLFeatureNotSupported  error occurred |
+| getRowId(String  columnLabel)                                | 4.0                   | X         | Does  not support RowId      | SQLFeatureNotSupported  error occurred |
+| updateRowId(int  columnIndex, RowId x)                       | 4.0                   | X         | Does  not support RowId      | SQLFeatureNotSupported  error occurred |
+| updateRowId(String  columnLabel, RowId x)                    | 4.0                   | X         | Does  not support RowId      | SQLFeatureNotSupported  error occurred |
+| updateNString(int  columnIndex, String nString)              | 4.0                   | O         |                              |                                        |
+| updateNString(String  columnLabel, String nString)           | 4.0                   | O         |                              |                                        |
+| updateNClob(int  columnIndex, Reader reader)                 | 4.0                   | X         | Does  not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| updateNClob(int  columnIndex, Reader reader, long length)    | 4.0                   | X         | Does  not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| updateNClob(String  columnLabel, Reader reader)              | 4.0                   | X         | Does  not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| updateNClob(String  columnLabel, Reader reader, long length) | 4.0                   | X         | Does  not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| updateNClob(int  columnIndex, NClob nClob)                   | 4.0                   | X         | Does  not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| updateNClob(String  columnLabel, NClob nClob)                | 4.0                   | X         | Does  not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| getNClob(int  columnIndex)                                   | 4.0                   | X         | Does  not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| getNClob(String  columnLabel)                                | 4.0                   | X         | Does  not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| getSQLXML(int  columnIndex)                                  | 4.0                   | X         | Does not support XML type    | SQLFeatureNotSupported  error occurred |
+| getSQLXML(String  columnLabel)                               | 4.0                   | X         | Does not support XML type    | SQLFeatureNotSupported  error occurred |
+| updateSQLXML(int  columnIndex, SQLXML xmlObject)             | 4.0                   | X         | Does not support XML type    | SQLFeatureNotSupported  error occurred |
+| updateSQLXML(String  columnLabel, SQLXML xmlObject)          | 4.0                   | X         | Does not support XML type    | SQLFeatureNotSupported  error occurred |
+| getNString(int  columnIndex)                                 | 4.0                   | O         |                              |                                        |
+| getNString(String  columnLabel)                              | 4.0                   | O         |                              |                                        |
+| getNCharacterStream(int  columnIndex)                        | 4.0                   | X         | Does  not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| getNCharacterStream(String  columnLabel)                     | 4.0                   | X         | Does  not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| updateNCharacterStream(int  columnIndex, Reader x)           | 4.0                   | X         | Does  not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| updateNCharacterStream(int  columnIndex, Reader x, long length) | 4.0                   | X         | Does  not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| updateNCharacterStream(String  columnLabel, Reader reader)   | 4.0                   | X         | Does  not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| updateNCharacterStream(String  columnLabel, Reader reader, long length) | 4.0                   | X         | Does  not support NCLOB type | SQLFeatureNotSupported  error occurred |
+| updateAsciiStream(int  columnIndex, InputStream x)           | 4.0                   | O         |                              |                                        |
+| updateAsciiStream(int  columnIndex, InputStream x, long length) | 4.0                   | O         |                              |                                        |
+| updateAsciiStream(String  columnLabel, InputStream x)        | 4.0                   | O         |                              |                                        |
+| updateAsciiStream(String  columnLabel, InputStream x, long length) | 4.0                   | O         |                              |                                        |
+| updateBinaryStream(int  columnIndex, InputStream x)          | 4.0                   | O         |                              |                                        |
+| updateBinaryStream(int  columnIndex, InputStream x, long length) | 4.0                   | O         |                              |                                        |
+| updateBinaryStream(String  columnLabel, InputStream x)       | 4.0                   | O         |                              |                                        |
+| updateBinaryStream(String  columnLabel, InputStream x, long length) | 4.0                   | O         |                              |                                        |
+| updateCharacterStream(int  columnIndex, Reader x)            | 4.0                   | O         |                              |                                        |
+| updateCharacterStream(int  columnIndex, Reader x, long length) | 4.0                   | O         |                              |                                        |
+| updateCharacterStream(String  columnLabel, Reader reader)    | 4.0                   | O         |                              |                                        |
+| updateCharacterStream(String  columnLabel, Reader reader, long length) | 4.0                   | O         |                              |                                        |
+| updateBlob(int  columnIndex, InputStream inputStream)        | 4.0                   | O         |                              |                                        |
+| updateBlob(int  columnIndex, InputStream inputStream, long length) | 4.0                   | O         |                              |                                        |
+| updateBlob(String  columnLabel, InputStream inputStream)     | 4.0                   | O         |                              |                                        |
+| updateBlob(String  columnLabel, InputStream inputStream, long length) | 4.0                   | O         |                              |                                        |
+| updateClob(int  columnIndex, Reader reader)                  | 4.0                   | O         |                              |                                        |
+| updateClob(int  columnIndex, Reader reader, long length)     | 4.0                   | O         |                              |                                        |
+| updateClob(String  columnLabel, Reader reader)               | 4.0                   | O         |                              |                                        |
+| updateClob(String  columnLabel, Reader reader, long length)  | 4.0                   | O         |                              |                                        |
+| getObject(int  columnIndex, Class<T> type)                   | 4.1                   | O         |                              |                                        |
+| getObject(String  columnLabel, Class<T> type)                | 4.1                   | O         |                              |                                        |
+
+### javax.sql.CommonDataSource
+
+| Interface name    | Specification Version | Supported | Details | Exception |
+| ----------------- | --------------------- | --------- | ------- | --------- |
+| getParentLogger() | 4.1                   | O         |         |           |
+
+### java.sql.DatabaseMetaData
+
+| Interface name                                               | Specification Version | Supported | Details                       | Exceptions                             |
+| ------------------------------------------------------------ | --------------------- | --------- | ----------------------------- | -------------------------------------- |
+| getRowIdLifetime()                                           | 4.0                   | X         | Does  not support RowId       | SQLFeatureNotSupported  error occurred |
+| getSchemas(String  catalog, String schemaPattern)            | 4.0                   | O         |                               |                                        |
+| supportsStoredFunctionsUsingCallSyntax()                     | 4.0                   | X         | Returns false                 |                                        |
+| autoCommitFailureClosesAllResultSets()                       | 4.0                   | X         | Returns false                 |                                        |
+| getClientInfoProperties()                                    | 4.0                   | O         | Supports ApplicationName only |                                        |
+| getFunctions(String  catalog, String schemaPattern, String functionNamePattern) | 4.0                   | O         |                               |                                        |
+| getFunctionColumns(String  catalog, String schemaPattern, String functionNamePattern,String  columnNamePattern) | 4.0                   | O         |                               |                                        |
+| getPseudoColumns(String  catalog, String schemaPattern, String tableNamePattern, String  columnNamePattern) | 4.1                   | X         |                               | SQLFeatureNotSupported  error occurred |
+| generatedKeyAlwaysReturned()                                 | 4.1                   | X         | Returns  false                |                                        |
+
+### java.sql.Blob
+
+| Interface name                          | Specification Version | Supported | Details | Exceptions |
+| --------------------------------------- | --------------------- | --------- | ------- | ---------- |
+| getBinaryStream(long  pos, long length) | 4.0                   | O         |         |            |
+
+### java.sql.Clob
+
+| Interface name                             | Specification Version | Supported | Details | Exceptions |
+| ------------------------------------------ | --------------------- | --------- | ------- | ---------- |
+| getCharacterStream(long  pos, long length) | 4.0                   | O         |         |            |
+
+### java.sql.Types
+
+| Interface name | Specification Version | Supported | Details                                     | Exceptions |
+| -------------- | --------------------- | --------- | ------------------------------------------- | ---------- |
+| REF_CURSOR     | 4.2                   | X         | Cannot use ref cursor as outbound parameter |            |
+
+### java.sql.DriverAction
+
+| Interface name | Specification Version | Supported | Details                                              | Exceptions |
+| -------------- | --------------------- | --------- | ---------------------------------------------------- | ---------- |
+| deregister()   | 4.2                   | x         | Does not support releasing resources by deregister() |            |
+
+### java.sql.SQLTypes
+
+Altibase JDBC driver supports AltibaseJDBCType which implements java.sql.SQLTypes interface.
+
+| Interface name        | Specification Version | Supported | Details | Exceptions |
+| --------------------- | --------------------- | --------- | ------- | ---------- |
+| getName()             | 4.2                   | O         |         |            |
+| getVendor()           | 4.2                   | O         |         |            |
+| getVendorTypeNumber() | 4.2                   | O         |         |            |
+
+### Java 8 Time API
+
+Altibase42.jar which supports JDBC 4.2 specification supports JAVA8 Time API by converting it to java.sql type as follows.
+
+| Java 8 Time Class        | Altibase JDBC      |
+| ------------------------ | ------------------ |
+| java.time.LocalDate      | java.sql.Date      |
+| java.time.LocalTime      | java.sql.Time      |
+| java.time.LocalDateTime  | java.sql.TimeStamp |
+| java.time.OffsetTime     | Not supported      |
+| java.time.OffsetDateTime | Not supported      |
+
+
 
 Appendix A. Data Type Mapping
 ----------------------

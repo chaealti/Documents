@@ -1,5 +1,4 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 
 - [Application Program Interface User’s Manual](#application-program-interface-users-manual)
   - [Preface](#preface)
@@ -21,7 +20,7 @@
     - [JDBC Distributed Transactions](#jdbc-distributed-transactions)
     - [How to Solve Application Problems Using XA](#how-to-solve-application-problems-using-xa)
   - [4. iLoader API](#4-iloader-api)
-    - [iLoader API 개요](#iloader-api-%EA%B0%9C%EC%9A%94)
+    - [iLoader API Overview](#iloader-api-overview)
     - [Using the iLoader API](#using-the-iloader-api)
     - [iLoader API Data Structures](#iloader-api-data-structures)
     - [iLoader API](#iloader-api)
@@ -31,9 +30,7 @@
     - [CheckServer API Data Structure](#checkserver-api-data-structure)
     - [CheckServer API](#checkserver-api)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-- 
 
 Altibase® Application Development
 
@@ -136,12 +133,12 @@ The following table describes the printing conventions used in the code examples
 
 | Rules            | Meaning                                                      | Example                                                      |
 | ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [ ]              | Indicates an optional item                                   | VARCHAR [(*size*)][[FIXED \|] VARIABLE]                      |
+| [ ]              | Indicates an optional item                                   | VARCHAR [(*size*)] [[FIXED \|] VARIABLE]                     |
 | { }              | Indicates a mandatory field for which one or more items must be selected. | { ENABLE \| DISABLE \| COMPILE }                             |
 | \|               | A delimiter between optional or mandatory arguments.         | { ENABLE \| DISABLE \| COMPILE } [ ENABLE \| DISABLE \| COMPILE ] |
-| . . .            | Indicates that the previous argument is repeated, or that sample code has been omitted. | SQL> SELECT ename FROM employee; ENAME ----------------------- SWNO HJNO HSCHOI . . . 20 rows selected. |
-| Other Symbols    | Symbols other than those shown above are part of the actual code.Other Symbols | EXEC :p1 := 1; acc NUMBER(11,2);Symbols other than those shown above are part of the actual code. |
-| Italics          | Statement elements in italics indicate variables and special values specified by the user. | SELECT * FROM *table_name*; CONNECT *userID*/*password*;     |
+| . . .            | Indicates that the previous argument is repeated, or that sample code has been omitted. | SQL\> SELECT ename FROM employee;<br/> ENAME<br/>  -----------------------<br/> SWNO<br/>  HJNO<br/>  HSCHOI<br/>  .<br/> .<br/> .<br/> 20 rows selected. |
+| Other Symbols    | Symbols other than those shown above are part of the actual code. | EXEC :p1 := 1; acc NUMBER(11,2)                              |
+| Italics          | Statement elements in italics indicate variables and special values specified by the user. | SELECT \* FROM *table_name*; <br/>CONNECT *userID*/*password*; |
 | Lower case words | Indicate program elements set by the user, such as table names, column names, file names, etc. | SELECT ename FROM employee;                                  |
 | Upper case words | Keywords and all elements provided by the system appear in upper case. | DESC SYSTEM_.SYS_INDICES_;                                   |
 
@@ -177,7 +174,7 @@ Include the following information:
 - Any comments about the manual
 - Your name, address, and phone number
 
-If you need immediate assistance regarding any errors, omissions, and other technical issues, please contact Altibase's Support Portal (http://altibase.com/support-center/en/).
+If you need immediate assistance regarding any errors, omissions, and other technical issues, please contact [Altibase's Support Portal](http://support.altibase.com/en/).
 
 Thank you. We always welcome your feedbacks and suggestions.
 
@@ -894,7 +891,7 @@ This section describes the basic procedures for using ODBC, APRE and JDBC in an 
 9.  xa_commit  
     Commit the transaction.
 10.  SQLDisconnect  
-   In ODBC, change the internal state of the connection to unconnected. However, the connection created by the actual XA is retained.
+      In ODBC, change the internal state of the connection to unconnected. However, the connection created by the actual XA is retained.
 11.  xa_close  
     Terminate xa connection.
 
@@ -1921,9 +1918,9 @@ The iLoader API provides the following two structures for use in logging the pro
   ​                                                                                                                                                                
   
   | Member         | Description                                                  |
-| -------------- | ------------------------------------------------------------ |
+  | -------------- | ------------------------------------------------------------ |
   | tableName      | This is the name of the table being uploaded or downloaded.  |
-| totalCount     | This is the total number of rows for which an upload or download attempt has been made. |
+  | totalCount     | This is the total number of rows for which an upload or download attempt has been made. |
   | loadCount      | This is the total number of rows that have been successfully uploaded or downloaded. |
   | errorCount     | This is the number of rows that could not be uploaded or downloaded due to the occurrence of an error. Note that when an error occurs, this count does not include the current error. That is, it is a count of all errors preceding the current error. |
   | record         | When an error occurs, this indicates the position of the record that could not be uploaded or downloaded. |

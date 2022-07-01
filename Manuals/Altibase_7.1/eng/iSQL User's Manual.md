@@ -1,18 +1,17 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [iSQL User’s Manual](#isql-users-manual)
+
+- [iSQL User’s Manual](#iSQL-users-manual)
   - [Preface](#preface)
     - [About This Manual](#about-this-manual)
-  - [1. Using iSQL](#1-using-isql)
-    - [iSQL Overview](#isql-overview)
-    - [Setting up iSQL](#setting-up-isql)
-    - [iSQL Command-Line Options](#isql-command-line-options)
-    - [iSQL Commands](#isql-commands)
-    - [iSQL Environment Variables](#isql-environment-variables)
-    - [Personalizing iSQL](#personalizing-isql)
-  - [2. Examples of iSQL in Use](#2-examples-of-isql-in-use)
-    - [Logging In to iSQL](#logging-in-to-isql)
+  - [1. Using iSQL](#1-using-iSQL)
+    - [iSQL Overview](#iSQL-overview)
+    - [Setting up iSQL](#setting-up-iSQL)
+    - [iSQL Command-Line Options](#iSQL-command-line-options)
+    - [iSQL Commands](#iSQL-commands)
+    - [iSQL Environment Variables](#iSQL-environment-variables)
+    - [Personalizing iSQL](#personalizing-iSQL)
+  - [2. Examples of iSQL in Use](#2-examples-of-iSQL-in-use)
+    - [Logging In to iSQL](#logging-in-to-iSQL)
     - [Starting Up and Shutting Down Altibase](#starting-up-and-shutting-down-altibase)
     - [Connecting and Disconnecting](#connecting-and-disconnecting)
     - [Retrieving Information Related to the Database and Database Objects](#retrieving-information-related-to-the-database-and-database-objects)
@@ -20,7 +19,7 @@
     - [File Management](#file-management)
     - [Formatting SELECT Query Results](#formatting-select-query-results)
     - [Setting Output Options](#setting-output-options)
-    - [Viewing iSQL Display Settings](#viewing-isql-display-settings)
+    - [Viewing iSQL Display Settings](#viewing-iSQL-display-settings)
     - [Host Variables](#host-variables)
     - [Executing Prepared SQL Statements](#executing-prepared-sql-statements)
     - [Creating, Executing, and Dropping Stored Procedures](#creating-executing-and-dropping-stored-procedures)
@@ -28,7 +27,7 @@
     - [Convenient User Functions](#convenient-user-functions)
     - [Using National Character Sets](#using-national-character-sets)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 Altibase® Tools & Utilities
 
@@ -125,12 +124,12 @@ The following table describes the printing conventions used in the code examples
 
 | Rules            | Meaning                                                      | Example                                                      |
 | ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [ ]              | Indicates an optional item                                   | VARCHAR [(*size*)][[FIXED \|] VARIABLE]                      |
+| [ ]              | Indicates an optional item                                   | VARCHAR [(*size*)] [[FIXED \|] VARIABLE]                     |
 | { }              | Indicates a mandatory field for which one or more items must be selected. | { ENABLE \| DISABLE \| COMPILE }                             |
 | \|               | A delimiter between optional or mandatory arguments.         | { ENABLE \| DISABLE \| COMPILE } [ ENABLE \| DISABLE \| COMPILE ] |
-| . . .            | Indicates that the previous argument is repeated, or that sample code has been omitted. | SQL> SELECT ename FROM employee; ENAME ----------------------- SWNO HJNO HSCHOI . . . 20 rows selected. |
-| Other Symbols    | Symbols other than those shown above are part of the actual code.Other Symbols | EXEC :p1 := 1; acc NUMBER(11,2);Symbols other than those shown above are part of the actual code. |
-| Italics          | Statement elements in italics indicate variables and special values specified by the user. | SELECT * FROM *table_name*; CONNECT *userID*/*password*;     |
+| . . .            | Indicates that the previous argument is repeated, or that sample code has been omitted. | SQL\> SELECT ename FROM employee;<br/> ENAME<br/>  -----------------------<br/> SWNO<br/>  HJNO<br/>  HSCHOI<br/>  .<br/> .<br/> .<br/> 20 rows selected. |
+| Other Symbols    | Symbols other than those shown above are part of the actual code. | EXEC :p1 := 1; acc NUMBER(11,2)                              |
+| Italics          | Statement elements in italics indicate variables and special values specified by the user. | SELECT \* FROM *table_name*; <br/>CONNECT *userID*/*password*; |
 | Lower case words | Indicate program elements set by the user, such as table names, column names, file names, etc. | SELECT ename FROM employee;                                  |
 | Upper case words | Keywords and all elements provided by the system appear in upper case. | DESC SYSTEM_.SYS_INDICES_;                                   |
 
@@ -162,7 +161,7 @@ Include the following information:
 - Any comments about the manual
 - Your name, address, and phone number
 
-If you need immediate assistance regarding any errors, omissions, and other technical issues, please contact Altibase's Support Portal (http://altibase.com/support-center/en/).
+If you need immediate assistance regarding any errors, omissions, and other technical issues, please contact [Altibase's Support Portal](http://support.altibase.com/en/).
 
 Thank you. We always welcome your feedbacks and suggestions.
 
@@ -337,8 +336,8 @@ isql
   
 - -prefer_ipv6
   This option determines the IP address to be connected first when a host name is given for the -s option.  
-  If this option is specified and a host name is given for the -s option, this means that resolving the host name to the IPv6 address is prefered. If this option is omitted, isql connects to the IPv4 address by default. If it fails to connect to the prefered IP version address, an attempt is made to connect using the other IP version address.  
-  For example, when localhost is given for the -s option and this option is specified, isql first tries to connect to the [::1] IPv6 address. If this attempt fails, isql proceeds to connect to the 127.0.0.1 IPv4 address.
+  If this option is specified and a host name is given for the -s option, this means that resolving the host name to the IPv6 address is prefered. If this option is omitted, iSQL connects to the IPv4 address by default. If it fails to connect to the prefered IP version address, an attempt is made to connect using the other IP version address.  
+  For example, when localhost is given for the -s option and this option is specified, iSQL first tries to connect to the [::1] IPv6 address. If this attempt fails, iSQL proceeds to connect to the 127.0.0.1 IPv4 address.
   
 - -TIME_ZONE *timezone*  
   This option sets the time zone of the client. If DB_TZ is specified for this option, the time zone is defaulted to that of the database server. Time zone names like Asia/Seoul, abbreviations such as KST and UTC offset values as +09:00 are valid for specification.  
@@ -744,6 +743,7 @@ help, outputs a list of commands, and
 describes (e.g.) the EXIT command, respectively.</TD>
        </TR>          
 </table>         
+
 
 
 
@@ -1760,7 +1760,7 @@ SELECT * FROM employees;
 After editing (employees was replaced with orders)
 
 ```
-iSQL> h 		<- The history list currently in the isql buffer 
+iSQL> h 		<- The history list currently in the iSQL buffer 
 1  : SELECT * FROM customers;
 2  : SELECT * FROM employees;
  : SELECT * FROM orders;
@@ -2809,7 +2809,7 @@ SQL statements executed in iSQL are usually executed according to the so-called 
 
 In Direct Execution, syntax analysis, validity testing, optimization and execution of a query are all performed at once. However, in Prepared Execution, only the syntax analysis, validity testing, and optimization of the query are performed to set up an execution plan for the query, which is then executed when requested by the client. When creating an application that uses ODBC, the Prepared Execution method is typically used, and is more advantageous in terms of speed when a SQL statement is to be repeatedly executed using host variable binding. 
 
-In iSQL, the difference between these two methods lies only in whether variables are used or not; there is no advantage in terms of speed.
+In iSQL, the difference between these two methods lies only in whether variables are used or not; there is no advantage in terms of speed. However, when it is executed in Prepared Execution, the printed graph and the execution plan may contain different information. The graph shows the plan up until the optimization phase, whereas execution plan shows the plan once the actual value is applied to the variable.
 
 #### Prepared SQL Statements
 
@@ -3204,7 +3204,32 @@ iSQL> / -> Re-execute the most recent command(HISTORY;))
 iSQL> 2/ -> Execute Command number 2 in history list(SELECT * FROM book;)
 ```
 
+#### History Logging
 
+It saves the commands executed in iSQL to a file when you exit iSQL. Enabling this function loads previous commands stored in the file when iSQL is restarted. Therefore, previous commands are accessible and executable by using the arrow keys on the keyboard.
+
+To use the history logging function, ISQL_HIST_FILE environment variable should be set and iSQL has to be restarted.
+
+```
+$ export ISQL_HIST_FILE=~/.isql_history
+```
+
+To turn off the history logging function, delete the ISQL_HIST_FILE environment variable.
+
+```
+$ unset ISQL_HIST_FILE
+```
+
+##### Default Value
+
+Not used
+
+##### Constraints
+
+- This function can only be used  when previous commands are accessible by using the arrow keys on command prompt or shell prompt.
+- Maximum 100 commands can be stored.
+
+File access control should be well taken care of when this function is used since every command the user entered is stored in the file, including sensitive information such as user passwords.
 
 #### Shell Commands
 
@@ -3302,8 +3327,6 @@ The ALTIBASE_NLS_NCHAR_LITERAL_REPLACE environment variable must be set to1.
 ```
 $ export ALTIBASE_NLS_NCHAR_LITERAL_REPLACE =1
 ```
-
-   
 
 In order to use NCHAR type data that are encoded differently from the database character set, enter the character “N” in front of the string.
 

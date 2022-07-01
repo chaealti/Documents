@@ -34,7 +34,9 @@
     - [DBMS_SHARD](#dbms_shard)
     - [DBMS_SHARD_GET_DIAGNOSTICS](#dbms_shard_get_diagnostics)
   - [Stored Procedures](#stored-procedures)
-  - [Sharded Sequence](#sharded-sequence)
+  - [Sequence](#sequence)
+    - [Sharded Sequence](#sharded-sequence)
+    - [Global Sequence](#global-sequence)
   - [Altibase Sharding Property](#altibase-sharding-property)
   - [Altibase Sharding Dictionary](#altibase-sharding-dictionary)
     - [Shard Meta Table](#shard-meta-table)
@@ -319,7 +321,7 @@ iSQL> SELECT user_id, count(*) FROM table GROUP BY user_id;
 리스트 분산은 샤드 키 값을 특정값과 일치하는지 확인하여 분산하는 방식이다. 
 
 아래는 도시명을 이용한 임의의 리스트 분산 설정한 예시이다.
--   { record(x) \| (shard key value of x) = ‘서울’ } -\> 샤드 노드1
+-   { record(x) \| (shard key value of x) = ‘서울’ } -\> 샤드 노드 1
 -   { record(x) \| (shard key value of x) = ‘부산’ } -\> 샤드 노드 2
 -   { record(x) \| (shard key value of x) = ‘대구’ } -\> 샤드 노드 3
 
@@ -402,6 +404,7 @@ non-shard DML 처리를 위한 분산 질의 처리기이다. 해당 DML의 대�
 -   Table
 -   Procedure
 -   Sharded sequence
+-   Global sequence
 
 #### 샤드 테이블(shard table)
 샤드 테이블은 일반 테이블에 샤드 분산 설정을 한 테이블을 말한다.
@@ -446,6 +449,9 @@ non-shard DML 처리를 위한 분산 질의 처리기이다. 해당 DML의 대�
 -   SHARD
 -   NODE[META]
 -   NODE[DATA]
+-   NODE[DATA_PARTIAL]
+-   SHARD_PARTIAL
+-   SHARD_LOCAL
 
 #### 샤드 쿼리(shard query)
 샤드 쿼리는 동일한 쿼리를 샤드노드별로 별개로 수행하여 취합한 결과가 하나의 데이터베이스에서 처리한 결과와 동일 할 경우를 지칭한다. 논샤드 쿼리는 샤드 쿼리가 아닌 쿼리를 지칭한다.
@@ -932,8 +938,8 @@ Altibase Sharding 사용자는 iSQL의 Explain Plan 기능을 통해 쿼리가 �
   - 논샤드 쿼리에 대한 샤드 퀴리 변환 최적화 가능 여부(Yes/No)가 표시된다.
 
 #### 분산쿼리 키워드
-분산쿼리 키워드를 이용하여, 임의의 쿼리를 수행할 샤드 노드의 범위를 정해서 쿼리를 수행하게 할 수 있다.
-- 단, 하나의 statement에서는 하나의 분산쿼리 키워드 만 사용할 수 있다.
+분산쿼리 키워드를 이용하여, 임의의 쿼리를 수행할 샤드 노드의 범위와 수행방식을 정해서 쿼리를 수행하게 할 수 있다.
+- 단, SHARD_LOCAL 키워드를 제외한 나머지 키워드는 하나의 statement내에서 하나의 분산쿼리 키워드 만 사용할 수 있다.
 
 ##### 구문
 -   SHARD
@@ -942,12 +948,18 @@ Altibase Sharding 사용자는 iSQL의 Explain Plan 기능을 통해 쿼리가 �
     - SELECT, INSERT, UPDATE, DELETE
 -   NODE[DATA | DATA() | DATA('*node1_name'*, '*node2_name'*...)]
     - SELECT
+-   NODE[DATA_PARTIAL | DATA_PARTIAL() | DATA_PARTIAL('*node1_name'*, '*node2_name'*...)]
+    - SELECT
+-   SHARD_PARTIAL
+    - SELECT
+-   SHARD_LOCAL
+    - SELECT
 
 ![](media/Sharding/79bcb8f6b5cb10cc7a7b816363aa709f.jpg)
 
 **shard_keyword_clause::=**
 
-![](media/Sharding/d15e35752ab4fd66496232e1d1e055a1.jpg)
+![](media/Sharding/bug-45986-new-img_2.jpg)
 
 ##### *SHARD* 분산쿼리 키워드
 SHARD 분산쿼리 키워드를 사용하면, 쿼리에 존재하는 샤드객체의 분산정의가 존재하는 모든 샤드 노드(들)에 쿼리를 전송하고 수행하여 취합한다. 분산 수행할 수 있는 샤딩객체가 전혀 없을 때는 에러가 발생한다.
@@ -960,11 +972,31 @@ SHARD 분산쿼리 키워드를 사용하면, 쿼리에 존재하는 샤드객�
 -   SELECT i1, sum(cn) FROM SHARD (SELECT i1, count(\*) cn FROM s1 GROUP BY i1);
 -   SELECT \* FROM SHARD (SELECT \* FROM s1 limit 10) limit 10;
 
+##### *SHARD_PARTIAL* 분산쿼리 키워드
+SHARD_PARTIAL 분산쿼리 키워드는 쿼리를 전송받은 노드가 보조적인 샤드 코디네이터로서 전역수행 하도록 명령하는 키워드이다.
+SHARD_PARTIAL 키워드가 적용된 쿼리 구간 내부에는 반드시 SHARD_LOCAL 키워드가 존재해야 한다.
+
+SHARD_PARTIAL 키워드가 적용된 쿼리는 SHARD_LOCAL 키워드가 적용된 부분 쿼리의 분산수행 분석결과에 따라 해당하는 노드(들)에 쿼리를 전송하고,
+해당 쿼리를 전송받은 노드는 SHARD_LOCAL 키워드가 적용된 부분 쿼리에 대해서는 지역 수행하며, 그 외의 부분 쿼리에 대해서는 전역 수행하여 결과를 반환한다.
+
+아래와 같은 쿼리의 수행 시 SHARD_LOCAL 키워드가 적용된 t1이 존재하는 모든 샤드 노드(들)에 SHARD_PARTIAL 키워드가 적용된 쿼리가 전송되고,
+이를 전송받은 노드는 SELECT * FROM t1에 대해서는 지역수행하고, SELECT * FROM t2에 대해서는 전역수행 하여 결과를 반환하게 된다.
+-   SELECT * FROM SHARD_PARTIAL( SELECT * FROM SHARD_LOCAL(SELECT * FROM t1) , t2 );
+
+성능을 위한 쿼리 튜닝의 일환으로 데이터 노드(들)에서 직접 전역수행 할 시 성능상 이점이 있는경우 활용될 수 있다.
+
+##### *SHARD_LOCAL* 분산쿼리 키워드
+SHARD_LOCAL 분산쿼리 키워드는 다른 분산 쿼리 키워드 내에 사용 될 수 있는 키워드로서,
+데이터 노드가 보조적인 샤드 코디네이터 역할을 수행하도록 지시하는 SHARD_PARTIAL 키워드 등과 함께 사용되어
+SHARD_LOCAL 키워드가 적용된 부분 쿼리에 대해서 전역 수행하지 않고, 지역수행 하도록 하는 역할을 한다.
+
 ##### *NODE* 분산쿼리 키워드
 NODE 분산쿼리 키워드는 인자로 명시한 노드에서 쿼리를 분석 및 변환없이 수행하고, 그 수행 결과를 취합한다. 샤드 쿼리 분석기를 통하지 않고 해당 쿼리를 바로 전달한다. 사용 가능한 NODE 유형은 다음과 같다.
--   NODE[META] : 사용자 세션이 접속한 샤드 노드에 대해 쿼리 분석 및 변환없이 수행
--   NODE[DATA] 또는 NODE[DATA()] : 모든 샤드 노드들에 대해 쿼리 분석 및 변환없이 수행
--   NODE[DATA(*'node1_name*', *node2_name*',...)] : 명시된 노드(들)에 대해 쿼리 분석 및 변환없이 수행
+-   NODE[META] : 사용자 세션이 접속한 샤드 노드에서 쿼리 분석 및 변환없이 지역수행
+-   NODE[DATA] 또는 NODE[DATA()] : 모든 샤드 노드들에서 쿼리 분석 및 변환없이 지역수행
+-   NODE[DATA(*'node1_name*', *node2_name*',...)] : 명시된 노드(들)에서 쿼리 분석 및 변환없이 지역수행
+-   NODE[DATA_PARTIAL] 또는 NODE[DATA_PARTIAL()] : 모든 샤드 노드들에서 쿼리 분석 및 변환없이 전역수행
+-   NODE[DATA_PARTIAL(*'node1_name*', *node2_name*',...)] : 명시된 노드(들)에서 쿼리 분석 및 변환없이 전역수행
 
 샤드 노드별 데이터 상태를 확인할 경우에 유용하게 쓰일 수 있다. 아래는 몇가지 사용예이다.
 ```
@@ -973,6 +1005,8 @@ NODE[DATA] SELECT count(*) FROM s1;
 SELECT * FROM NODE[META](SELECT count(*) FROM s1);
 SELECT * FROM NODE[DATA('node1', 'node2')](SELECT count(*) FROM s1);
 SELECT * FROM NODE[DATA('node2')](SELECT i1,sum(i1) FROM s1 GROUP BY i1);
+SELECT * FROM NODE[DATA_PARTIAL('node1', 'node2')](SELECT count(*) FROM SHARD_LOCAL(SELECT * FROM s1)); 
+SELECT * FROM NODE[DATA_PARTIAL('node2')](SELECT i1,sum(i1) FROM SHARD_LOCAL(SELECT * FROM s1) GROUP BY i1);
 ```
 
 > ##### 주의 사항
@@ -1002,11 +1036,15 @@ JOIN 쿼리에 대하여, 클라이언트 사이드 쿼리로 수행되기 위�
 - Limit, Selection, Projection, Out reference predicate 최적화는 SHARD_TRANSFORM_MODE property 설명 부분을 참고한다.
 
 #### Sharding Hint
-- 사용자의 원래 쿼리가 분산쿼리로 변환되는 과정에서 힌트에 대한 고려가 되어있지 않다.
 - 분산쿼리에 힌트가 올바르게 적용되었는지 확인하기 위해서는, PLAN으로 분산쿼리를 확인하여야 한다.
   - 의도와 맞지 않게 힌트가 적용된 경우는, 원래 쿼리를 분산쿼리에 맞추어 변경을 해준 후에, 해당 변경된 쿼리에 힌트를 부여해야 한다. 
 - 샤딩에서는 인덱스 힌트를 통해서 결과 레코드들의 순서를 보장하는 기능은 사용할 수 없다.
   - 단, 단일노드 쿼리인 경우에는 인덱스 힌트를 통해서 결과 레코드들의 순서를 보장할 수 있다. (이 경우에도, 샤드 실행계획을 보고, 최종 실행노드에서 수행되는 쿼리에 해당 인덱스 힌트가 들어 있는지 확인해야 한다.)
+- PUSH_PRED 힌트를 사용하면, 서버측 샤딩으로 수행되는 노드간 조인의 조인 조건절을 바인드 파라메터화 하여, 조인 비용을 감소시키고, 인덱스를 활용을 통해 쿼리 속도를 향상시킬 수 있다. 이 경우, 조인 방식과 순서는 PUSH_PRED 힌트에 의해 강제된다.
+  - 다음과 같은 쿼리가 있다.
+    - SELECT * FROM t1, t2 WHERE t1.i1=t2.i1 AND t2.i2>3;
+  - 이를 PUSH_PRED 힌트를 사용하여, 다음과 같이 변경할 수 있다.
+    - SELECT /*+ PUSH_PRED(v1) */ * FROM ( SELECT * FROM t1 ) v1, t2 WHERE v1.i1=t2.i1 AND t2.i2>3;
 
 ## Global DDL
 - Sharding 환경에서 DDL 수행시 샤딩 클러스터의 모든 노드로 DDL 을 실행하는 기능이다.
@@ -1020,7 +1058,7 @@ JOIN 쿼리에 대하여, 클라이언트 사이드 쿼리로 수행되기 위�
 - table
   - truncate table
   - create table
-    - create ddl as select 는 안됨
+    - create ddl as select는 안 됨
   - drop table
     - shard object는 안 됨
   - access table
@@ -1039,7 +1077,7 @@ JOIN 쿼리에 대하여, 클라이언트 사이드 쿼리로 수행되기 위�
   - access partition
 - column
   - add column
-    - traling null 이어야함
+    - trailing null 이어야함
     - not null 속성이 없어야함
     - check 속성이 없어야함
     - hidden column 이 아니어야함
@@ -1050,12 +1088,43 @@ JOIN 쿼리에 대하여, 클라이언트 사이드 쿼리로 수행되기 위�
     - not null
     - nullable
 - constraints
+  - add constraint
+  - modify constraint
   - rename constraint
   - drop constraint
 - index
   - create index
   - drop index
- 
+- global sequence
+  - create sequence
+  - alter sequence
+    - shard object만 지원
+  - drop sequence
+    - shard object는 미지원
+
+#### 샤드 테이블 제약조건 지원범위
+- 샤드 테이블에 생성할 수 있는 제약조건은 UNIQUE와 FOREIGN KEY 두 가지이다.
+
+##### UNIQUE KEY
+- UNIQUE 제약조건을 구성하는 컬럼에 샤드키를 포함해야 한다.
+
+###### 예제
+```
+iSQL> ALTER TABLE HASH_CHILD ADD CONSTRAINT UK_HASH_CHILD UNIQUE ( SHARD_KEY, COL_1, ... );
+```
+
+##### FOREIGN KEY
+- 제약조건을 한 노드내에서 검증할 수 있는 경우만 허용한다.
+  - 부모 샤드 테이블이 복제 분산 방식이라면, 무조건 허용한다.
+  - 그 외 분산 방식의 경우,
+    - 부모와 자식 샤드 테이블의 분산 정보가 서로 동일해야 한다.
+    - 외래키와 참조키를 구성하는 컬럼 대상에 모두 샤드키가 포함되어 있어야 하며 동일한 순서에 위치해야 한다.
+
+###### 예제
+```
+iSQL> ALTER TABLE CHILD ADD CONSTRAINT FK_HASH_CHILD FOREIGN KEY ( SHARD_KEY, COL_1, ... ) REFERENCES PARENT ( SHARD_KEY, COL_2, ... ); 
+```
+
 ## SHARD DDL
 - Shard DDL은 샤딩 클러스터 시스템의 노드 구성 형상에 영향을 주는 명령어이다.
 - SYS 사용자만 수행할 수 있다.
@@ -1096,6 +1165,18 @@ ALTER DATABASE SHARD ADD ;
 - 샤드 테이블들 및 백업테이블들인 \_BAK_ 테이블들은 모두 생성되어 있되, 비어 있어야 한다.
 - k-safety 복제를 위하여 시스템적으로 관리되는 이중화 객체들(repl_set_~)은 "ALTER DATABASE SHARD ADD;" 구문을 수행하면 자동으로 생성되므로, 미리 생성해 놓으면 안된다.
 - 위의 "신규노드 추가 사전작업"에서 sys_shard 계정에 대한 객체들은 자동 생성되므로, sys_shard 계정의 객체들을 삭제하거나 새로 생성하면 안된다.
+
+새로운 샤드 노드를 추가하기 전에, 기존 샤드 노드에 외래키가 있었다면, 기존 샤드 노드와 동일한 외래키를 미리 생성해 놓아야 한다.
+- 백업테이블들인 \_BAK_ 테이블들에도 동일한 외래키를 미리 생성해 놓아야 한다.
+- 만약 부모 샤드 테이블이 복제 분산 방식이라면, 자식 백업테이블과 부모 샤드 테이블간 외래키를 생성해야 한다
+```
+iSQL> ALTER TABLE HASH_CHILD ADD CONSTRAINT FK_HASH_CHILD FOREIGN KEY ( SHARD_KEY, COL_1, ... ) REFERENCES HASH_PARENT ( SHARD_KEY, COL_2, ... );
+iSQL> ALTER TABLE _BAK_HASH_CHILD ADD CONSTRAINT _BAK_FK_HASH_CHILD FOREIGN KEY ( SHARD_KEY, COL_1, ... ) REFERENCES _BAK_HASH_PARENT ( SHARD_KEY, COL_2, ... );
+```
+```
+iSQL> ALTER TABLE HASH_CHILD ADD CONSTRAINT FK_HASH_CHILD FOREIGN KEY ( SHARD_KEY, COL_1, ... ) REFERENCES CLONE_PARENT ( SHARD_KEY, COL_2, ... );
+iSQL> ALTER TABLE _BAK_HASH_CHILD ADD CONSTRAINT _BAK_FK_HASH_CHILD FOREIGN KEY ( SHARD_KEY, COL_1, ... ) REFERENCES CLONE_PARENT ( SHARD_KEY, COL_2, ... );
+```
 
 샤드 노드를 추가하는 순간 아래와 같은 작업이 내부적으로 수행된다.
 - Zookeeper 에 접속되고, Zookeeper 메타에 추가되는 샤드 노드에 대한 정보가 설정된다.
@@ -1220,6 +1301,21 @@ ALTER DATABASE SHARD MOVE { TABLE ["user_name" . ] "table_name" [ PARTITION {"(p
 ALTER DATABASE SHARD MOVE TABLE user1.table1 PARTITION (p1), TABLE user2.soloTable1, TABLE user1.table2 PARTITION (p2), PROCEDURE user1.shardproc1 key ( 123 )  TO NODE4 ;
 ```
 
+#### 주의사항
+- 외래키와 참조키를 지닌 샤드 테이블을 이동하려면, 부모와 자식 샤드 테이블을 동시에 변경하도록 제약한다.
+- 만약 부모 샤드 테이블이 복제 분산 방식이라면, 자식 샤드 테이블만 변경한다.
+
+#### 예제1
+```
+iSQL> ALTER DATABASE SHARD MOVE TABLE user1.hash.parent PARTITION (p1), TABLE user1.hash.child PARTITION (p1) TO NODE4;
+iSQL> ALTER DATABASE SHARD MOVE TABLE user1.solo.parent, TABLE user1.solo.child TO NODE4;
+```
+#### 예제2
+```
+iSQL> ALTER TABLE user1.hash.child ADD CONSTRAINT fk_hash_child FOREIGN KEY ( shard_key, c1 ) REFERENCES ser1.clone.parent ( shard_key, col_2 );
+iSQL> ALTER DATABASE SHARD MOVE TABLE user1.hash.child TO NODE4;
+```
+
 ## Altibase Sharding Package
 ### DBMS_SHARD
 DBMS_SHARD 패키지는 Altibase Sharding의 샤드 설정과 관리에 사용한다.
@@ -1236,8 +1332,10 @@ DBMS_SHARD 패키지는 Altibase Sharding의 샤드 설정과 관리에 사용�
 - SET_SHARD_PROCEDURE_SHARDKEY: 샤드키 프로시저 샤드객체로 등록한다.
 - SET_SHARD_PROCEDURE_SOLO: 솔로 프로시저 샤드객체로 등록한다.
 - SET_SHARD_PROCEDURE_CLONE: 클론 프로시저 샤드객체로 등록한다.
+- SET_SHARD_SEQUENCE_GLOBAL: 글로벌 시퀀스 샤드객체로 등록한다.
 - UNSET_SHARD_TABLE: 샤드 테이블을 해제한다.
 - UNSET_SHARD_PROCEDURE: 샤드 프로시저를 해제한다.
+- UNSET_SHARD_SEQUENCE: 글로벌 시퀀스를 샤드객체에서 해제한다.
 
 #### CREATE_META
 ##### 구문
@@ -1533,6 +1631,33 @@ iSQL> EXEC DBMS_SHARD.SET_SHARD_PROCEDURE_CLONE( 'SYS', 'PROC1');
 iSQL> EXEC DBMS_SHARD.SET_SHARD_PROCEDURE_CLONE( 'SYS', 'PROC1', 'Y');
 ```
 
+#### SET_SHARD_SEQUENCE_GLOBAL
+##### 구문
+```
+SET_SHARD_SEQUENCE_GLOBAL(
+  user_name in varchar(128),
+  sequence_name in varchar(128),
+  node_name in varchar(12))
+```
+
+##### 파라미터
+- user_name: 시퀀스 소유자의 이름
+- sequence_name: 시퀀스 이름
+- node_name: 시퀀스 관리 테이블이 존재할 노드 이름
+
+###### 설명
+글로벌 시퀀스를 샤드객체로 등록한다.
+- Global option으로 생성한 시퀀스만 샤드객체로 등록할 수 있다.
+- 본 프로시저 수행시 각 노드의 샤드로 등록할 시퀀스에 LOCK을 잡는다.
+- 본 프로시저 수행시 시퀀스 관리 테이블의 row를 모두 삭제하고 시퀀스를 관리하는 노드에 row를 새로 만든다. 
+- 이미 수행중인 트랜잭션이 있는 경우 commit 혹은 rollback 처리 후에 본 프로시저를 수행할 수 있다.
+- 본 프로시저는 수행 성공하면 자동으로 commit 되며, 수행 실패하면 자동으로 rollback 된다.
+
+##### 예제
+```
+iSQL> EXEC dbms_shard.set_shard_sequence_global('SYS', 'SEQ1', 'NODE1');
+```
+
 #### UNSET_SHARD_TABLE
 ##### 구문
 ```
@@ -1580,6 +1705,32 @@ DBMS_SHARD.UNSET_SHARD_PROCEDURE(
 ##### 예제
 ```
 iSQL> EXEC dbms_shard.unset_shard_procedure('sys','proc1');
+```
+
+#### UNSET_SHARD_SEQUENCE
+
+##### 구문
+```
+UNSET_SHARD_SEQUENCE(
+  user_name in varchar(128),
+  sequence_name in varchar(128))
+```
+
+##### 파라미터
+- user_name: 시퀀스 소유자의 이름
+- sequence_name: 시퀀스 이름
+
+##### 설명
+글로벌 시퀀스를 샤드객체에서 해제한다.
+- 글로벌 시퀀스를 삭제하지 않는다.
+- 본 프로시저 수행시 각 노드의 샤드객체에서 해제 할 시퀀스에 LOCK을 잡는다.
+- 본 프로시저 수행시 시퀀스 관리 테이블의 row를 모두 삭제한다.
+- 이미 수행중인 트랜잭션이 있는 경우 commit 혹은 rollback 처리 후에 본 프로시저를 수행할 수 있다.
+- 본 프로시저는 수행 성공하면 자동으로 commit 되며, 수행 실패하면 자동으로 rollback 된다.
+
+##### 예제
+```
+iSQL> EXEC dbms_shard.unset_shard_sequence('SYS', 'SEQ1');
 ```
 
 ### DBMS_SHARD_GET_DIAGNOSTICS
@@ -1708,21 +1859,24 @@ END;
 /
 ```
 
-## Sharded Sequence
-- Sharded sequence는 sharding 환경에서 unique number generator 역할을 합니다.
-- 전 node에 걸쳐서 global uniqueness 는 보장하지만, sequentiality 는 보장하지 않습니다.
-- 동일 Node내에서는 순서는 보장한다.
-- node_id 를 prefix 로 사용하여 uniqueness를 제공한다. 그러므로, node_id 가 재사용되면 uniqueness 가 깨질 수 있습니다.
+## Sequence
+Sharding 환경에서는 기존 시퀀스 외에 sharded sequence와 global sequence를 추가로 제공한다.
+Sharding 환경에서는 시퀀스의 CURRVAL을 지원하지 않는다.
+
+### Sharded Sequence
+- Sharded sequence는 sharding 환경에서 unique number generator 역할을 한다.
+- 전 노드에 걸쳐서 유일성(uniqueness)는 보장하지만, 연속성(sequentiality)는 보장하지 않는다.
+- 동일 노드 내에서는 순서를 보장한다.
+- node_id 를 prefix 로 사용하여 유일성을 제공한다. 그러므로, node_id 를 재사용하면 유일성이 깨질 수 있다.
 - node_id 는 1~9200 사이의 값을 가질 수 있다.
 
 #### 문법
-- 여기서는 sharded sequence 가 일반 sequence 와 다른 부분만을 설명한다.
-- Sharded sequence는 기존 sequence 문법에서 sequence option 에서 shard clause를 추가로 지원하는 것을 지칭한다.
-  - sequence option 에 대한 설명은 SQL 매뉴얼의 sequence 부분을 참고한다.
-- Sharded sequence는 sync table option을 지원하지 않는다.
-  - sync table option 에 대한 설명은 SQL 매뉴얼의 sequence 부분을 참고한다.
-- Sharded sequence는 CURRVAL을 지원하지 않는다.
-- Sharded sequence의 shard clause
+- 여기서는 sharded sequence 가 일반 시퀀스와 다른 부분을 설명한다.
+- Sharded sequence는 기존 시퀀스 문법에서 시퀀스 옵션에서 SHARD clause를 추가로 지원하는 것을 지칭한다.
+  - 시퀀스 옵션에 대한 설명은 SQL Reference 매뉴얼의 CREATE SEQUENCE 부분을 참고한다.
+- Sharded sequence는 SYNC TABLE 옵션을 지원하지 않는다.
+  - SYNC TABLE 옵션에 대한 설명은 SQL Reference 매뉴얼의 CREATE SEQUENCE 부분을 참고한다.
+- Sharded sequence의 SHARD clause
   - SHARD
     - FIXED 혹은 VARIABLE을 지정하지 않으면, FIXED 가 기본으로 지정된다.
   - SHARD FIXED
@@ -1766,6 +1920,103 @@ iSQL> SELECT S3.NEXTVAL;
 iSQL> CREATE SEQUENCE S4 SHARD VARIABLE MAXVALUE 1000;
 iSQL> SELECT S4.NEXTVAL;
 10001
+```
+
+### Global Sequence
+- Global sequence는 sharding 환경에서 전 노드에 걸쳐서 유일성과 연속성을 보장한다.
+- Global sequence를 사용할 때 노드에 시퀀스 캐시 크기 만큼의 시퀀스 값을 관리 노드로부터 미리 확보한다.
+  - 시퀀스의 캐시가 남아 있으면 다른 노드와 동기화 없이 시퀀스 값을 얻을 수 있다.
+  - 시퀀스의 캐시 크기 만큼 시퀀스 값을 미리 확보하므로 서로 다른 노드간에는 연속성이 지켜지지 않을 수 있다.
+  - 정확한 연속성을 원하는 경우 시퀀스를 생성할 때 NOCACHE 옵션을 사용한다.
+    - 단, NOCACHE 옵션을 사용하면 시퀀스 값을 얻을 때마다 동기화가 필요하여 성능이 매우 떨어진다.
+- DBMS_SHARD.SET_SHARD_SEQUENCE_GLOBAL 프로시저를 통해서 샤드 객체로 등록한 뒤 사용할 수 있다.
+- 옵션을 변경하는 것은 GLOBAL_DDL 프로퍼티가 1일 때만 가능하다.
+
+#### 문법
+- 여기서는 global sequence 가 일반 시퀀스와 다른 부분을 설명한다.
+- Global sequence는 기존 시퀀스 문법에서 시퀀스 옵션에서 GLOBAL clause를 추가로 지원하는 것을 지칭한다.
+  - 시퀀스 옵션에 대한 설명은 SQL Reference 매뉴얼의 CREATE SEQUENCE 부분을 참고한다.
+  - GLOBAL 옵션을 사용해서 시퀀스를 생성하면 global sequence를 관리하기 위한 테이블을 생성한다. 테이블의 이름은 [sequence 이름]$gsq로 자동 부여된다.
+- Global sequence는 SYNC TABLE 옵션을 지원하지 않는다.
+  - SYNC TABLE 옵션에 대한 설명은 SQL Reference 매뉴얼의 CREATE SEQUENCE 부분을 참고한다.
+
+#### 예제1
+
+기본 옵션으로 global sequence를 생성하라.
+```
+-- Create global sequence @node_id = 1
+iSQL > CREATE SEQUENCE S1 GLOBAL;
+
+-- Create global sequence @node_id = 2
+iSQL > CREATE SEQUENCE S1 GLOBAL;
+
+-- Create global sequence @node_id = 3
+iSQL > CREATE SEQUENCE S1 GLOBAL;
+
+
+-- Set global sequence @node_id = 1
+iSQL> exec dbms_shard.set_shard_sequence_global('SYS', 'S1', 'NODE1');
+Execute success.
+
+-- Get sequence number @node_id = 1
+iSQL> select s1.nextval from dual;
+S1.NEXTVAL
+-----------------------
+1
+1 row selected.
+
+-- Get sequence number @node_id = 2
+iSQL> select s1.nextval from dual;
+S1.NEXTVAL
+-----------------------
+21
+1 row selected.
+
+-- Get sequence number @node_id = 3
+iSQL> select s1.nextval from dual;
+S1.NEXTVAL
+-----------------------
+41
+1 row selected.
+```
+
+#### 예제2
+NOCACHE 옵션을 사용하여 global sequence를 생성하라.
+```
+-- Create global sequence @node_id = 1
+iSQL > CREATE SEQUENCE S1 GLOBAL NOCACHE;
+
+-- Create global sequence @node_id = 2
+iSQL > CREATE SEQUENCE S1 GLOBAL NOCACHE;
+
+-- Create global sequence @node_id = 3
+iSQL > CREATE SEQUENCE S1 GLOBAL NOCACHE;
+
+
+-- Set global sequence @node_id = 1
+iSQL> exec dbms_shard.set_shard_sequence_global('SYS', 'S1', 'NODE1');
+Execute success.
+
+-- Get sequence number @node_id = 1
+iSQL> select s1.nextval from dual;
+S1.NEXTVAL
+-----------------------
+1
+1 row selected.
+
+-- Get sequence number @node_id = 2
+iSQL> select s1.nextval from dual;
+S1.NEXTVAL
+-----------------------
+2
+1 row selected.
+
+-- Get sequence number @node_id = 3
+iSQL> select s1.nextval from dual;
+S1.NEXTVAL
+-----------------------
+3
+1 row selected.
 ```
 
 ## Altibase Sharding Property

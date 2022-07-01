@@ -1,116 +1,86 @@
-# Altibase Korean manuals(Trunk)
+# Altibase Trunk Korean manuals
 
 ## New Features
 
-- ### [New Features Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/NewFeaturesGuide.md)
-
-
-
-
+- ### [New Features Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/New%20Features%20Guide.md)
 
 ## Admin
 
-- ### [Getting Started Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/GettingStarted.md)	
+- ### [Getting Started Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Getting%20Started%20Guide.md)
 
-- ### [Installation Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Installation.md)	
+- ### [Installation Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Installation%20Guide.md)
 
-- ### Administrator's Manual	
+- ### [Administrator's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Administrator's%20Manual.md)
 
-  - [Administrator's Manual 1](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Admin_1.md)
-  - [Administrator's Manual 2](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Admin_2.md)
+- ### [Replication Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Replication%20Manual.md)
 
-- ### [Replication Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Replication.md)	
+- ### General Reference
+  
+  - [General_Reference-1.Data Types & Altibase Properties](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/General_Reference-1.Data%20Types%20%26%20Altibase%20Properties.md)
+  - [General_Reference-2.The Data Dictionary](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/General_Reference-2.The%20Data%20Dictionary.md) 
 
-- ### General Reference	
+- ### [Performance Tuning Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Performance%20Tuning%20Guide.md)
 
-  - [General Reference 1](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/GeneralReference_1.md)
-  - [General Reference 2](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/GeneralReference_2.md) 
-  - [General Reference 3](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/GeneralReference_3.md)
-  - [General Reference 4](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/GeneralReference_4.md)
+- ### [SNMP Agent Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/SNMP%20Agent%20Guide.md)
 
-- ### [Performance Tuning Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/TuningGuide.md)
-
-- ### [SNMP Agent Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/SNMP.md)
-
-- ### [DB Link User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/DBLink.md)
+- ### [DB Link User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/DB%20Link%20User's%20Manual.md)
 
 - ### [Altibase Sharding Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Sharding.md)
 
-
-
 ## Application Development
 
-- ### SQL Reference
+- ### [SQL Reference](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/SQL%20Reference.md)
 
-  - [SQL Reference1](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/SQL1.md)
-  - [SQL Reference2](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/SQL2.md)
-  - [SQL Reference3](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/SQL3.md)
-  - [SQL Reference4](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/SQL4.md)
+- ### [Spatial SQL Reference](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Spatial%20SQL%20Reference.md)
 
-- ### [Spatial SQL Reference](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/SpatialSQL.md)	
+- ### [Stored Procedures Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Stored%20Procedures%20Manual.md)
 
-- ### Stored Procedures Manual	
+- ### [C/C++ External Procedures Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/External%20Procedures%20Manual.md)
 
-  - [Stored Procedures Manual1](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/StoredProcedure1.md)
-  - [Stored Procedures Manual2](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/StoredProcedure2.md)
+- ### [Precompiler User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Precompiler%20User's%20Manual.md)
 
-- ### [C/C++ External Procedures Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/ExternalProcedure.md)
+- ### [CLI User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/CLI%20User's%20Manual.md)
 
-- ### Precompiler User's Manual
+- ### [ODBC User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/ODBC%20User's%20Manual.md)
 
-  - [Precompiler User's Manual1](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Precompiler_1.md)
-  - [Precompiler User's Manual2](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Precompiler_2.md)
+- ### [JDBC User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/JDBC%20User's%20Manual.md)
 
-- ### CLI User's Manual
+- ### [API User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/API%20User's%20Manual.md)
 
-  - [CLI User's Manual1](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/CLI_1.md)
-  - [CLI User's Manual2](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/CLI_2.md)
+- ### [Altibase C Interface Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Altibase%20C%20Interface%20Manual.md)
 
-- ### [ODBC User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/ODBCDriver.md)
+- ### [Log Analyzer User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Log%20Analyzer%20User's%20Manual.md)
 
-- ### [JDBC User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/JDBC.md)
+- ### [Monitoring API Developer's Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Monitoring%20API%20Developer's%20Guide.md)
 
-- ### [API User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/API.md)
+## Version-dependent Tools
 
-- ### [Altibase C Interface Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/ACI.md)
+- ### [Adapter for JDBC User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Adapter%20for%20JDBC%20User's%20Manual.md)
 
-- ### [Log Analyzer User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/LogAnalyzer.md)
+- ### [Adapter for Oracle User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Adapter%20for%20Oracle%20User's%20Manual.md)
 
-- ### [Monitoring API Developer's Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/MonitorAPI.md)
+- ### [Altibase SSL/TLS User's Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Altibase%20SSL%20TLS%20User's%20Guide.md)
 
+- ### [Hadoop Connector User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Hadoop%20Connector%20User's%20Manual.md)
+
+- ### [iLoader User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/iLoader%20User's%20Manual.md)
+
+- ### [iSQL User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/iSQL%20User's%20Manual.md)
+
+- ### [Utilities Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Utilities%20Manual.md)
 
 ## Tools
 
-- ### [iSQL User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/iSQL.md)
+- ### [Altibase 3rd Party Connector Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Tools/Altibase_trunk/kor/Altibase%203rd%20Party%20Connector%20Guide.md)
 
-- ### [iLoader User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/iLoader.md)
+- ### [Altibase Heartbeat User's Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Tools/Altibase_trunk/kor/Altibase%20Heartbeat%20User's%20Guide.md)
 
-- ### [Utilities Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Utilities.md)
+- ### [altiShapeLoader User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Tools/Altibase_trunk/kor/altiShapeLoader%20User's%20Manual.md)
 
-- ### [Adapter for Oracle User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/OraAdapter.md)
+- ### [Migration Center User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Tools/Altibase_trunk/kor/Migration%20Center%20User's%20Manual.md)
 
-- ### [Adapter for JDBC User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/JdbcAdapter.md)
-
-- ### [Migration Center User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/MigrationCenter.md)
-
-- ### [Replication Manager User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/ReplicationManager.md)
-
-- ### [Altibase SSL/TLS User's Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/SSL.md)	
-
-- ### [Altibase Heartbeat User's Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Heartbeat.md)	
-
-- ### [Hadoop Connector User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/HadoopConnector.md)	
-
-- ### [Altibase 3rd Party Connector Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/3rdPartyConnector.md)	
-
-- ### [altiShapeLoader User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/altiShapeLoader.md)
-
+- ### [Replication Manager User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Tools/Altibase_trunk/kor/Replication%20Manager%20User's%20Manual.md)
 
 ## Message
 
-- ### [Error Message Reference](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/ErrorMessage.md)
-
-
-
-
-
+- ### [Error Message Reference](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_trunk/kor/Error%20Message%20Reference.md)

@@ -1,5 +1,4 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 
 
 - [Database Link User’s Manual](#database-link-users-manual)
@@ -32,7 +31,7 @@
     - [Property Files](#property-files)
     - [AltiLinker Properties](#altilinker-properties)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 Altibase® Application Development
 
@@ -134,12 +133,12 @@ The following table describes the printing conventions used in the code examples
 
 | Rules            | Meaning                                                      | Example                                                      |
 | ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [ ]              | Indicates an optional item                                   | VARCHAR [(*size*)][[FIXED \|] VARIABLE]                      |
+| [ ]              | Indicates an optional item                                   | VARCHAR [(*size*)] [[FIXED \|] VARIABLE]                     |
 | { }              | Indicates a mandatory field for which one or more items must be selected. | { ENABLE \| DISABLE \| COMPILE }                             |
 | \|               | A delimiter between optional or mandatory arguments.         | { ENABLE \| DISABLE \| COMPILE } [ ENABLE \| DISABLE \| COMPILE ] |
-| . . .            | Indicates that the previous argument is repeated, or that sample code has been omitted. | SQL> SELECT ename FROM employee; ENAME ----------------------- SWNO HJNO HSCHOI . . . 20 rows selected. |
-| Other Symbols    | Symbols other than those shown above are part of the actual code.Other Symbols | EXEC :p1 := 1; acc NUMBER(11,2);Symbols other than those shown above are part of the actual code. |
-| Italics          | Statement elements in italics indicate variables and special values specified by the user. | SELECT * FROM *table_name*; CONNECT *userID*/*password*;     |
+| . . .            | Indicates that the previous argument is repeated, or that sample code has been omitted. | SQL\> SELECT ename FROM employee;<br/> ENAME<br/>  -----------------------<br/> SWNO<br/>  HJNO<br/>  HSCHOI<br/>  .<br/> .<br/> .<br/> 20 rows selected. |
+| Other Symbols    | Symbols other than those shown above are part of the actual code. | EXEC :p1 := 1; acc NUMBER(11,2)                              |
+| Italics          | Statement elements in italics indicate variables and special values specified by the user. | SELECT \* FROM *table_name*; <br/>CONNECT *userID*/*password*; |
 | Lower case words | Indicate program elements set by the user, such as table names, column names, file names, etc. | SELECT ename FROM employee;                                  |
 | Upper case words | Keywords and all elements provided by the system appear in upper case. | DESC SYSTEM_.SYS_INDICES_;                                   |
 
@@ -175,7 +174,7 @@ Include the following information:
 - Any comments about the manual
 - Your name, address, and phone number
 
-If you need immediate assistance regarding any errors, omissions, and other technical issues, please contact Altibase's Support Portal (http://altibase.com/support-center/en/).
+If you need immediate assistance regarding any errors, omissions, and other technical issues, please contact [Altibase's Support Portal](http://support.altibase.com/en/).
 
 Thank you. We always welcome your feedbacks and suggestions.
 
@@ -384,9 +383,9 @@ To complete a global transaction, transactions on every server(local and remote)
     For the Simple Transaction Commit Level to operate, the database system making up the remote node must support setting the auto-commit mode to OFF.  
     When the DBLINK_GLOBAL_TRANSACTION_LEVEL property is set to this level, autocommit mode is set to OFF by default for the session which AltiLinker connects to the remote server.
     
--   Two-Phase Commit Level: This feature provides the 2PC protocol which ensures interoperable compatibility of the global transaction between Altibase server and other database system. This feature is available after setting the DBLINK_GLOBAL_TRANSACTION_LEVEL property with two-phase commit level, and the 2PC operation commit Level is demonstrated in the following figure below.![](media/DBLink/2pcLevel.gif)
+-   Two-Phase Commit Level: This feature provides the Two-Phase Commit protocol which ensures interoperable compatibility of the global transaction between Altibase server and other database system. This feature is available after setting the DBLINK_GLOBAL_TRANSACTION_LEVEL property to 2(Two-Phase Commit). The Two-Phase Commit process is demonstrated in the figure below.![](media/DBLink/2pcLevel.gif)
 
-[Figure 1‑3] Two-Phase Commit Level(2-PC Commit Level)
+[Figure 1‑3] Two-Phase Commit Level
 
 Prepare Phase: Altibase writes prepare log after the user has executed a commit, and sends a requesting message to AltiLinker for preparation. Then, the AltiLinker receives the message, and sends a preparation message to all the participants related to the global transactions. After the participants have been prepared, AltiLinker delivers a ready message for system to Altibase, which has received results from all the participants, in order to perform the next phase.
 
@@ -2304,7 +2303,7 @@ This is used to specify JVM bit for AltiLinker on JVM (Java Virtual Machine).
 
 ##### Range
 
-[8MB, 512MB]
+[128MB, 4096MB]
 
 ##### Description
 
@@ -2314,11 +2313,11 @@ This property specifies the initial size, in bytes, of the memory pool allocated
 
 ##### Default Value
 
-512 MBytes
+4096 MBytes
 
 ##### Range
 
-[16MB, 512MB]
+[512MB, 32768MB]
 
 ##### Description
 

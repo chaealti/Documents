@@ -1,5 +1,3 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
 - [Altibase Replication Manager 1.2 Release Notes](#altibase-replication-manager-12-release-notes)
@@ -13,20 +11,12 @@
     - [2.4 Packages](#24-packages)
     - [2.5 Downloads](#25-downloads)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-</br>
-
-</br>
-
-</br>
 
 Altibase Replication Manager 1.2 Release Notes
 ===============================
 
 **(Feburary 18, 2019)**
-
-
 
 1.Abstract
 ---------------
@@ -42,10 +32,10 @@ Altibase Replication Manager 1.2 Release Notes
 
 ### 1.2 Supported Operating Systems and Platforms
 
-| OS                 | CPU  | Windows System | Bit (Client) | JRE              |
-| ------------------ | ---- | -------------- | ------------ | ---------------- |
-| Windows XP Vista 7 | x86  | Win32          | 32bit        | Java 6 or higher |
-| LINUX              | x86  | GTK            | 32bit        | Java 6 or higher |
+| OS                 | CPU  | Graphic Library | Bit   | JRE              |
+| ------------------ | ---- | --------------- | ----- | ---------------- |
+| Windows XP Vista 7 | x86  | Win32           | 32bit | Java 6 or higher |
+| LINUX              | x86  | GTK             | 32bit | Java 6 or higher |
 
 ## 2. Release Information
 
@@ -53,13 +43,11 @@ Altibase Replication Manager 1.2 Release Notes
 
 Replication Manager is a graphical tool for managing replication on Altibase more easily and quickly. 
 
-#### 	2.1.1 New Features
+#### 2.1.1 New Features
 
-|    PK     |                  SYNOPSIS                   |
-| :-------: | :-----------------------------------------: |
+| PK        | SYNOPSIS                                    |
+|:---------:|:-------------------------------------------:|
 | BUG-46683 | Need to support database with multiple IPs. |
-
-
 
 #### 2.1.2  Bug-Fixes
 
@@ -67,47 +55,33 @@ Replication Manager is a graphical tool for managing replication on Altibase mor
 | --------- | ------------------------------------------------- |
 | BUG-46677 | Need to update GUI after SYNC has been completed. |
 
-
-
 ### 2.2 Changes
 
 Listed below are added/updated/deleted functions explanations for Replication Manager.
 
 #### 2.2.1 Version Updates
 
-Replication Manager Version
-
-| Altibase Replication Manager Version |
-| :----------------------------------: |
-|                 1.2                  |
-
-
+- Replication Manager Version: 1.2
 
 #### 2.2.2 Compatibility
 
-##### Altibase Compatibility
-
-- Replication Manager : Altibase 4.3.9 or higher
+- Altibase Version: Altibase 4.3.9 or higher
 
 #### 2.2.3 Properties
 
-NONE
-
 #### 2.2.4 Error Messages
 
-NONE
-
-### 2.3 Open Source Libraries 
+### 2.3 Open Source Libraries
 
 Replication Manager is based on the following Open Source Libraries and Royalty-Free Images. The
 licenses are distributed in a text file format along with Replication Manager.
 
-| Library           | Open Source License                                          |
-| ----------------- | ------------------------------------------------------------ |
-| balcosqlformatter | Homepage: http://www.igapyon.jp/blanco/blancosqlformatter.html </br>License: LGPL (http://www.gnu.org/licenses/lgpl-3.0.txt) |
-| Eclipse           | Homepage: http://www.eclipse.org <br/>License: Eclipse Public License (http://www.eclipse.org/legal/epl-v10.html) |
-| JDOM              | Homepage: http://www.jfree.org/jfreechart/) <br/>License: LGPL (http://www.gnu.org/licenses/lgpl-3.0.txt) |
-| JFreeChart        | Homepage: http://www.jfree.org/jfreechart/) <br/>License: LGPL (http://www.gnu.org/licenses/lgpl-3.0.txt) |
+| Library           | Open Source License                                                                                                             |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| balcosqlformatter | Homepage: http://www.igapyon.jp/blanco/blancosqlformatter.html </br>License: LGPL (http://www.gnu.org/licenses/lgpl-3.0.txt)    |
+| Eclipse           | Homepage: http://www.eclipse.org <br/>License: Eclipse Public License (http://www.eclipse.org/legal/epl-v10.html)               |
+| JDOM              | Homepage: http://www.jfree.org/jfreechart/) <br/>License: LGPL (http://www.gnu.org/licenses/lgpl-3.0.txt)                       |
+| JFreeChart        | Homepage: http://www.jfree.org/jfreechart/) <br/>License: LGPL (http://www.gnu.org/licenses/lgpl-3.0.txt)                       |
 | Log4j             | Homepage: http://logging.apache.org/index.html<br/>License: Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0.txt) |
 
 | Library                   | Royalty-Free Images                        |
@@ -118,10 +92,10 @@ licenses are distributed in a text file format along with Replication Manager.
 
 ### 2.4 Packages
 
-| OS          | CPU  | Archive Name                           |
-| ----------- | ---- | -------------------------------------- |
-| Linux/glibc | x86  | ReplicationManager-linux.gtk.x86.zip   |
-| Windows     | x86  | ReplicationManager-win32.win32.x86.zip |
+| OS          | CPU | Archive Name                           |
+| ----------- | --- | -------------------------------------- |
+| Linux/glibc | x86 | ReplicationManager-linux.gtk.x86.zip   |
+| Windows     | x86 | ReplicationManager-win32.win32.x86.zip |
 
 ### 2.5 Downloads
 
@@ -131,7 +105,7 @@ licenses are distributed in a text file format along with Replication Manager.
 
 #### 2.5.2 Manual
 
-[https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/eng/Replication%20Manager%20User's%20Manual.md](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/eng/Replication Manager User's Manual.md)
+[Replication Manager User's Manual.md](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Tools/eng/Replication%20Manager%20User's%20Manual.md)
 
 #### 2.5.3 Installation
 

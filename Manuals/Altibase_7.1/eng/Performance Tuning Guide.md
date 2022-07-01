@@ -1,45 +1,46 @@
 
 
 - [Performance Tuning Guide](#performance-tuning-guide)
-  - [Preface](#%EC%84%9C%EB%AC%B8)
-    - [About This Manual](#%EC%9D%B4-%EB%A7%A4%EB%89%B4%EC%96%BC%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC)
-  - [1. Introduction to Performance Tuning](#1%EC%84%B1%EB%8A%A5-%ED%8A%9C%EB%8B%9D-%EC%86%8C%EA%B0%9C)
-    - [Introduction to SQL Tuning](#%EC%84%B1%EB%8A%A5-%ED%8A%9C%EB%8B%9D-%EA%B0%9C%EC%9A%94)
-    - [Database Server Tuning](#%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%84%9C%EB%B2%84-%ED%8A%9C%EB%8B%9D)
-    - [SQL Tuning](#sql-%ED%8A%9C%EB%8B%9D)
-  - [2. Altibase Server Tuning](#2altibase-%EC%84%9C%EB%B2%84-%ED%8A%9C%EB%8B%9D)
-    - [Log Files](#%EB%A1%9C%EA%B7%B8%ED%8C%8C%EC%9D%BC)
-    - [Checkpointing](#%EC%B2%B4%ED%81%AC%ED%8F%AC%EC%9D%B8%ED%8A%B8)
-    - [Buffers](#%EB%B2%84%ED%8D%BC)
-    - [Service Threads](#%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%93%B0%EB%A0%88%EB%93%9C)
-    - [Garbage Collector](#%EA%B0%80%EB%B9%84%EC%A7%80-%EC%BD%9C%EB%A0%89%ED%84%B0)
+
+  - [Preface](#preface)
+    - [About This Manual](#about-this-manual)
+  - [1. Introduction to Performance Tuning](#1-introduction-to-performance-tuning)
+    - [Introduction to SQL Tuning](#introduction-to-sql-tuning)
+    - [Database Server Tuning](#database-server-tuning)
+    - [SQL Tuning](#sql-tuning)
+  - [2. Altibase Server Tuning](#2-altibase-server-tuning)
+    - [Log Files](#log-files)
+    - [Checkpointing](#checkpointing)
+    - [Buffers](#buffers)
+    - [Service Threads](#service-threads)
+    - [Garbage Collector](#garbage-collector)
     - [SQL Plan Cache](#sql-plan-cache)
-    - [CPU Usage](#cpu-%EC%82%AC%EC%9A%A9%EB%A5%A0)
-  - [3. The Query Optimizer](#3%EC%BF%BC%EB%A6%AC-%EC%98%B5%ED%8B%B0%EB%A7%88%EC%9D%B4%EC%A0%80)
-    - [Query Optimizer Overview](#%EC%BF%BC%EB%A6%AC-%EC%98%B5%ED%8B%B0%EB%A7%88%EC%9D%B4%EC%A0%80-%EA%B0%9C%EC%9A%94)
-    - [Query Conversion](#%EC%BF%BC%EB%A6%AC-%EB%B3%80%ED%99%98)
-    - [Creating Logical Execution Plans](#%EB%85%BC%EB%A6%AC%EC%A0%81-%EC%8B%A4%ED%96%89-%EA%B3%84%ED%9A%8D-%EC%83%9D%EC%84%B1)
-    - [Creating Physical Execution Plans](#%EB%AC%BC%EB%A6%AC%EC%A0%81-%EC%8B%A4%ED%96%89-%EA%B3%84%ED%9A%8D-%EC%83%9D%EC%84%B1)
-    - [Optimizer-related Properties](#%EC%98%B5%ED%8B%B0%EB%A7%88%EC%9D%B4%EC%A0%80-%EA%B4%80%EB%A0%A8-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0)
-  - [4. The Explain Plan](#4explain-plan-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
-    - [Overview](#explain-plan%EC%9D%98-%EA%B0%9C%EC%9A%94)
-    - [Displaying the Plan Tree](#plan-tree-%EC%B6%9C%EB%A0%A5)
-    - [Reading Plan Trees](#plan-tree-%EC%9D%BD%EA%B8%B0)
-    - [Plan Tree Usage](#plan-tree-%ED%99%9C%EC%9A%A9)
-    - [Plan Nodes](#%EC%8B%A4%ED%96%89-%EB%85%B8%EB%93%9C)
-  - [5. The Optimizer and Statistics](#5%EC%98%B5%ED%8B%B0%EB%A7%88%EC%9D%B4%EC%A0%80%EC%99%80-%ED%86%B5%EA%B3%84%EC%A0%95%EB%B3%B4)
-    - [Overview of Statistics](#%ED%86%B5%EA%B3%84%EC%A0%95%EB%B3%B4%EC%9D%98-%EA%B0%9C%EC%9A%94)
-    - [Managing Statistics](#%ED%86%B5%EA%B3%84%EC%A0%95%EB%B3%B4-%EA%B4%80%EB%A6%AC)
-    - [Automatic Statistics Collections](#%EC%9E%90%EB%8F%99-%ED%86%B5%EA%B3%84%EC%A0%95%EB%B3%B4-%EC%88%98%EC%A7%91auto-stats)
-  - [6. SQL Hints](#6sql-%ED%9E%8C%ED%8A%B8)
-    - [Overview of Hints](#%ED%9E%8C%ED%8A%B8%EC%9D%98-%EA%B0%9C%EC%9A%94)
-    - [Types of Hints](#%ED%9E%8C%ED%8A%B8%EC%9D%98-%EC%A2%85%EB%A5%98)
-  - [7. SQL Plan Cache](#7sql-plan-cache)
-    - [Overview of the SQL Plan Cache](#sql-plan-cache%EC%9D%98-%EA%B0%9C%EC%9A%94)
-    - [Managing the SQL Plan Cache](#sql-plan-cache-%EA%B4%80%EB%A6%AC)
-    - [Overview of the Result Cache](#result-cache%EC%9D%98-%EA%B0%9C%EC%9A%94)
+    - [CPU Usage](#cpu-usage)
+  - [3. The Query Optimizer](#3-the-query-optimizer)
+    - [Query Optimizer Overview](#query-optimizer-overview)
+    - [Query Conversion](#query-conversion)
+    - [Creating Logical Execution Plans](#creating-logical-execution-plans)
+    - [Creating Physical Execution Plans](#creating-physical-execution-plans)
+    - [Optimizer-related Properties](#optimizer-related-properties)
+  - [4. The Explain Plan](#4-the-explain-plan)
+    - [EXPLAIN PLAN Overview](#explain-plan-overview)
+    - [Displaying the Plan Tree](#displaying-the-plan-tree)
+    - [Reading Plan Trees](#reading-plan-trees)
+    - [Using Plan Trees](#using-plan-trees)
+    - [Plan Nodes](#plan-nodes)
+  - [5. The Optimizer and Statistics](#5-the-optimizer-and-statistics)
+    - [Overview of Statistics](#overview-of-statistics)
+    - [Managing Statistics](#managing-statistics)
+    - [Auto Stats](#auto-stats)
+  - [6. SQL Hints](#6-sql-hints)
+    - [Overview of Hints](#overview-of-hints)
+    - [Types of Hints](#types-of-hints)
+  - [7. SQL Plan Cache](#7-sql-plan-cache)
+    - [Overview of the SQL Plan Cache](#overview-of-the-sql-plan-cache)
+    - [Managing the SQL Plan Cache](#managing-the-sql-plan-cache)
+    - [Overview of the Result Cache](#overview-of-the-result-cache)
 
-
+  
 
 Altibase® Administration
 
@@ -68,10 +69,6 @@ Homepage: [[http://www.altibase.com](http://www.altibase.com/)]
 
 
 
-
-
-
-
 Preface
 ----
 
@@ -95,8 +92,6 @@ It is recommended for those reading this manual possess the following background
 -   Experience in using relational databases and an understanding of database concepts
 -   Computer programming experience
 -   Experience in database server management, operating system management, or network administration
-
-
 
 #### Organization
 
@@ -155,12 +150,12 @@ The following table describes the printing conventions used in the code examples
 
 | Rules            | Meaning                                                      | Example                                                      |
 | ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [ ]              | Indicates an optional item                                   | VARCHAR [(*size*)][[FIXED \|] VARIABLE]                      |
+| [ ]              | Indicates an optional item                                   | VARCHAR [(*size*)] [[FIXED \|] VARIABLE]                     |
 | { }              | Indicates a mandatory field for which one or more items must be selected. | { ENABLE \| DISABLE \| COMPILE }                             |
 | \|               | A delimiter between optional or mandatory arguments.         | { ENABLE \| DISABLE \| COMPILE } [ ENABLE \| DISABLE \| COMPILE ] |
-| . . .            | Indicates that the previous argument is repeated, or that sample code has been omitted. | SQL\> SELECT ename FROM employee;<br/> ENAME<br/>  -----------------------<br/> SWNO <br/> HJNO<br/>  HSCHOI <br/> .<br/> .<br/> . <br/>20 rows selected. |
-| Other Symbols    | Symbols other than those shown above are part of the actual code. | EXEC :p1 := 1; acc NUMBER(11,2);                             |
-| Italics          | Statement elements in italics indicate variables and special values specified by the user. | SELECT \* FROM *table_name*;<br/> CONNECT *userID*/*password*; |
+| . . .            | Indicates that the previous argument is repeated, or that sample code has been omitted. | SQL\> SELECT ename FROM employee;<br/> ENAME<br/>  -----------------------<br/> SWNO<br/>  HJNO<br/>  HSCHOI<br/>  .<br/> .<br/> .<br/> 20 rows selected. |
+| Other Symbols    | Symbols other than those shown above are part of the actual code. | EXEC :p1 := 1; acc NUMBER(11,2)                              |
+| Italics          | Statement elements in italics indicate variables and special values specified by the user. | SELECT \* FROM *table_name*; <br/>CONNECT *userID*/*password*; |
 | Lower case words | Indicate program elements set by the user, such as table names, column names, file names, etc. | SELECT ename FROM employee;                                  |
 | Upper case words | Keywords and all elements provided by the system appear in upper case. | DESC SYSTEM_.SYS_INDICES_;                                   |
 
@@ -192,7 +187,7 @@ Include the following information:
 - Any comments about the manual
 - Your name, address, and phone number
 
-If you need immediate assistance regarding any errors, omissions, and other technical issues, please contact Altibase's Support Portal (http://altibase.com/support-center/en/).
+If you need immediate assistance regarding any errors, omissions, and other technical issues, please contact [Altibase's Support Portal](http://support.altibase.com/en/).
 
 Thank you. We always welcome your feedbacks and suggestions.
 
@@ -4104,13 +4099,14 @@ PROJECT ( COLUMN_COUNT: 5, TUPLE_SIZE: 40, COST: 0.30 )
 ##### Format
 
 ```
-LEFT-OUTER-JOIN ( METHOD: method, COST: cost )
+LEFT-OUTER-JOIN ( METHOD: method, SKIP RIGHT COUNT: count, COST: cost )
 ```
 
-| Item   | Description        |
-| ------ | ------------------ |
-| METHOD | The joining method |
-| COST   | The estimated cost |
+| Item             | Description                                                  |
+| ---------------- | ------------------------------------------------------------ |
+| METHOD           | The joining method                                           |
+| SKIP RIGHT COUNT | The number of skip right count <br>\- Shown when TRCLOG_DETAIL_INFORMATION = 1<br>\- Not shown when skip count is 0 |
+| COST             | The estimated cost                                           |
 
 [Table 4-11] Information of the LEFT-OUTER-JOIN Node
 
@@ -5390,18 +5386,19 @@ The hints pertaining to joining methods are processed as described below in orde
   
 - Conflict with ORDERED hint. If the table order specified in an ORDERED hint and that specified in an USE_NL hint contradict each other, the ORDERED hint takes priority.
   
+
 Given the following query: 
-  
+
   ```
   SELECT /*+ ORDERED USE_NL(T2, T1) */
     FROM T1, T2 WHERE T1.i1 = T2.i1;
-```
-  
+  ```
+
 - If more than one joining method hint is specified for the same table, one of those hints is chosen on the basis of cost estimation.
   
 ```
   USE_NL(T1, T2) USE_HASH(T2, T1)
-  ```
+```
 
 
 -   In case of starting with the NO_USE hints, 
@@ -5462,7 +5459,7 @@ These hints are used to control how tables are accessed.
 -   INDEX (table, index1, index2, ...): Specifies that an index scan is to be performed using one of the listed indexes. 
 -   INDEX ASC (table, index1, index2, ...): Specifies that an ascending index scan is to be performed using one of the listed indexes. 
 -   INDEX_ASC(table, index1, index2, ...): It is the same with the INDEX ASC. 
--   INDEX DESC (table, index1, index2, ...): Specifies that a descending index scan is to be performed using one of the listed indexes. 
+-   INDEX DESC (table, index1, index2, ...): Specifies that a descending index scan is to be performed using one of the listed indexes. However, when index created with DESC is used with this hint, it is forward scanned and the result is sorted in descending order.
 -   INDEX_DESC(table, index1, index2, ...): It is the same with the INDEX DESC. 
 -   NO INDEX (table, index1, index2, ...): Specifies that none of the listed indexes are to be used in the optimization process. 
 -   NO_INDEX (table, index1, index2, ...): It is the same with the NO INDEX. 
@@ -5473,16 +5470,11 @@ Many hints can be used to control the access method. These hints are processed a
 
 -   If any hints contradict each other, the hint that appears first will be applied, and subsequent hints will be disregarded. 
     Example: INDEX(T1, IDX1) NO INDEX(T1, IDX1)
-    
 -   If the hints do not contradict each other, the most efficient of the specified access methods will be chosen on the basis of cost estimation.
     Example: FULL SCAN(T1), INDEX(T1, IDX1)
-    
 -   When an access method hint is used together with a joining method hint, the hints are processed separately.
     Example: USE_HASH(T1, T2), INDEX(T2, IDX2)
-    
-    
-    
-    The table is accessed using an index and is processed in the hash-based joining method.
+-   The table is accessed using an index and is processed in the hash-based joining method.
 
 #### Converting Queries
 
@@ -5548,7 +5540,7 @@ Incorrect usage example:
   
 ```
   SELECT * FROM T1 WHERE EXISTS ( SELECT /*+HASH_AJ*/ * FROM T2  WHERE T2.a1 = T1.i1 );
-  ```
+```
 
 
 #### Plan Cache-related Hints
@@ -6048,5 +6040,4 @@ sTargetColumn[1] : [3, 1],sTargetColumn->arg[X, X]
 -----------------------------------------------------------
 * AUTO STATISTICS USED: 2
 ```
-
 

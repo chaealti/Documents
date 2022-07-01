@@ -1,113 +1,84 @@
 # Altibase 7.1 Korean manuals
 
-이 매뉴얼은 7.1.0.4.7 기준으로 업데이트 되었습니다.
-
 ## New Features
 
-- ### [New Features Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/NewFeaturesGuide.md)
-
-
-
-
+- ### [New Features Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/New%20Features%20Guide.pdf)
 
 ## Admin
 
-- ### [Getting Started Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/GettingStarted.md)	
+- ### [Getting Started Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Getting%20Started%20Guide.pdf)
 
-- ### [Installation Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/Installation.md)	
+- ### [Installation Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Installation%20Guide.pdf)
 
-- ### Administrator's Manual	
+- ### [Administrator's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Administrator's%20Manual.pdf)
 
-  - [Administrator's Manual 1](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/Admin_1.md)
-  - [Administrator's Manual 2](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/Admin_2.md)
+- ### [Replication Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Replication%20Manual.pdf)
 
-- ### [Replication Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/Replication.md)	
+- ### General Reference
+  
+  - [General Reference-1.Data Types & Altibase Properties](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/General%20Reference-1.Data%20Types%20%26%20Altibase%20Properties.pdf)
+  - [General Reference-2.The Data Dictionary](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/General%20Reference-2.The%20Data%20Dictionary.pdf)
 
-- ### General Reference	
+- ### [Performance Tuning Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Performance%20Tuning%20Guide.pdf)
 
-  - [General Reference 1](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/GeneralReference_1.md)
-  - [General Reference 2](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/GeneralReference_2.md) 
-  - [General Reference 3](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/GeneralReference_3.md)
-  - [General Reference 4](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/GeneralReference_4.md)
+- ### [SNMP Agent Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/SNMP%20Agent%20Guide.pdf)
 
-- ### [Performance Tuning Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/TuningGuide.md)
-
-- ### [SNMP Agent Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/SNMP.md)
-
-- ### [DB Link User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/DBLink.md)
-
+- ### [DB Link User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/DB%20Link%20User's%20Manual.pdf)
 
 ## Application Development
 
-- ### SQL Reference
+- ### [SQL Reference](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/SQL%20Reference.pdf)
 
-  - [SQL Reference1](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/SQL1.md)
-  - [SQL Reference2](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/SQL2.md)
-  - [SQL Reference3](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/SQL3.md)
-  - [SQL Reference4](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/SQL4.md)
+- ### [Spatial SQL Reference](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Spatial%20SQL%20Reference.pdf)
 
-- ### [Spatial SQL Reference](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/SpatialSQL.md)	
+- ### [Stored Procedures Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Stored%20Procedures%20Manual.pdf)
 
-- ### Stored Procedures Manual	
+- ### [C/C++ External Procedures Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/External%20Procedures%20Manual.pdf)
 
-  - [Stored Procedures Manual1](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/StoredProcedure1.md)
-  - [Stored Procedures Manual2](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/StoredProcedure2.md)
+- ### [Precompiler User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Precompiler%20User's%20Manual.pdf)
 
-- ### [C/C++ External Procedures Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/ExternalProcedure.md)
+- ### [CLI User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/CLI%20User's%20Manual.pdf)
 
-- ### Precompiler User's Manual
+- ### [ODBC User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/ODBC%20User's%20Manual.pdf)
 
-  - [Precompiler User's Manual1](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/Precompiler_1.md)
-  - [Precompiler User's Manual2](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/Precompiler_2.md)
+- ### [JDBC User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/JDBC%20User's%20Manual.pdf)
 
-- ### CLI User's Manual
+- ### [API User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/API%20User's%20Manual.pdf)
 
-  - [CLI User's Manual1](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/CLI_1.md)
-  - [CLI User's Manual2](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/CLI_2.md)
+- ### [Altibase C Interface Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Altibase%20C%20Interface%20Manual.pdf)
 
-- ### [ODBC User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/ODBCDriver.md)
+- ### [Log Analyzer User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Log%20Analyzer%20User's%20Manual.pdf)
 
-- ### [JDBC User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/JDBC.md)
+- ### [Monitoring API Developer's Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Monitoring%20API%20Developer's%20Guide.pdf)
 
-- ### [API User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/API.md)
+## Version-dependent Tools
 
-- ### [Altibase C Interface Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/ACI.md)
+- ### [Adapter for JDBC User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Adapter%20for%20JDBC%20User's%20Manual.pdf)
 
-- ### [Log Analyzer User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/LogAnalyzer.md)
+- ### [Adapter for Oracle User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Adapter%20for%20Oracle%20User's%20Manual.pdf)
 
-- ### [Monitoring API Developer's Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/MonitorAPI.md)
+- ### [Altibase SSL/TLS User's Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Altibase%20SSL%20TLS%20User's%20Guide.pdf)
 
+- ### [Hadoop Connector User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Hadoop%20Connector%20User's%20Manual.pdf)
+
+- ### [iLoader User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/iLoader%20User's%20Manual.pdf)
+
+- ### [iSQL User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/iSQL%20User's%20Manual.pdf)
+
+- ### [Utilities Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Utilities%20Manual.pdf)
 
 ## Tools
 
-- ### [iSQL User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/iSQL.md)
+- ### [Altibase 3rd Party Connector Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Tools/kor/PDF/Altibase%203rd%20Party%20Connector%20Guide.pdf)
 
-- ### [iLoader User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/iLoader.md)
+- ### [Altibase Heartbeat User's Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Tools/kor/PDF/Altibase%20Heartbeat%20User's%20Guide.pdf)
 
-- ### [Utilities Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/Utilities.md)
+- ### [altiShapeLoader User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Tools/kor/PDF/altiShapeLoader%20User's%20Manual.pdf)
 
-- ### [Adapter for Oracle User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/OraAdapter.md)
+- ### [Migration Center User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Tools/kor/PDF/Migration%20Center%20User's%20Manual.pdf)
 
-- ### [Adapter for JDBC User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/JdbcAdapter.md)
-
-- ### [Migration Center User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/MigrationCenter.md)
-
-- ### [Replication Manager User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/ReplicationManager.md)
-
-- ### [Altibase SSL/TLS User's Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/SSL.md)	
-
-- ### [Altibase Heartbeat User's Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/Heartbeat.md)	
-
-- ### [Hadoop Connector User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/HadoopConnector.md)	
-
-- ### [Altibase 3rd Party Connector Guide](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/3rdPartyConnector.md)	
-
+- ### [Replication Manager User's Manual](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Tools/kor/PDF/Replication%20Manager%20User's%20Manual.pdf)
 
 ## Message
 
-- ### [Error Message Reference](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/ErrorMessage.md)
-
-
-
-
-
+- ### [Error Message Reference](https://github.com/ALTIBASE/Documents/blob/master/Manuals/Altibase_7.1/kor/PDF/Error%20Message%20Reference.pdf)
