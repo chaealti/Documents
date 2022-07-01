@@ -119,6 +119,7 @@
     - [그 외의 조건](#%EA%B7%B8-%EC%99%B8%EC%9D%98-%EC%A1%B0%EA%B1%B4)
   - [A.부록: 정규 표현식](#a%EB%B6%80%EB%A1%9D-%EC%A0%95%EA%B7%9C-%ED%91%9C%ED%98%84%EC%8B%9D)
     - [정규 표현식 지원](#%EC%A0%95%EA%B7%9C-%ED%91%9C%ED%98%84%EC%8B%9D-%EC%A7%80%EC%9B%90)
+    - [정규식 문법 차이점](#%EC%A0%95%EA%B7%9C%EC%8B%9D-%EB%AC%B8%EB%B2%95-%EC%B0%A8%EC%9D%B4%EC%A0%90)
 
 
 
@@ -25529,9 +25530,11 @@ A.부록: 정규 표현식
 ### 정규 표현식 지원
 
 정규 표현식(regular expression)이란 텍스트 패턴을 기술하기 위한 표기법으로, 하나
-이상의 문자열과 메타문자(metacharacter)로 구성된다. Altibase는 POSIX Basic
-Regular Expression (BRE)과 Extended Regular Expression(ERE)의 일부를 지원한다.
-Altibase가 지원하는 정규 표현식은 아래와 같은 제약 사항과 특징이 있다.
+이상의 문자열과 메타문자(metacharacter)로 구성된다. Altibase는 자체 
+정규식 라이브러리와 PCRE2 라이브러리를 지원하여 정규 표현식을 지원한다.
+Altibase 자체 정규식 라이브러리는 POSIX Basic Regular Expression (BRE)과 
+Extended Regular Expression(ERE)의 일부를 지원한다.
+Altibase가 자체적으로 지원하는 정규 표현식은 아래와 같은 제약 사항과 특징이 있다.
 
 -   멀티바이트 문자를 지원하지 않는다.
 
@@ -25685,7 +25688,24 @@ Altibase가 지원하는 정규 표현식은 아래와 같은 제약 사항과 �
 </tbody>
 </table>
 
-### 정규식 문법 차이점
+### 정규식 라이브러리 설정 변경 방법
+
+다음 쿼리로 현재 시스템의 정규식 라이브러리 설정을 변경할 수 있다. 변경된 설정을 적용하려면 세션 재접속이 필요할 수 있다.
+
+`ALTER SYSTEM SET REGEXP_MODE=1;`
+
+다음 쿼리로 현재 세션의 설정을 변경 할 수 있다.
+
+`ALTER SESSION SET REGEXP_MODE=1;`
+
+### 정규식 라이브러리 설정 확인 방법
+
+아래와 같이 두 가지 방법으로 설정이 올바르게 적용되었는지 여부를 확인 할 수 있다.
+
+* 차이점이 존재하는 정규식 문법을 사용하여 확인
+* 올바르지 않은 정규식 문법 사용 시 에러 메세지 출력으로 확인
+	
+### 정규식 라이브러리 문법 차이점
 
 PCRE2 라이브러리를 사용할 때의 몇 가지 차이점을 다음과 같이 표로 정리한다.
 	
