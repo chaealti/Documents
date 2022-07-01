@@ -25684,3 +25684,97 @@ Altibase가 지원하는 정규 표현식은 아래와 같은 제약 사항과 �
 </tr>
 </tbody>
 </table>
+
+### 정규식 문법 차이점
+
+PCRE2 라이브러리를 사용할 때의 몇 가지 차이점을 다음과 같이 표로 정리한다.
+	
+<table>
+  <tbody>
+    <tr>
+      <th>변경 문법</th>
+      <th>기존 문법의 예</th>
+      <th>변경 문법의 예</th>
+    </tr>
+    <tr>
+      <td>
+        <p>POSIX 문자열 클래스</p>
+        <p>(POSIX character class)</p>
+      </td>
+      <td>
+`SELECT REGEXP_COUNT('ABCDEFG1234567abcdefgh!@#$%^&*(','[:punct:]+');
+SELECT REGEXP_COUNT('ABCDEFG1234567abcdefgh!@#$%^&*(','\l+');`
+      </td>
+      <td>
+`SELECT REGEXP_COUNT('ABCDEFG1234567abcdefgh!@#$%^&*(','[[:punct:+');
+SELECT REGEXP_COUNT('ABCDEFG1234567abcdefgh!@#$%^&*(','[[:lower:+');`
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="2">
+        <p>POSIX 동등 클래스</p>
+        <p>(POSIX collating element or equivalence class)</p>
+      </td>
+      <td colspan="1">
+`SELECT I1 FROM T1 WHERE REGEXP_LIKE( I1, '[=A=]' );`
+      </td>
+      <td colspan="1">지원하지 않음</td>
+    </tr>
+    <tr>
+      <td colspan="1">
+`SELECT I1 FROM T1 WHERE REGEXP_LIKE( I1, '[A-[.CH.' );`
+      </td>
+      <td colspan="1">지원하지 않음</td>
+    </tr>
+    <tr>
+      <td colspan="1">
+        <p>역참조</p>
+        <p>(Backreference)</p>
+      </td>
+      <td colspan="1">지원하지 않음</td>
+      <td colspan="1">`SELECT * FROM T1 WHERE REGEXP_LIKE(I2,'(알티(베이스)7) 데이터\2');
+SELECT * FROM T1 WHERE REGEXP_LIKE(I2,'(알티(?<BASE>베이스)7) 데이터(?P=BASE)');`
+      </td>
+    </tr>
+    <tr>
+      <td colspan="1">
+        <p>전방 탐색</p>
+        <p>(Lookahead)</p>
+      </td>
+      <td colspan="1">지원하지 않음</td>
+      <td colspan="1">`SELECT * FROM T1 WHERE REGEXP_LIKE(I2,'알티.*(?=데이터베이스)');
+SELECT * FROM T1 WHERE REGEXP_LIKE(I2,'알티.*(?!데이터베이스)');`
+      </td>
+    </tr>
+    <tr>
+      <td colspan="1">
+        <p>후방 탐색</p>
+        <p>(Lookbehind)</p>
+      </td>
+      <td colspan="1">지원하지 않음</td>
+      <td colspan="1">`SELECT * FROM T1 WHERE REGEXP_LIKE(I2,'(?<=알티베이스7) 데이터베이스');
+SELECT * FROM T1 WHERE REGEXP_LIKE(I2,'(?<!알티베이스7) 데이터베이스');`
+      </td>
+    </tr>
+    <tr>
+      <td colspan="1">
+        <p>조건부 정규 표현식</p>
+        <p>(Conditional pattern)</p>
+      </td>
+      <td colspan="1">지원하지 않음</td>
+      <td colspan="1">`SELECT REGEXP_SUBSTR(I2,'(?(?=알티베이스)알티베이스7|데이터베이스)') FROM T1;`
+      </td>
+    </tr>
+    <tr>
+      <td colspan="1">
+        <p>문자 속성 정규 표현식</p>
+        <p>(Character with the xx property)</p>
+      </td>
+      <td colspan="1">지원하지 않음</td>
+      <td colspan="1">`SELECT REGEXP_SUBSTR(I2,'\P{HANGUL}+') FROM T1;`
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+PCRE2 라이브러리에서 지원하는 정규식 문법에 대한 자세한 내용은 PCRE2 패턴 매뉴얼 페이지( https://www.pcre.org/current/doc/html/pcre2pattern.html )를 참조한다.
