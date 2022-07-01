@@ -25531,10 +25531,10 @@ A.부록: 정규 표현식
 
 정규 표현식(regular expression)이란 텍스트 패턴을 기술하기 위한 표기법으로, 하나
 이상의 문자열과 메타문자(metacharacter)로 구성된다. Altibase는 자체 
-정규식 라이브러리와 PCRE2 라이브러리를 지원하여 정규 표현식을 지원한다.
-Altibase 자체 정규식 라이브러리는 POSIX Basic Regular Expression (BRE)과 
-Extended Regular Expression(ERE)의 일부를 지원한다.
-Altibase가 자체적으로 지원하는 정규 표현식은 아래와 같은 제약 사항과 특징이 있다.
+정규식 라이브러리 또는 PCRE2 라이브러리를 사용하여 정규 표현식을 지원한다.
+기본 값으로 Altibase 자체 정규식 라이브러리를 사용하며, 해당 라이브러리는 POSIX 
+Basic Regular Expression (BRE)과 Extended Regular Expression(ERE)의 일부를 지원한다.
+Altibase 자체 정규식 라이브러리에서 지원하는 정규 표현식은 아래와 같은 제약 사항과 특징이 있다.
 
 -   멀티바이트 문자를 지원하지 않는다.
 
@@ -25707,7 +25707,7 @@ Altibase가 자체적으로 지원하는 정규 표현식은 아래와 같은 �
 	
 ### 정규식 라이브러리 문법 차이점
 
-PCRE2 라이브러리를 사용할 때의 몇 가지 차이점을 다음과 같이 표로 정리한다.
+PCRE2 라이브러리를 사용할 때의  차이점을 다음과 같이 표로 정리한다.
 	
 <table>
   <tbody>
